@@ -1,5 +1,3 @@
-mkdir -p .github/workflows
-# Create the deploy.yml file with the content above
 git add .github/workflows/deploy.yml
-git commit -m "Add GitHub Pages deployment workflow"
+git commit -m "Fix deployment workflow with correct YAML"
 git push
