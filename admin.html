@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - DS Financial Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --admin-primary: #6366f1;
+            --admin-secondary: #8b5cf6;
+            --admin-dark: #1e1b4b;
+            --admin-light: #eef2ff;
+        }
+
+        body {
+            background: var(--admin-light);
+            min-height: 100vh;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            font-size: 1.75rem;
+        }
+
+        .admin-header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+        }
+
+        .admin-logout {
+            background: white;
+            color: var(--admin-primary);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-logout:hover {
+            transform: scale(1.05);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card .icon.users {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .stat-card .icon.logins {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .stat-card .icon.downloads {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .stat-card .icon.calculators {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin: 0 0 0.25rem;
+            color: #1f2937;
+        }
+
+        .stat-card p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .admin-section h2 {
+            margin: 0 0 1rem;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .user-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-badge.inactive {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 26px;
+            background: #e5e7eb;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #22c55e;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active::after {
+            left: 26px;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h4 {
+            margin: 0 0 0.25rem;
+        }
+
+        .setting-info p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .admin-btn.primary {
+            background: var(--admin-primary);
+            color: white;
+        }
+
+        .admin-btn.secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .admin-btn.danger {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .no-access {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .no-access i {
+            font-size: 4rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+        }
+
+        .no-access h2 {
+            margin: 0 0 1rem;
+        }
+
+        .no-access a {
+            color: var(--admin-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container" id="adminContent" style="display:none;">
+        <header class="admin-header">
+            <div>
+                <h1><i class="fas fa-shield-alt"></i> Admin Dashboard</h1>
+                <p>Welcome back, <span id="adminEmail">Admin</span></p>
+            </div>
+            <button class="admin-logout" onclick="logoutAdmin()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon users"><i class="fas fa-users"></i></div>
+                <h3 id="totalUsers">0</h3>
+                <p>Total Registered Users</p>
+            </div>
+            <div class="stat-card">
+                <div class="icon logins"><i class="fas fa-sign-in-alt"></i></div>
+                <h3 id="totalLogins">0</h3>
+                <p>Total Logins Today</p>
+            </div>
+            <div class="stat-card">
+                <div class="icon downloads"><i class="fas fa-download"></i></div>
+                <h3 id="totalDownloads">0</h3>
+                <p>PDF Downloads</p>
+            </div>
+            <div class="stat-card">
+                <div class="icon calculators"><i class="fas fa-calculator"></i></div>
+                <h3>55+</h3>
+                <p>Active Calculators</p>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2><i class="fas fa-cog"></i> Site Settings</h2>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Require Login for PDF Downloads</h4>
+                    <p>Users must login with Gmail to download PDFs</p>
+                </div>
+                <div class="toggle-switch active" id="pdfLoginToggle" onclick="toggleSetting('pdfLogin')"></div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Show Login Prompt</h4>
+                    <p>Show optional login prompt to new visitors</p>
+                </div>
+                <div class="toggle-switch" id="loginPromptToggle" onclick="toggleSetting('loginPrompt')"></div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Maintenance Mode</h4>
+                    <p>Temporarily disable the site for updates</p>
+                </div>
+                <div class="toggle-switch" id="maintenanceToggle" onclick="toggleSetting('maintenance')"></div>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2><i class="fas fa-users"></i> Recent Users</h2>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Login Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <tr>
+                        <td colspan="3" style="text-align:center;color:#6b7280;">No users logged in yet</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-section">
+            <h2><i class="fas fa-tools"></i> Quick Actions</h2>
+            <div class="admin-actions">
+                <button class="admin-btn primary" onclick="window.location.href='tax-portal.html'">
+                    <i class="fas fa-calculator"></i> Go to Tax Portal
+                </button>
+                <button class="admin-btn secondary" onclick="exportData()">
+                    <i class="fas fa-file-export"></i> Export User Data
+                </button>
+                <button class="admin-btn danger" onclick="clearAllData()">
+                    <i class="fas fa-trash"></i> Clear All Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-access" id="noAccess">
+        <i class="fas fa-lock"></i>
+        <h2>Admin Access Required</h2>
+        <p>You need admin privileges to access this page.</p>
+        <p><a href="tax-portal.html">← Return to Tax Portal</a></p>
+    </div>
+
+    <script>
+        // Check admin access
+        const adminSession = JSON.parse(localStorage.getItem('dsAdminSession') || 'null');
+
+        if (adminSession && adminSession.isAdmin) {
+            document.getElementById('adminContent').style.display = 'block';
+            document.getElementById('noAccess').style.display = 'none';
+            document.getElementById('adminEmail').textContent = adminSession.email;
+            loadStats();
+            loadSettings();
+            loadUsers();
+        }
+
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('dsStats') || '{"users":0,"logins":0,"downloads":0}');
+            document.getElementById('totalUsers').textContent = stats.users || 0;
+            document.getElementById('totalLogins').textContent = stats.logins || 0;
+            document.getElementById('totalDownloads').textContent = stats.downloads || 0;
+        }
+
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('dsSettings') || '{"pdfLogin":true,"loginPrompt":false,"maintenance":false}');
+            document.getElementById('pdfLoginToggle').classList.toggle('active', settings.pdfLogin);
+            document.getElementById('loginPromptToggle').classList.toggle('active', settings.loginPrompt);
+            document.getElementById('maintenanceToggle').classList.toggle('active', settings.maintenance);
+        }
+
+        function toggleSetting(key) {
+            const settings = JSON.parse(localStorage.getItem('dsSettings') || '{"pdfLogin":true,"loginPrompt":false,"maintenance":false}');
+            settings[key] = !settings[key];
+            localStorage.setItem('dsSettings', JSON.stringify(settings));
+            loadSettings();
+        }
+
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('dsUsers') || '[]');
+            const tbody = document.getElementById('userTableBody');
+
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#6b7280;">No users logged in yet</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = users.slice(-10).reverse().map(user => `
+                <tr>
+                    <td>${user.email}</td>
+                    <td>${new Date(user.loginTime).toLocaleString()}</td>
+                    <td><span class="status-badge active">Active</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('dsAdminSession');
+            window.location.href = 'tax-portal.html';
+        }
+
+        function exportData() {
+            const data = {
+                stats: JSON.parse(localStorage.getItem('dsStats') || '{}'),
+                users: JSON.parse(localStorage.getItem('dsUsers') || '[]'),
+                settings: JSON.parse(localStorage.getItem('dsSettings') || '{}')
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ds_admin_data.json';
+            a.click();
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all user data? This cannot be undone.')) {
+                localStorage.removeItem('dsStats');
+                localStorage.removeItem('dsUsers');
+                loadStats();
+                loadUsers();
+                alert('All data cleared successfully!');
+            }
+        }
+    </script>
+</body>
+
+</html>

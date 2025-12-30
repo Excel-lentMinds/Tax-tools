@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Free GST Calculator Tools - Calculate GST, find HSN/SAC codes, ITC calculator, E-way bill validity, and more. Professional GST tools by DS Financial Solutions.">
+    <meta name="keywords"
+        content="GST Calculator, HSN Code Finder, ITC Calculator, E-way Bill Calculator, GST Interest Calculator, GSTR Reconciliation">
+    <title>GST Tools | DS Financial Solutions</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231A237E' rx='15' width='100' height='100'/><text x='50' y='65' font-size='50' font-weight='bold' fill='%23FFB300' text-anchor='middle'>DS</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="gst-tools.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">DS</div>
+                <span class="logo-text" style="color: var(--primary);">DS Financial</span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" style="color: var(--text-primary);">Home</a></li>
+                <li><a href="index.html#services" class="nav-link" style="color: var(--text-primary);">Services</a></li>
+                <li><a href="#" class="nav-link active" style="color: var(--text-primary);">GST Tools</a></li>
+                <li><a href="index.html#about" class="nav-link" style="color: var(--text-primary);">About</a></li>
+                <li><a href="index.html#contact" class="nav-link" style="color: var(--text-primary);">Contact</a></li>
+                <li><a href="index.html#contact" class="btn btn-primary nav-cta">Free Consultation</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"
+                    style="background: var(--bg-secondary); color: var(--primary);">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span style="background: var(--primary);"></span>
+                    <span style="background: var(--primary);"></span>
+                    <span style="background: var(--primary);"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="tools-header">
+        <div class="container">
+            <div class="tools-header-content">
+                <span class="tools-badge"><i class="fas fa-calculator"></i> Free Tools</span>
+                <h1>GST Calculator & Tools</h1>
+                <p>Professional GST calculators and compliance tools to simplify your tax calculations</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tools Sidebar + Content Layout -->
+    <div class="tools-layout">
+        <!-- Sidebar -->
+        <aside class="tools-sidebar" id="toolsSidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-receipt"></i> GST Tools</h3>
+                <span class="tool-count">9 Tools</span>
+            </div>
+
+            <nav class="tools-nav">
+                <a href="#gst-calculator" class="tool-nav-item active" data-tool="gst-calculator">
+                    <i class="fas fa-calculator"></i>
+                    <span>GST Calculator</span>
+                </a>
+                <a href="#hsn-finder" class="tool-nav-item" data-tool="hsn-finder">
+                    <i class="fas fa-search"></i>
+                    <span>HSN/SAC Rate Finder</span>
+                </a>
+                <a href="#itc-calculator" class="tool-nav-item" data-tool="itc-calculator">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>ITC Calculator</span>
+                </a>
+                <a href="#interest-calculator" class="tool-nav-item" data-tool="interest-calculator">
+                    <i class="fas fa-percent"></i>
+                    <span>Interest & Late Fee</span>
+                </a>
+                <a href="#eway-calculator" class="tool-nav-item" data-tool="eway-calculator">
+                    <i class="fas fa-truck"></i>
+                    <span>E-way Bill Validity</span>
+                </a>
+                <a href="#composition-checker" class="tool-nav-item" data-tool="composition-checker">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Composition Scheme</span>
+                </a>
+                <a href="#reconciliation" class="tool-nav-item" data-tool="reconciliation">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>2A vs 3B Reconciliation</span>
+                </a>
+                <a href="#annual-return" class="tool-nav-item" data-tool="annual-return">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Annual Return Compiler</span>
+                </a>
+                <a href="#anti-profiteering" class="tool-nav-item" data-tool="anti-profiteering">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Anti-Profiteering</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-cta">
+                <p>Need help with GST compliance?</p>
+                <a href="index.html#contact" class="btn btn-primary btn-sm">Get Expert Help</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="tools-content">
+            <!-- Tool 1: GST Calculator -->
+            <section class="tool-section active" id="gst-calculator">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-green">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div>
+                            <h2>GST Calculator</h2>
+                            <p>Calculate GST with forward, reverse, and GST-only modes</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <!-- Calculation Mode -->
+                        <div class="mode-selector">
+                            <button class="mode-btn active" data-mode="add">
+                                <i class="fas fa-plus-circle"></i>
+                                Add GST
+                            </button>
+                            <button class="mode-btn" data-mode="remove">
+                                <i class="fas fa-minus-circle"></i>
+                                Remove GST
+                            </button>
+                            <button class="mode-btn" data-mode="gst-only">
+                                <i class="fas fa-percentage"></i>
+                                GST Only
+                            </button>
+                        </div>
+
+                        <div class="form-grid">
+                            <!-- Amount Input -->
+                            <div class="form-group full-width">
+                                <label for="gstAmount">
+                                    <span id="amountLabel">Amount (Excluding GST)</span>
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">₹</span>
+                                    <input type="text" id="gstAmount" placeholder="Enter amount" inputmode="decimal">
+                                </div>
+                            </div>
+
+                            <!-- GST Rate Selection -->
+                            <div class="form-group full-width">
+                                <label>GST Rate</label>
+                                <div class="rate-buttons">
+                                    <button class="rate-btn" data-rate="0">0%</button>
+                                    <button class="rate-btn" data-rate="0.25">0.25%</button>
+                                    <button class="rate-btn" data-rate="3">3%</button>
+                                    <button class="rate-btn" data-rate="5">5%</button>
+                                    <button class="rate-btn active" data-rate="12">12%</button>
+                                    <button class="rate-btn" data-rate="18">18%</button>
+                                    <button class="rate-btn" data-rate="28">28%</button>
+                                    <button class="rate-btn custom" data-rate="custom">Custom</button>
+                                </div>
+                                <div class="custom-rate-input hidden" id="customRateWrapper">
+                                    <input type="number" id="customRate" placeholder="Enter rate %" min="0" max="100"
+                                        step="0.01">
+                                </div>
+                            </div>
+
+                            <!-- Tax Type -->
+                            <div class="form-group">
+                                <label>Tax Type</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="taxType" value="igst" checked>
+                                        <span class="radio-custom"></span>
+                                        IGST (Interstate)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="taxType" value="cgst-sgst">
+                                        <span class="radio-custom"></span>
+                                        CGST + SGST (Intrastate)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Cess (Optional) -->
+                            <div class="form-group">
+                                <label for="cessRate">Cess Rate (if applicable)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="cessRate" placeholder="0" min="0" max="100" step="0.01"
+                                        value="0">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-calculate" id="calculateGST">
+                            <i class="fas fa-calculator"></i>
+                            Calculate GST
+                        </button>
+
+                        <!-- Results -->
+                        <div class="calculation-result hidden" id="gstResult">
+                            <h3><i class="fas fa-check-circle"></i> Calculation Summary</h3>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <span class="result-label">Base Amount</span>
+                                    <span class="result-value" id="resultBase">₹ 0.00</span>
+                                </div>
+                                <div class="result-item highlight-cgst" id="cgstRow">
+                                    <span class="result-label">CGST</span>
+                                    <span class="result-value" id="resultCGST">₹ 0.00</span>
+                                </div>
+                                <div class="result-item highlight-sgst" id="sgstRow">
+                                    <span class="result-label">SGST</span>
+                                    <span class="result-value" id="resultSGST">₹ 0.00</span>
+                                </div>
+                                <div class="result-item highlight-igst" id="igstRow">
+                                    <span class="result-label">IGST</span>
+                                    <span class="result-value" id="resultIGST">₹ 0.00</span>
+                                </div>
+                                <div class="result-item" id="cessRow">
+                                    <span class="result-label">Cess</span>
+                                    <span class="result-value" id="resultCess">₹ 0.00</span>
+                                </div>
+                                <div class="result-item result-total">
+                                    <span class="result-label">Total GST</span>
+                                    <span class="result-value" id="resultTotalGST">₹ 0.00</span>
+                                </div>
+                                <div class="result-item result-grand">
+                                    <span class="result-label">Final Amount</span>
+                                    <span class="result-value" id="resultFinal">₹ 0.00</span>
+                                </div>
+                            </div>
+
+                            <div class="result-actions">
+                                <button class="btn btn-outline btn-sm" id="copyResult">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button class="btn btn-outline btn-sm" id="clearResult">
+                                    <i class="fas fa-redo"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Reference -->
+                    <div class="tool-reference">
+                        <h4><i class="fas fa-info-circle"></i> GST Rate Quick Reference</h4>
+                        <div class="reference-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Rate</th>
+                                        <th>Examples</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="rate-tag exempt">Exempt</span></td>
+                                        <td>0%</td>
+                                        <td>Milk, Vegetables, Books, Education</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rate-tag low">Basic</span></td>
+                                        <td>5%</td>
+                                        <td>Packaged food, Transport, Medicines</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rate-tag medium">Standard</span></td>
+                                        <td>12%</td>
+                                        <td>Computers, Processed food, Mobile phones</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rate-tag high">Standard+</span></td>
+                                        <td>18%</td>
+                                        <td>Most services, Electronics, Software</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rate-tag luxury">Luxury</span></td>
+                                        <td>28%</td>
+                                        <td>Cars, AC, Luxury items, Tobacco</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 2: HSN/SAC Rate Finder -->
+            <section class="tool-section" id="hsn-finder">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-blue">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div>
+                            <h2>HSN/SAC Rate Finder</h2>
+                            <p>Find GST rates by HSN code, SAC code, or product name</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="search-box">
+                            <div class="search-type-toggle">
+                                <button class="search-type-btn active" data-type="all">All</button>
+                                <button class="search-type-btn" data-type="hsn">Goods (HSN)</button>
+                                <button class="search-type-btn" data-type="sac">Services (SAC)</button>
+                            </div>
+                            <div class="search-input-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="hsnSearch"
+                                    placeholder="Search by HSN/SAC code or product name...">
+                                <button class="btn btn-primary" id="searchHSN">Search</button>
+                            </div>
+                        </div>
+
+                        <!-- Search Results -->
+                        <div class="hsn-results" id="hsnResults">
+                            <div class="hsn-placeholder">
+                                <i class="fas fa-search"></i>
+                                <p>Enter HSN/SAC code or product name to find GST rate</p>
+                                <span>Try: "laptop", "8471", "restaurant", "9963"</span>
+                            </div>
+                        </div>
+
+                        <!-- Popular HSN Codes -->
+                        <div class="popular-codes">
+                            <h4>Popular GST Rates</h4>
+                            <div class="popular-grid">
+                                <div class="popular-item" data-hsn="8471">
+                                    <span class="hsn-code">8471</span>
+                                    <span class="hsn-desc">Computers & Laptops</span>
+                                    <span class="hsn-rate">18%</span>
+                                </div>
+                                <div class="popular-item" data-hsn="9963">
+                                    <span class="hsn-code">9963</span>
+                                    <span class="hsn-desc">Restaurant Services</span>
+                                    <span class="hsn-rate">5%</span>
+                                </div>
+                                <div class="popular-item" data-hsn="8517">
+                                    <span class="hsn-code">8517</span>
+                                    <span class="hsn-desc">Mobile Phones</span>
+                                    <span class="hsn-rate">12%</span>
+                                </div>
+                                <div class="popular-item" data-hsn="9983">
+                                    <span class="hsn-code">9983</span>
+                                    <span class="hsn-desc">Professional Services</span>
+                                    <span class="hsn-rate">18%</span>
+                                </div>
+                                <div class="popular-item" data-hsn="8703">
+                                    <span class="hsn-code">8703</span>
+                                    <span class="hsn-desc">Motor Vehicles</span>
+                                    <span class="hsn-rate">28%</span>
+                                </div>
+                                <div class="popular-item" data-hsn="9954">
+                                    <span class="hsn-code">9954</span>
+                                    <span class="hsn-desc">Construction Services</span>
+                                    <span class="hsn-rate">18%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 3: ITC Calculator -->
+            <section class="tool-section" id="itc-calculator">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-purple">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div>
+                            <h2>Input Tax Credit Calculator</h2>
+                            <p>Calculate eligible ITC and optimal utilization</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="itc-tabs">
+                            <button class="itc-tab active" data-tab="eligibility">Eligibility Check</button>
+                            <button class="itc-tab" data-tab="utilization">ITC Utilization</button>
+                            <button class="itc-tab" data-tab="reversal">ITC Reversal</button>
+                        </div>
+
+                        <!-- Eligibility Check -->
+                        <div class="itc-content active" id="eligibility-content">
+                            <h4>ITC Eligibility Questionnaire</h4>
+                            <div class="eligibility-checklist">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="itc1" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Is the supplier registered under GST?
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="itc2" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Do you have a valid tax invoice?
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="itc3" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Have you received the goods/services?
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="itc4" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Has the supplier filed GSTR-1?
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="itc5" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Is the expense for business purpose?
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="itc6" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Is payment made within 180 days?
+                                </label>
+                            </div>
+
+                            <div class="blocked-itc-section">
+                                <h4><i class="fas fa-ban"></i> Blocked ITC Check (Section 17(5))</h4>
+                                <p class="help-text">Check if your purchase falls under blocked credit:</p>
+                                <div class="blocked-items">
+                                    <label class="checkbox-item blocked">
+                                        <input type="checkbox" id="blocked1">
+                                        <span class="checkbox-custom"></span>
+                                        Motor vehicles (except for specified purposes)
+                                    </label>
+                                    <label class="checkbox-item blocked">
+                                        <input type="checkbox" id="blocked2">
+                                        <span class="checkbox-custom"></span>
+                                        Food & beverages, outdoor catering
+                                    </label>
+                                    <label class="checkbox-item blocked">
+                                        <input type="checkbox" id="blocked3">
+                                        <span class="checkbox-custom"></span>
+                                        Health & fitness services
+                                    </label>
+                                    <label class="checkbox-item blocked">
+                                        <input type="checkbox" id="blocked4">
+                                        <span class="checkbox-custom"></span>
+                                        Personal consumption items
+                                    </label>
+                                    <label class="checkbox-item blocked">
+                                        <input type="checkbox" id="blocked5">
+                                        <span class="checkbox-custom"></span>
+                                        Construction of immovable property
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" id="checkITCEligibility">
+                                <i class="fas fa-check-circle"></i> Check Eligibility
+                            </button>
+
+                            <div class="itc-result hidden" id="itcEligibilityResult">
+                                <!-- Result will be shown here -->
+                            </div>
+                        </div>
+
+                        <!-- ITC Utilization -->
+                        <div class="itc-content" id="utilization-content">
+                            <h4>ITC Utilization Order Calculator</h4>
+                            <p class="help-text">Enter your ITC available and tax liability to calculate optimal
+                                utilization</p>
+
+                            <div class="form-grid">
+                                <div class="form-section">
+                                    <h5>Available ITC</h5>
+                                    <div class="form-group">
+                                        <label>IGST Credit (₹)</label>
+                                        <input type="number" id="igstCredit" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CGST Credit (₹)</label>
+                                        <input type="number" id="cgstCredit" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>SGST Credit (₹)</label>
+                                        <input type="number" id="sgstCredit" placeholder="0" min="0">
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h5>Tax Liability</h5>
+                                    <div class="form-group">
+                                        <label>IGST Payable (₹)</label>
+                                        <input type="number" id="igstPayable" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CGST Payable (₹)</label>
+                                        <input type="number" id="cgstPayable" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>SGST Payable (₹)</label>
+                                        <input type="number" id="sgstPayable" placeholder="0" min="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" id="calculateITCUtil">
+                                <i class="fas fa-calculator"></i> Calculate Utilization
+                            </button>
+
+                            <div class="itc-util-result hidden" id="itcUtilResult">
+                                <!-- Utilization result will be shown here -->
+                            </div>
+                        </div>
+
+                        <!-- ITC Reversal -->
+                        <div class="itc-content" id="reversal-content">
+                            <h4>ITC Reversal Calculator (Rule 42 & 43)</h4>
+                            <p class="help-text">Calculate ITC reversal for mixed supplies (taxable + exempt)</p>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Total ITC Claimed (₹)</label>
+                                    <input type="number" id="totalITC" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>ITC on Exempt Supplies Only (₹)</label>
+                                    <input type="number" id="exemptITC" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>ITC on Taxable Supplies Only (₹)</label>
+                                    <input type="number" id="taxableITC" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Exempt Turnover (₹)</label>
+                                    <input type="number" id="exemptTurnover" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Turnover (₹)</label>
+                                    <input type="number" id="totalTurnover" placeholder="0" min="0">
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" id="calculateReversal">
+                                <i class="fas fa-calculator"></i> Calculate Reversal
+                            </button>
+
+                            <div class="reversal-result hidden" id="reversalResult">
+                                <!-- Reversal result will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 4: Interest & Late Fee Calculator -->
+            <section class="tool-section" id="interest-calculator">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-orange">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <div>
+                            <h2>GST Interest & Late Fee Calculator</h2>
+                            <p>Calculate interest and late fees for delayed GST payments and filings</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Return Type</label>
+                                <select id="returnType">
+                                    <option value="gstr3b">GSTR-3B (Monthly Summary)</option>
+                                    <option value="gstr1">GSTR-1 (Outward Supplies)</option>
+                                    <option value="gstr4">GSTR-4 (Composition)</option>
+                                    <option value="gstr9">GSTR-9 (Annual Return)</option>
+                                    <option value="cmp08">CMP-08 (Composition Quarterly)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tax Period</label>
+                                <div class="date-inputs">
+                                    <select id="taxMonth">
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                    <select id="taxYear">
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Actual Filing Date</label>
+                                <input type="date" id="filingDate">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Return Type</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="returnNature" value="regular" checked>
+                                        <span class="radio-custom"></span>
+                                        Regular
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="returnNature" value="nil">
+                                        <span class="radio-custom"></span>
+                                        NIL Return
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Annual Turnover</label>
+                                <select id="turnoverSlab">
+                                    <option value="1.5">Below ₹1.5 Cr</option>
+                                    <option value="5">₹1.5 Cr - ₹5 Cr</option>
+                                    <option value="100">Above ₹5 Cr</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="tax-liability-section" id="taxLiabilitySection">
+                            <h4>Tax Liability (for Interest Calculation)</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>IGST Payable (₹)</label>
+                                    <input type="number" id="intIGST" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>CGST Payable (₹)</label>
+                                    <input type="number" id="intCGST" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>SGST Payable (₹)</label>
+                                    <input type="number" id="intSGST" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cess Payable (₹)</label>
+                                    <input type="number" id="intCess" placeholder="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="calculateInterest">
+                            <i class="fas fa-calculator"></i> Calculate Interest & Late Fee
+                        </button>
+
+                        <div class="interest-result hidden" id="interestResult">
+                            <!-- Result will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 5: E-way Bill Validity Calculator -->
+            <section class="tool-section" id="eway-calculator">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-teal">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div>
+                            <h2>E-way Bill Validity Calculator</h2>
+                            <p>Calculate E-way bill validity and check requirements</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Consignment Value (₹)</label>
+                                <input type="number" id="consignmentValue" placeholder="Enter value" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Transport Mode</label>
+                                <select id="transportMode">
+                                    <option value="road">Road</option>
+                                    <option value="rail">Rail</option>
+                                    <option value="air">Air</option>
+                                    <option value="ship">Ship</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="vehicleTypeGroup">
+                                <label>Vehicle Type</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="vehicleType" value="regular" checked>
+                                        <span class="radio-custom"></span>
+                                        Regular
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="vehicleType" value="odc">
+                                        <span class="radio-custom"></span>
+                                        Over Dimensional Cargo
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Movement Type</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="movementType" value="inter" checked>
+                                        <span class="radio-custom"></span>
+                                        Interstate
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="movementType" value="intra">
+                                        <span class="radio-custom"></span>
+                                        Intrastate
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Approximate Distance (KM)</label>
+                                <input type="number" id="distance" placeholder="Enter distance in KM" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>E-way Bill Generation Date & Time</label>
+                                <input type="datetime-local" id="ewayGenDate">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="calculateEway">
+                            <i class="fas fa-calculator"></i> Calculate Validity
+                        </button>
+
+                        <div class="eway-result hidden" id="ewayResult">
+                            <!-- Result will be shown here -->
+                        </div>
+
+                        <!-- E-way Bill Reference -->
+                        <div class="tool-reference">
+                            <h4><i class="fas fa-info-circle"></i> E-way Bill Validity Reference</h4>
+                            <div class="reference-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Distance (Road)</th>
+                                            <th>Regular Vehicle</th>
+                                            <th>ODC Vehicle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Up to 200 km</td>
+                                            <td>1 day</td>
+                                            <td>1 day (per 20 km)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>201 - 400 km</td>
+                                            <td>2 days</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>401 - 600 km</td>
+                                            <td>3 days</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>601 - 800 km</td>
+                                            <td>4 days</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Every +200 km</td>
+                                            <td>+1 day</td>
+                                            <td>+1 day per 20 km</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 6: Composition Scheme Checker -->
+            <section class="tool-section" id="composition-checker">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-indigo">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div>
+                            <h2>Composition Scheme Eligibility</h2>
+                            <p>Check your eligibility for GST Composition Scheme</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nature of Business</label>
+                                <select id="businessNature">
+                                    <option value="manufacturer">Manufacturer</option>
+                                    <option value="trader">Trader (Goods)</option>
+                                    <option value="restaurant">Restaurant/Caterer</option>
+                                    <option value="service">Service Provider</option>
+                                    <option value="mixed">Mixed (Goods + Services)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>State of Registration</label>
+                                <select id="stateReg">
+                                    <option value="normal">Normal State</option>
+                                    <option value="special">Special Category State (NE States, HP, Uttarakhand)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Previous FY Aggregate Turnover (₹)</label>
+                                <input type="number" id="prevTurnover" placeholder="Enter turnover" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Estimated Current FY Turnover (₹)</label>
+                                <input type="number" id="currentTurnover" placeholder="Enter estimated turnover"
+                                    min="0">
+                            </div>
+                        </div>
+
+                        <div class="exclusion-checklist">
+                            <h4>Exclusion Criteria (Check if applicable)</h4>
+                            <div class="exclusion-items">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="exc1">
+                                    <span class="checkbox-custom"></span>
+                                    Make inter-state outward supplies
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="exc2">
+                                    <span class="checkbox-custom"></span>
+                                    Supply through e-commerce operators
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="exc3">
+                                    <span class="checkbox-custom"></span>
+                                    Manufacturer of ice cream, pan masala, tobacco
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="exc4">
+                                    <span class="checkbox-custom"></span>
+                                    Casual or non-resident taxable person
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="exc5">
+                                    <span class="checkbox-custom"></span>
+                                    Input Service Distributor
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="checkComposition">
+                            <i class="fas fa-clipboard-check"></i> Check Eligibility
+                        </button>
+
+                        <div class="composition-result hidden" id="compositionResult">
+                            <!-- Result will be shown here -->
+                        </div>
+
+                        <!-- Composition Rates Reference -->
+                        <div class="tool-reference">
+                            <h4><i class="fas fa-info-circle"></i> Composition Tax Rates</h4>
+                            <div class="reference-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Business Type</th>
+                                            <th>CGST</th>
+                                            <th>SGST</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Manufacturers</td>
+                                            <td>0.5%</td>
+                                            <td>0.5%</td>
+                                            <td>1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Traders (Goods)</td>
+                                            <td>0.5%</td>
+                                            <td>0.5%</td>
+                                            <td>1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Restaurants</td>
+                                            <td>2.5%</td>
+                                            <td>2.5%</td>
+                                            <td>5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Service Providers</td>
+                                            <td>3%</td>
+                                            <td>3%</td>
+                                            <td>6%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 7: GSTR-2A vs 3B Reconciliation -->
+            <section class="tool-section" id="reconciliation">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-pink">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div>
+                            <h2>GSTR-2A vs 3B Reconciliation</h2>
+                            <p>Compare and reconcile ITC between GSTR-2A and GSTR-3B</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="recon-input-section">
+                            <div class="form-grid">
+                                <div class="form-section">
+                                    <h4><i class="fas fa-file-invoice"></i> GSTR-2A ITC (As per Portal)</h4>
+                                    <div class="form-group">
+                                        <label>IGST (₹)</label>
+                                        <input type="number" id="r2aIGST" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CGST (₹)</label>
+                                        <input type="number" id="r2aCGST" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>SGST (₹)</label>
+                                        <input type="number" id="r2aSGST" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cess (₹)</label>
+                                        <input type="number" id="r2aCess" placeholder="0" min="0">
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h4><i class="fas fa-file-alt"></i> GSTR-3B ITC (As Claimed)</h4>
+                                    <div class="form-group">
+                                        <label>IGST (₹)</label>
+                                        <input type="number" id="r3bIGST" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CGST (₹)</label>
+                                        <input type="number" id="r3bCGST" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>SGST (₹)</label>
+                                        <input type="number" id="r3bSGST" placeholder="0" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cess (₹)</label>
+                                        <input type="number" id="r3bCess" placeholder="0" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="reconcileGSTR">
+                            <i class="fas fa-balance-scale"></i> Reconcile
+                        </button>
+
+                        <div class="recon-result hidden" id="reconResult">
+                            <!-- Result will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 8: Annual Return Data Compiler -->
+            <section class="tool-section" id="annual-return">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-amber">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div>
+                            <h2>Annual Return Data Compiler</h2>
+                            <p>Compile and summarize data for GSTR-9 annual return</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Financial Year</label>
+                                <select id="fyYear">
+                                    <option value="2023-24">2023-24</option>
+                                    <option value="2022-23">2022-23</option>
+                                    <option value="2021-22">2021-22</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Turnover Category</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="turnoverCat" value="below2cr" checked>
+                                        <span class="radio-custom"></span>
+                                        Below ₹2 Cr (Simplified)
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="turnoverCat" value="above2cr">
+                                        <span class="radio-custom"></span>
+                                        Above ₹2 Cr (Detailed)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="annual-summary-input">
+                            <h4>Monthly Summary (Auto-filled from returns)</h4>
+                            <div class="monthly-table-wrapper">
+                                <table class="monthly-data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>Taxable Value</th>
+                                            <th>IGST</th>
+                                            <th>CGST</th>
+                                            <th>SGST</th>
+                                            <th>ITC Claimed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>April</td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>May</td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>June</td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                            <td><input type="number" placeholder="0" min="0"></td>
+                                        </tr>
+                                        <!-- More months can be added dynamically -->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="total-row">
+                                            <td><strong>Total</strong></td>
+                                            <td id="totalTaxable">₹0</td>
+                                            <td id="totalIGSTAnn">₹0</td>
+                                            <td id="totalCGSTAnn">₹0</td>
+                                            <td id="totalSGSTAnn">₹0</td>
+                                            <td id="totalITCAnn">₹0</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="compileAnnual">
+                            <i class="fas fa-file-export"></i> Compile Data
+                        </button>
+
+                        <div class="annual-result hidden" id="annualResult">
+                            <!-- Result will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool 9: Anti-Profiteering Calculator -->
+            <section class="tool-section" id="anti-profiteering">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon gst-red">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h2>Anti-Profiteering Calculator</h2>
+                            <p>Calculate price reduction required after GST rate changes</p>
+                        </div>
+                    </div>
+
+                    <div class="tool-body">
+                        <div class="info-banner">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Under Section 171 of CGST Act, any reduction in GST rate or ITC benefit must be passed on
+                                to customers through price reduction.</p>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Scenario</label>
+                                <select id="apScenario">
+                                    <option value="rate">GST Rate Reduction</option>
+                                    <option value="itc">ITC Benefit Gain</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Product/Service Name</label>
+                                <input type="text" id="apProduct" placeholder="e.g., Restaurant meal">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Previous GST Rate (%)</label>
+                                <input type="number" id="oldRate" placeholder="e.g., 18" min="0" max="100" step="0.01">
+                            </div>
+
+                            <div class="form-group">
+                                <label>New GST Rate (%)</label>
+                                <input type="number" id="newRate" placeholder="e.g., 5" min="0" max="100" step="0.01">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Old Selling Price (Inclusive of GST) ₹</label>
+                                <input type="number" id="oldPrice" placeholder="e.g., 1000" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Units Sold After Rate Change</label>
+                                <input type="number" id="unitsSold" placeholder="e.g., 500" min="0">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="calculateAP">
+                            <i class="fas fa-calculator"></i> Calculate Price Reduction
+                        </button>
+
+                        <div class="ap-result hidden" id="apResult">
+                            <!-- Result will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="tools-footer">
+        <div class="container">
+            <div class="footer-content-simple">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">DS</div>
+                        <span class="logo-text">DS Financial Solutions</span>
+                    </a>
+                    <p>Professional accounting, taxation, and financial advisory services.</p>
+                </div>
+                <div class="footer-links-simple">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#services">Services</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Deepanshu Sharma | DS Financial Solutions. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Elements -->
+    <a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <button class="back-to-top visible" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="gst-tools.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Tax Tips, GST Updates, and Financial Insights from DS Financial Solutions. Stay informed with expert advice.">
+    <meta name="keywords" content="Tax Tips, GST Updates, ITR Filing Guide, Financial Planning, Tax Saving">
+    <title>Blog | DS Financial Solutions</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231A237E' rx='15' width='100' height='100'/><text x='50' y='65' font-size='50' font-weight='bold' fill='%23FFB300' text-anchor='middle'>DS</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .blog-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #4A148C 100%);
+            padding: 8rem 0 4rem;
+            color: white;
+            text-align: center;
+        }
+
+        .blog-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .blog-section {
+            padding: 4rem 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-card-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary), #4A148C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+
+        .blog-card .read-more:hover {
+            gap: 0.75rem;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: rgba(26, 35, 126, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .blog-filter-btn {
+            padding: 0.5rem 1.25rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .blog-filter-btn:hover,
+        .blog-filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .newsletter-box {
+            background: linear-gradient(135deg, var(--primary), #4A148C);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+        }
+
+        .newsletter-box h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-box p {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .newsletter-form button:hover {
+            transform: scale(1.05);
+        }
+
+        .month-section {
+            margin-top: 3rem;
+        }
+
+        .month-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .month-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .month-header .badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* News Chatbot Styles */
+        .news-chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
+            z-index: 9998;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .news-chat-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .news-chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #FFB300;
+            color: #1A237E;
+            font-size: 0.7rem;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            height: 480px;
+            max-height: calc(100vh - 150px);
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .news-chat-container.active {
+            display: flex;
+        }
+
+        .news-chat-header {
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .news-chat-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .news-chat-header span {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .news-chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .news-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8f9fa;
+        }
+
+        .news-msg {
+            max-width: 90%;
+            padding: 10px 14px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .news-msg.bot {
+            background: white;
+            align-self: flex-start;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .news-msg.user {
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .news-quick-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .news-quick-btn {
+            background: #fce4ec;
+            border: 1px solid #E91E63;
+            color: #C2185B;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .news-quick-btn:hover {
+            background: #E91E63;
+            color: white;
+        }
+
+        .news-chat-input {
+            display: flex;
+            padding: 12px;
+            background: white;
+            border-top: 1px solid #eee;
+            gap: 8px;
+        }
+
+        .news-chat-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .news-chat-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E91E63, #C2185B);
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-chat-container {
+                width: calc(100vw - 20px);
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">DS</div>
+                <span class="logo-text">DS Financial</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="tax-portal.html" class="nav-link">Tax Tools</a></li>
+                <li><a href="#" class="nav-link active">Blog</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="index.html#contact" class="btn btn-primary nav-cta">Free Consultation</a></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1><i class="fas fa-fire-alt"></i> Latest Financial News & Market Updates</h1>
+            <p>Breaking news on Union Budget 2025, GST Changes, IPO Analysis, Mergers & Acquisitions, and Market Trends.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-section">
+        <div class="container">
+            <!-- Filters -->
+            <div class="blog-filters">
+                <button class="blog-filter-btn active" data-filter="all">All News</button>
+                <button class="blog-filter-btn" data-filter="budget">🏛️ Budget 2025</button>
+                <button class="blog-filter-btn" data-filter="gst">📋 GST Updates</button>
+                <button class="blog-filter-btn" data-filter="ipo">🚀 IPO Watch</button>
+                <button class="blog-filter-btn" data-filter="ma">🤝 M&A Deals</button>
+                <button class="blog-filter-btn" data-filter="markets">📈 Markets</button>
+            </div>
+
+            <!-- BREAKING NEWS - December 2024 -->
+            <div class="month-section">
+                <div class="month-header">
+                    <h2><i class="fas fa-bolt"></i> Breaking News - December 2024</h2>
+                    <span class="badge">8 Hot Stories</span>
+                </div>
+                <div class="blog-grid">
+                    <article class="blog-card" data-category="budget">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #FF6B35, #F7931E);"><i
+                                class="fas fa-landmark"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #FF6B35; color: white;">🔥 Budget 2025</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 20, 2024</span>
+                                <span><i class="far fa-clock"></i> 8 min</span>
+                            </div>
+                            <h3>Union Budget 2025: Top 10 Expectations for Taxpayers & Businesses</h3>
+                            <p>What to expect from Nirmala Sitharaman's Budget on Feb 1, 2025 - Tax slab changes, 80C
+                                limit increase, and corporate tax reforms.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="ipo">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #00C853, #00E676);"><i
+                                class="fas fa-rocket"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #00C853; color: white;">🚀 IPO Watch</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 19, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>Top 5 IPOs to Watch in January 2025: Complete Analysis</h3>
+                            <p>NTPC Green Energy, Hexaware Technologies, Laxmi Dental, and more. Subscription dates,
+                                GMP, and investment recommendations.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="ma">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #651FFF, #7C4DFF);"><i
+                                class="fas fa-handshake"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #651FFF; color: white;">🤝 M&A Deal</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 18, 2024</span>
+                                <span><i class="far fa-clock"></i> 6 min</span>
+                            </div>
+                            <h3>Tata-Air India Merger Complete: What it Means for Investors</h3>
+                            <p>Air India Express and Vistara merger creates India's largest premium carrier. Stock
+                                impact and future outlook.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="gst">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #00BFA5, #1DE9B6);"><i
+                                class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #00BFA5; color: white;">📋 GST Update</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 17, 2024</span>
+                                <span><i class="far fa-clock"></i> 4 min</span>
+                            </div>
+                            <h3>GST Council Reduces Tax on Health Insurance to 5%</h3>
+                            <p>Major relief for policyholders! GST on health and term insurance reduced from 18% to 5%.
+                                Effective from Jan 1, 2025.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="markets">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #E91E63, #F50057);"><i
+                                class="fas fa-chart-line"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #E91E63; color: white;">📈 Markets</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 16, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>Sensex Crosses 75,000: Is the Bull Run Sustainable?</h3>
+                            <p>Expert analysis on Nifty 50, FII flows, and sectors to watch. Should you book profits or
+                                stay invested?</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="ipo">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #FF5722, #FF7043);"><i
+                                class="fas fa-fire"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #FF5722; color: white;">🔥 Hot IPO</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 15, 2024</span>
+                                <span><i class="far fa-clock"></i> 4 min</span>
+                            </div>
+                            <h3>Swiggy IPO Lists at 17% Premium: Should You Hold?</h3>
+                            <p>Swiggy's blockbuster listing analysis. Long-term potential, Zomato comparison, and
+                                analyst targets.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="ma">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #2196F3, #42A5F5);"><i
+                                class="fas fa-building"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #2196F3; color: white;">🤝 Acquisition</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 14, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>Adani Group Acquires ACC & Ambuja Cement: ₹31,000 Cr Deal</h3>
+                            <p>Adani becomes India's 2nd largest cement producer. Market share analysis and stock
+                                recommendations.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="budget">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #9C27B0, #AB47BC);"><i
+                                class="fas fa-coins"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category" style="background: #9C27B0; color: white;">💰 Tax Reform</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Dec 12, 2024</span>
+                                <span><i class="far fa-clock"></i> 7 min</span>
+                            </div>
+                            <h3>New Tax Regime to Become Default in 2025: Key Changes</h3>
+                            <p>Government may make New Tax Regime mandatory. Impact on salaried employees and how to
+                                prepare.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- NOVEMBER 2024 -->
+            <div class="month-section">
+                <div class="month-header">
+                    <h2><i class="fas fa-calendar-alt"></i> November 2024</h2>
+                    <span class="badge">5 Articles</span>
+                </div>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #3F51B5, #303F9F);"><i
+                                class="fas fa-rupee-sign"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Tax Tips</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Nov 25, 2024</span>
+                                <span><i class="far fa-clock"></i> 6 min</span>
+                            </div>
+                            <h3>TDS on Salary: Understanding Form 12BB Declaration</h3>
+                            <p>How to submit investment proofs to your employer and avoid excess TDS deduction from
+                                salary.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #009688, #00796B);"><i
+                                class="fas fa-shield-alt"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Investment</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Nov 20, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>NPS vs PPF vs ELSS: Which is Best for Tax Saving?</h3>
+                            <p>Complete comparison of popular 80C investment options with returns, lock-in, and tax
+                                treatment.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #795548, #5D4037);"><i
+                                class="fas fa-home"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Tax Tips</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Nov 15, 2024</span>
+                                <span><i class="far fa-clock"></i> 7 min</span>
+                            </div>
+                            <h3>HRA Exemption Rules 2024: Complete Calculation Guide</h3>
+                            <p>Step-by-step guide to calculate HRA exemption with examples for metro and non-metro
+                                cities.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #607D8B, #455A64);"><i
+                                class="fas fa-file-alt"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">GST Updates</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Nov 10, 2024</span>
+                                <span><i class="far fa-clock"></i> 4 min</span>
+                            </div>
+                            <h3>GSTR-9 Annual Return: Common Mistakes to Avoid</h3>
+                            <p>Top 10 errors in GST annual return filing and how to reconcile GSTR-2B with books of
+                                accounts.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #FF5722, #E64A19);"><i
+                                class="fas fa-lightbulb"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Business</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Nov 5, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>Startup India: Tax Benefits Under Section 80-IAC</h3>
+                            <p>Complete guide to 3-year tax holiday for DPIIT-recognized startups and eligibility
+                                criteria.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- OCTOBER 2024 -->
+            <div class="month-section">
+                <div class="month-header">
+                    <h2><i class="fas fa-calendar-alt"></i> October 2024</h2>
+                    <span class="badge">4 Articles</span>
+                </div>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #673AB7, #512DA8);"><i
+                                class="fas fa-gift"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Tax Tips</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Oct 25, 2024</span>
+                                <span><i class="far fa-clock"></i> 4 min</span>
+                            </div>
+                            <h3>Diwali Bonus Taxability: What Employers & Employees Must Know</h3>
+                            <p>Is your festive bonus taxable? Understanding the tax treatment of Diwali gifts and
+                                bonuses.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #2196F3, #1976D2);"><i
+                                class="fas fa-coins"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Investment</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Oct 18, 2024</span>
+                                <span><i class="far fa-clock"></i> 6 min</span>
+                            </div>
+                            <h3>Sovereign Gold Bond vs Physical Gold: Diwali Investment Guide</h3>
+                            <p>Compare returns, taxation, and safety of SGB vs gold jewelry for your Dhanteras
+                                investment.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #4CAF50, #388E3C);"><i
+                                class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">GST Updates</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Oct 10, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>GST on Online Gaming: 28% Tax Clarification</h3>
+                            <p>Understanding the GST implications on online gaming platforms after recent CBIC
+                                clarifications.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #F44336, #D32F2F);"><i
+                                class="fas fa-exclamation-triangle"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">News</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Oct 5, 2024</span>
+                                <span><i class="far fa-clock"></i> 3 min</span>
+                            </div>
+                            <h3>Advance Tax Due: October 15 Second Installment Reminder</h3>
+                            <p>Who needs to pay advance tax and how to calculate your second installment by October 15.
+                            </p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- SEPTEMBER 2024 -->
+            <div class="month-section">
+                <div class="month-header">
+                    <h2><i class="fas fa-calendar-alt"></i> September 2024</h2>
+                    <span class="badge">4 Articles</span>
+                </div>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #00BCD4, #0097A7);"><i
+                                class="fas fa-university"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">News</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Sep 28, 2024</span>
+                                <span><i class="far fa-clock"></i> 4 min</span>
+                            </div>
+                            <h3>RBI October Policy Preview: Rate Cut Expectations</h3>
+                            <p>Market expectations for the upcoming RBI monetary policy and what it means for borrowers.
+                            </p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);"><i
+                                class="fas fa-user-tie"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Tax Tips</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Sep 20, 2024</span>
+                                <span><i class="far fa-clock"></i> 6 min</span>
+                            </div>
+                            <h3>Freelancer Tax Guide: ITR-4 vs ITR-3 for Professionals</h3>
+                            <p>Which ITR form to file if you're a freelancer? Understanding presumptive taxation under
+                                44ADA.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #FF9800, #F57C00);"><i
+                                class="fas fa-chart-pie"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">Investment</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Sep 12, 2024</span>
+                                <span><i class="far fa-clock"></i> 7 min</span>
+                            </div>
+                            <h3>Mutual Fund LTCG Tax Changes: New Rules from July 2024</h3>
+                            <p>Budget 2024 changed LTCG taxation on equity mutual funds. Here's what investors need to
+                                know.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-card-image" style="background: linear-gradient(135deg, #3F51B5, #303F9F);"><i
+                                class="fas fa-landmark"></i></div>
+                        <div class="blog-card-content">
+                            <span class="blog-category">GST Updates</span>
+                            <div class="blog-card-meta">
+                                <span><i class="far fa-calendar"></i> Sep 5, 2024</span>
+                                <span><i class="far fa-clock"></i> 5 min</span>
+                            </div>
+                            <h3>GST Amnesty Scheme 2024: Waiver on Interest & Penalty</h3>
+                            <p>Details of the new amnesty scheme for pending GST demands from FY 2017-18 to 2019-20.</p>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="newsletter-box">
+                <h3><i class="fas fa-envelope"></i> Subscribe to Our Newsletter</h3>
+                <p>Get the latest tax updates, financial tips, and exclusive insights delivered to your inbox every
+                    week.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Assistant moved to Tax Portal page for better experience -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">DS</div>
+                        <span class="logo-text">DS Financial</span>
+                    </a>
+                    <p>Your trusted partner for accounting, taxation, and financial advisory services.</p>
+                </div>
+                <div class="footer-links-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="tax-portal.html">Tax Tools</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DS Financial Solutions. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+const systemPrompt = `You are a helpful, friendly AI assistant. You can answer ANY question the user asks - from
+general knowledge, coding, math, science, history, current events, creative writing, and more.
+
+You're hosted on the DS Financial Solutions blog page, but you're NOT limited to tax/finance topics. Feel free to
+help with:
+- 🧮 Math problems and calculations
+- 💻 Coding and programming questions
+- 📚 Research and explanations on any topic
+- ✍️ Creative writing and content
+- 🎓 Study help and exam preparation
+- 💡 General knowledge and trivia
+- 🔬 Science and technology
+- And anything else!
+
+INSTRUCTIONS:
+1. Be helpful, accurate, and friendly
+2. Use emojis to make responses engaging 😊
+3. For code, provide working examples
+4. For math, show step-by-step solutions
+5. Format responses nicely with bullet points when helpful
+6. If asked about taxes/finance, you can mention DS Financial's services`;
+
+let conversationHistory = [];
+
+function addMsg(text, isUser) {
+const div = document.createElement('div');
+div.className = `news-msg ${isUser ? 'user' : 'bot'}`;
+let html = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+div.innerHTML = html;
+messages.appendChild(div);
+messages.scrollTop = messages.scrollHeight;
+}
+
+function showTyping() {
+const div = document.createElement('div');
+div.className = 'news-msg bot';
+div.innerHTML = '<em>Thinking...</em>';
+div.id = 'typingIndicator';
+messages.appendChild(div);
+messages.scrollTop = messages.scrollHeight;
+return div;
+}
+
+async function callGemini(userMessage) {
+conversationHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+
+const requestBody = {
+contents: [
+{ role: 'user', parts: [{ text: systemPrompt }] },
+{ role: 'model', parts: [{ text: 'I am the DS Financial Tax News Assistant. I have the latest tax news and updates.
+Ask me about GST, ITR deadlines, Budget 2024 changes, or tax saving tips!' }] },
+...conversationHistory
+],
+generationConfig: {
+temperature: 0.6,
+maxOutputTokens: 250,
+topP: 0.9
+}
+};
+
+try {
+const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(requestBody)
+});
+
+if (!response.ok) throw new Error('API failed');
+
+const data = await response.json();
+const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t process that. Try asking
+about GST, ITR, or Budget 2024!';
+
+conversationHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
+return aiResponse;
+} catch (error) {
+console.error('Gemini API Error:', error);
+return 'I\'m having trouble connecting. Check our blog articles above for the latest tax news!';
+}
+}
+
+async function process(text) {
+addMsg(text, true);
+const typing = showTyping();
+
+try {
+const response = await callGemini(text);
+typing.remove();
+addMsg(response, false);
+} catch (error) {
+typing.remove();
+addMsg('Sorry, something went wrong. Please try again!', false);
+}
+}
+
+toggle.addEventListener('click', () => { container.classList.add('active'); toggle.style.display = 'none'; });
+close.addEventListener('click', () => { container.classList.remove('active'); toggle.style.display = 'flex'; });
+send.addEventListener('click', () => { if (input.value.trim()) { process(input.value.trim()); input.value = ''; }
+});
+input.addEventListener('keypress', e => { if (e.key === 'Enter' && input.value.trim()) {
+process(input.value.trim()); input.value = ''; } });
+messages.addEventListener('click', e => { if (e.target.classList.contains('news-quick-btn')) {
+process(e.target.textContent); } });
+})();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Free online PDF tools - Merge, Split, Compress, Convert PDF files. No signup required. Fast, secure, and easy to use.">
+    <meta name="keywords"
+        content="PDF tools, merge PDF, split PDF, compress PDF, convert PDF, PDF to Word, Word to PDF, JPG to PDF">
+    <title>PDF Tools | DS Financial - Free Online PDF Editor</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23667eea' rx='15' width='100' height='100'/><text x='50' y='65' font-size='40' font-weight='bold' fill='white' text-anchor='middle'>PDF</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- PDF Tools Styles -->
+    <link rel="stylesheet" href="pdf-tools.css">
+
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="pdf-navbar">
+        <div class="container">
+            <a href="index.html" class="pdf-logo">
+                <div class="logo-icon"><i class="fas fa-file-pdf"></i></div>
+                <span>PDF Tools</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tax-portal.html">Tax Tools</a>
+                <a href="#tools">All Tools</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pdf-hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <h1>All-in-One <span class="gradient-text">PDF Tools</span></h1>
+            <p class="hero-subtitle">Merge, split, compress, convert, and edit PDFs online. Free, fast, and secure.</p>
+
+            <!-- Search Bar -->
+            <div class="hero-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="toolSearch" placeholder="Search tools... (e.g., merge, compress, convert)">
+            </div>
+
+            <!-- Popular Tools Quick Access -->
+            <div class="popular-tools">
+                <span>Popular:</span>
+                <a href="#merge-pdf" class="quick-tool"><i class="fas fa-layer-group"></i> Merge</a>
+                <a href="#split-pdf" class="quick-tool"><i class="fas fa-cut"></i> Split</a>
+                <a href="#compress-pdf" class="quick-tool"><i class="fas fa-compress-arrows-alt"></i> Compress</a>
+                <a href="#pdf-to-jpg" class="quick-tool"><i class="fas fa-image"></i> PDF to JPG</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="tools-section" id="tools">
+        <div class="container">
+
+            <!-- Convert Category -->
+            <div class="tool-category" id="convert">
+                <h2><i class="fas fa-exchange-alt"></i> Convert PDF</h2>
+                <div class="tools-grid">
+                    <div class="tool-card convert" data-tool="pdf-to-jpg" onclick="openTool('pdf-to-jpg')">
+                        <div class="tool-icon"><i class="fas fa-image"></i></div>
+                        <h3>PDF to JPG</h3>
+                        <p>Convert PDF pages to images</p>
+                    </div>
+                    <div class="tool-card convert" data-tool="jpg-to-pdf" onclick="openTool('jpg-to-pdf')">
+                        <div class="tool-icon"><i class="fas fa-file-image"></i></div>
+                        <h3>JPG to PDF</h3>
+                        <p>Convert images to PDF</p>
+                    </div>
+                    <div class="tool-card convert" data-tool="word-to-pdf" onclick="openTool('word-to-pdf')">
+                        <div class="tool-icon"><i class="fas fa-file-word"></i></div>
+                        <h3>Word to PDF</h3>
+                        <p>Convert DOC/DOCX to PDF</p>
+                    </div>
+                    <div class="tool-card convert" data-tool="excel-to-pdf" onclick="openTool('excel-to-pdf')">
+                        <div class="tool-icon"><i class="fas fa-file-excel"></i></div>
+                        <h3>Excel to PDF</h3>
+                        <p>Convert spreadsheets to PDF</p>
+                    </div>
+                    <div class="tool-card convert" data-tool="ppt-to-pdf" onclick="openTool('ppt-to-pdf')">
+                        <div class="tool-icon"><i class="fas fa-file-powerpoint"></i></div>
+                        <h3>PowerPoint to PDF</h3>
+                        <p>Convert presentations to PDF</p>
+                    </div>
+                    <div class="tool-card convert" data-tool="pdf-to-text" onclick="openTool('pdf-to-text')">
+                        <div class="tool-icon"><i class="fas fa-file-alt"></i></div>
+                        <h3>PDF to Text</h3>
+                        <p>Extract text from PDF</p>
+                    </div>
+                    <div class="tool-card convert" data-tool="html-to-pdf" onclick="openTool('html-to-pdf')">
+                        <div class="tool-icon"><i class="fas fa-code"></i></div>
+                        <h3>HTML to PDF</h3>
+                        <p>Convert web pages to PDF</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organize Category -->
+            <div class="tool-category" id="organize">
+                <h2><i class="fas fa-tasks"></i> Organize PDF</h2>
+                <div class="tools-grid">
+                    <div class="tool-card organize" data-tool="merge-pdf" onclick="openTool('merge-pdf')">
+                        <div class="tool-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>Merge PDF</h3>
+                        <p>Combine multiple PDFs into one</p>
+                    </div>
+                    <div class="tool-card organize" data-tool="split-pdf" onclick="openTool('split-pdf')">
+                        <div class="tool-icon"><i class="fas fa-cut"></i></div>
+                        <h3>Split PDF</h3>
+                        <p>Separate PDF into pages</p>
+                    </div>
+                    <div class="tool-card organize" data-tool="compress-pdf" onclick="openTool('compress-pdf')">
+                        <div class="tool-icon"><i class="fas fa-compress-arrows-alt"></i></div>
+                        <h3>Compress PDF</h3>
+                        <p>Reduce PDF file size</p>
+                    </div>
+                    <div class="tool-card organize" data-tool="rotate-pdf" onclick="openTool('rotate-pdf')">
+                        <div class="tool-icon"><i class="fas fa-sync-alt"></i></div>
+                        <h3>Rotate PDF</h3>
+                        <p>Rotate PDF pages</p>
+                    </div>
+                    <div class="tool-card organize" data-tool="delete-pages" onclick="openTool('delete-pages')">
+                        <div class="tool-icon"><i class="fas fa-trash-alt"></i></div>
+                        <h3>Delete Pages</h3>
+                        <p>Remove pages from PDF</p>
+                    </div>
+                    <div class="tool-card organize" data-tool="extract-pages" onclick="openTool('extract-pages')">
+                        <div class="tool-icon"><i class="fas fa-file-export"></i></div>
+                        <h3>Extract Pages</h3>
+                        <p>Extract specific pages</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Category -->
+            <div class="tool-category" id="edit">
+                <h2><i class="fas fa-edit"></i> Edit PDF</h2>
+                <div class="tools-grid">
+                    <div class="tool-card edit" data-tool="add-watermark" onclick="openTool('add-watermark')">
+                        <div class="tool-icon"><i class="fas fa-stamp"></i></div>
+                        <h3>Add Watermark</h3>
+                        <p>Add text or image watermark</p>
+                    </div>
+                    <div class="tool-card edit" data-tool="add-page-numbers" onclick="openTool('add-page-numbers')">
+                        <div class="tool-icon"><i class="fas fa-list-ol"></i></div>
+                        <h3>Page Numbers</h3>
+                        <p>Add page numbers to PDF</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Category -->
+            <div class="tool-category" id="security">
+                <h2><i class="fas fa-shield-alt"></i> Security</h2>
+                <div class="tools-grid">
+                    <div class="tool-card security" data-tool="protect-pdf" onclick="openTool('protect-pdf')">
+                        <div class="tool-icon"><i class="fas fa-lock"></i></div>
+                        <h3>Protect PDF</h3>
+                        <p>Add password to PDF</p>
+                    </div>
+                    <div class="tool-card security" data-tool="unlock-pdf" onclick="openTool('unlock-pdf')">
+                        <div class="tool-icon"><i class="fas fa-unlock"></i></div>
+                        <h3>Unlock PDF</h3>
+                        <p>Remove PDF password</p>
+                    </div>
+                    <div class="tool-card security" data-tool="redact-pdf" onclick="openTool('redact-pdf')">
+                        <div class="tool-icon"><i class="fas fa-eraser"></i></div>
+                        <h3>Redact PDF</h3>
+                        <p>Black out sensitive content</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Tools - UNIQUE FEATURES -->
+            <div class="tool-category" id="advanced">
+                <h2><i class="fas fa-magic"></i> Advanced Tools <span class="badge-new">PRO</span></h2>
+                <div class="tools-grid">
+                    <div class="tool-card advanced" data-tool="sign-pdf" onclick="openTool('sign-pdf')">
+                        <div class="tool-icon"><i class="fas fa-signature"></i></div>
+                        <h3>E-Sign PDF</h3>
+                        <p>Draw signature on PDF</p>
+                        <span class="tool-badge">✨ Unique</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="compare-pdf" onclick="openTool('compare-pdf')">
+                        <div class="tool-icon"><i class="fas fa-columns"></i></div>
+                        <h3>Compare PDFs</h3>
+                        <p>Side-by-side comparison</p>
+                        <span class="tool-badge">✨ Unique</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="reorder-pages" onclick="openTool('reorder-pages')">
+                        <div class="tool-icon"><i class="fas fa-sort"></i></div>
+                        <h3>Reorder Pages</h3>
+                        <p>Drag & drop to reorder</p>
+                        <span class="tool-badge">✨ Unique</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="pdf-viewer" onclick="openTool('pdf-viewer')">
+                        <div class="tool-icon"><i class="fas fa-expand"></i></div>
+                        <h3>PDF Viewer</h3>
+                        <p>Full-screen viewer with annotations</p>
+                        <span class="tool-badge">🖥️ Full Screen</span>
+                    </div>
+                    <div class="tool-card advanced pro-tool" data-tool="pdf-editor" onclick="openTool('pdf-editor')">
+                        <div class="tool-icon"><i class="fas fa-edit"></i></div>
+                        <h3>PDF Editor</h3>
+                        <p>Edit text, erase, draw, add images</p>
+                        <span class="tool-badge pro">⭐ PRO Editor</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="pdf-reader" onclick="openTool('pdf-reader')">
+                        <div class="tool-icon"><i class="fas fa-book-reader"></i></div>
+                        <h3>PDF Reader</h3>
+                        <p>View PDF with zoom & search</p>
+                    </div>
+                    <div class="tool-card advanced" data-tool="qr-to-pdf" onclick="openTool('qr-to-pdf')">
+                        <div class="tool-icon"><i class="fas fa-qrcode"></i></div>
+                        <h3>Add QR Code</h3>
+                        <p>Add QR code to PDF</p>
+                        <span class="tool-badge">✨ Unique</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="pdf-metadata" onclick="openTool('pdf-metadata')">
+                        <div class="tool-icon"><i class="fas fa-info-circle"></i></div>
+                        <h3>Edit Metadata</h3>
+                        <p>Edit title, author, keywords</p>
+                        <span class="tool-badge">✨ Unique</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="crop-pdf" onclick="openTool('crop-pdf')">
+                        <div class="tool-icon"><i class="fas fa-crop-alt"></i></div>
+                        <h3>Crop PDF</h3>
+                        <p>Crop page margins</p>
+                    </div>
+                    <div class="tool-card advanced" data-tool="flatten-pdf" onclick="openTool('flatten-pdf')">
+                        <div class="tool-icon"><i class="fas fa-compress"></i></div>
+                        <h3>Flatten PDF</h3>
+                        <p>Flatten form fields</p>
+                    </div>
+                    <div class="tool-card advanced" data-tool="ocr-pdf" onclick="openTool('ocr-pdf')">
+                        <div class="tool-icon"><i class="fas fa-eye"></i></div>
+                        <h3>OCR PDF</h3>
+                        <p>Scan image PDF to searchable text</p>
+                        <span class="tool-badge">🔥 AI Powered</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="annotate-pdf" onclick="openTool('annotate-pdf')">
+                        <div class="tool-icon"><i class="fas fa-highlighter"></i></div>
+                        <h3>Annotate PDF</h3>
+                        <p>Draw, highlight, add notes</p>
+                        <span class="tool-badge">✏️ Interactive</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="header-footer" onclick="openTool('header-footer')">
+                        <div class="tool-icon"><i class="fas fa-heading"></i></div>
+                        <h3>Header & Footer</h3>
+                        <p>Add custom headers and footers</p>
+                    </div>
+                    <div class="tool-card advanced" data-tool="bates-numbering" onclick="openTool('bates-numbering')">
+                        <div class="tool-icon"><i class="fas fa-gavel"></i></div>
+                        <h3>Bates Numbering</h3>
+                        <p>Add legal document numbering</p>
+                        <span class="tool-badge">⚖️ Legal</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="batch-process" onclick="openTool('batch-process')">
+                        <div class="tool-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>Batch Process</h3>
+                        <p>Apply actions to multiple PDFs</p>
+                        <span class="tool-badge">🚀 Power User</span>
+                    </div>
+                    <div class="tool-card advanced" data-tool="pdf-optimize" onclick="openTool('pdf-optimize')">
+                        <div class="tool-icon"><i class="fas fa-magic"></i></div>
+                        <h3>PDF Optimizer</h3>
+                        <p>Advanced compression & cleanup</p>
+                    </div>
+                    <div class="tool-card advanced" data-tool="form-filler" onclick="openTool('form-filler')">
+                        <div class="tool-icon"><i class="fas fa-edit"></i></div>
+                        <h3>Form Filler</h3>
+                        <p>Fill PDF form fields</p>
+                    </div>
+                    <div class="tool-card advanced" data-tool="pdf-compare" onclick="openTool('pdf-compare')">
+                        <div class="tool-icon"><i class="fas fa-not-equal"></i></div>
+                        <h3>PDF Compare</h3>
+                        <p>Visual diff between two PDFs</p>
+                        <span class="tool-badge">🔍 Analysis</span>
+                    </div>
+                    <div class="tool-card advanced pro-tool" data-tool="text-to-html"
+                        onclick="openTool('text-to-html')">
+                        <div class="tool-icon"><i class="fas fa-code"></i></div>
+                        <h3>Text to HTML</h3>
+                        <p>Convert text to colorful structured HTML</p>
+                        <span class="tool-badge pro">🎨 Colorful Code</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Tool Modal -->
+    <div class="tool-modal" id="toolModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeTool()">&times;</button>
+            <div class="modal-header" id="modalHeader">
+                <div class="modal-icon"><i class="fas fa-file-pdf"></i></div>
+                <h2 id="modalTitle">Tool Name</h2>
+                <p id="modalDescription">Tool description</p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Full-Screen PDF Viewer -->
+    <div class="fullscreen-viewer" id="fullscreenViewer">
+        <div class="viewer-toolbar">
+            <div class="toolbar-section">
+                <button onclick="closeFullscreenViewer()" class="viewer-btn" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <span class="viewer-filename" id="viewerFilename">document.pdf</span>
+            </div>
+            <div class="toolbar-section center">
+                <button onclick="viewerPrevPage()" class="viewer-btn" title="Previous Page">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <span class="page-indicator">
+                    <input type="number" id="viewerPageInput" min="1" value="1" onchange="viewerGoToPage(this.value)">
+                    <span>/ <span id="viewerTotalPages">1</span></span>
+                </span>
+                <button onclick="viewerNextPage()" class="viewer-btn" title="Next Page">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button onclick="viewerZoomOut()" class="viewer-btn" title="Zoom Out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <select id="viewerZoomSelect" onchange="viewerSetZoom(this.value)">
+                    <option value="0.5">50%</option>
+                    <option value="0.75">75%</option>
+                    <option value="1" selected>100%</option>
+                    <option value="1.25">125%</option>
+                    <option value="1.5">150%</option>
+                    <option value="2">200%</option>
+                    <option value="fit">Fit Width</option>
+                </select>
+                <button onclick="viewerZoomIn()" class="viewer-btn" title="Zoom In">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+            </div>
+            <div class="toolbar-section">
+                <button onclick="viewerRotate()" class="viewer-btn" title="Rotate">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button onclick="viewerToggleSidebar()" class="viewer-btn" title="Thumbnails">
+                    <i class="fas fa-th-large"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button onclick="viewerPrint()" class="viewer-btn" title="Print">
+                    <i class="fas fa-print"></i>
+                </button>
+                <button onclick="viewerDownload()" class="viewer-btn primary" title="Download">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button onclick="viewerFullscreen()" class="viewer-btn" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+        </div>
+        <div class="viewer-container">
+            <div class="viewer-sidebar" id="viewerSidebar">
+                <div class="sidebar-header">
+                    <span>Pages</span>
+                    <button onclick="viewerToggleSidebar()" class="sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="sidebar-thumbnails" id="viewerThumbnails"></div>
+            </div>
+            <div class="viewer-main" id="viewerMain">
+                <div class="viewer-canvas-container" id="viewerCanvasContainer">
+                    <canvas id="viewerCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full-Screen PDF Editor PRO -->
+    <div class="pdf-editor" id="pdfEditor">
+        <!-- Top Toolbar -->
+        <div class="editor-toolbar">
+            <div class="toolbar-group file-group">
+                <button onclick="closeEditor()" class="editor-btn close-btn" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <span class="editor-filename" id="editorFilename">document.pdf</span>
+            </div>
+
+            <!-- Main Tools -->
+            <div class="toolbar-group tools">
+                <button onclick="setEditorTool('select')" class="editor-btn tool-btn active" id="toolSelect"
+                    title="Select & Move">
+                    <i class="fas fa-mouse-pointer"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+
+                <!-- Text Tools -->
+                <button onclick="setEditorTool('text')" class="editor-btn tool-btn" id="toolText" title="Add Text">
+                    <i class="fas fa-font"></i>
+                </button>
+                <button onclick="setEditorTool('whiteout')" class="editor-btn tool-btn" id="toolWhiteout"
+                    title="Whiteout & Replace Text">
+                    <i class="fas fa-eraser"></i>
+                </button>
+                <button onclick="openFindReplace()" class="editor-btn tool-btn" id="toolFindReplace"
+                    title="Find & Replace">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+
+                <!-- Drawing Tools -->
+                <button onclick="setEditorTool('draw')" class="editor-btn tool-btn" id="toolDraw" title="Free Draw">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button onclick="setEditorTool('highlight')" class="editor-btn tool-btn" id="toolHighlight"
+                    title="Highlight">
+                    <i class="fas fa-highlighter"></i>
+                </button>
+                <button onclick="setEditorTool('underline')" class="editor-btn tool-btn" id="toolUnderline"
+                    title="Underline">
+                    <i class="fas fa-underline"></i>
+                </button>
+                <button onclick="setEditorTool('strikethrough')" class="editor-btn tool-btn" id="toolStrikethrough"
+                    title="Strikethrough">
+                    <i class="fas fa-strikethrough"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+
+                <!-- Shapes -->
+                <button onclick="setEditorTool('rect')" class="editor-btn tool-btn" id="toolRect" title="Rectangle">
+                    <i class="far fa-square"></i>
+                </button>
+                <button onclick="setEditorTool('filledRect')" class="editor-btn tool-btn" id="toolFilledRect"
+                    title="Filled Rectangle">
+                    <i class="fas fa-square"></i>
+                </button>
+                <button onclick="setEditorTool('circle')" class="editor-btn tool-btn" id="toolCircle" title="Circle">
+                    <i class="far fa-circle"></i>
+                </button>
+                <button onclick="setEditorTool('line')" class="editor-btn tool-btn" id="toolLine" title="Line">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button onclick="setEditorTool('arrow')" class="editor-btn tool-btn" id="toolArrow" title="Arrow">
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+
+                <!-- Signature & Stamps -->
+                <button onclick="openSignaturePanel()" class="editor-btn tool-btn" id="toolSignature"
+                    title="Add Signature">
+                    <i class="fas fa-signature"></i>
+                </button>
+                <button onclick="addInitials()" class="editor-btn tool-btn" id="toolInitials" title="Add Initials">
+                    <i class="fas fa-user-edit"></i>
+                </button>
+                <button onclick="setEditorTool('checkmark')" class="editor-btn tool-btn" id="toolCheckmark"
+                    title="Checkmark">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button onclick="setEditorTool('crossmark')" class="editor-btn tool-btn" id="toolCrossmark"
+                    title="Cross Mark">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button onclick="addStampToEditor()" class="editor-btn tool-btn" id="toolStamp" title="Stamps">
+                    <i class="fas fa-stamp"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+
+                <!-- Insert -->
+                <button onclick="addImageToEditor()" class="editor-btn tool-btn" id="toolImage" title="Add Image">
+                    <i class="fas fa-image"></i>
+                </button>
+                <button onclick="addComment()" class="editor-btn tool-btn" id="toolComment" title="Add Comment">
+                    <i class="fas fa-comment"></i>
+                </button>
+                <button onclick="addLink()" class="editor-btn tool-btn" id="toolLink" title="Add Link">
+                    <i class="fas fa-link"></i>
+                </button>
+            </div>
+
+            <!-- Options -->
+            <div class="toolbar-group options">
+                <div class="color-picker-group">
+                    <label>Fill:</label>
+                    <input type="color" id="editorFillColor" value="#ffffff" title="Fill Color">
+                </div>
+                <div class="color-picker-group">
+                    <label>Stroke:</label>
+                    <input type="color" id="editorColor" value="#000000" title="Stroke Color">
+                </div>
+                <select id="editorFontSize" title="Font Size">
+                    <option value="8">8px</option>
+                    <option value="10">10px</option>
+                    <option value="12">12px</option>
+                    <option value="14" selected>14px</option>
+                    <option value="16">16px</option>
+                    <option value="18">18px</option>
+                    <option value="20">20px</option>
+                    <option value="24">24px</option>
+                    <option value="28">28px</option>
+                    <option value="32">32px</option>
+                    <option value="36">36px</option>
+                    <option value="48">48px</option>
+                    <option value="72">72px</option>
+                </select>
+                <select id="editorFont" title="Font Family">
+                    <option value="Helvetica">Helvetica</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+                <select id="editorFontWeight" title="Font Weight">
+                    <option value="normal">Normal</option>
+                    <option value="bold">Bold</option>
+                    <option value="italic">Italic</option>
+                </select>
+                <select id="editorStrokeWidth" title="Stroke Width">
+                    <option value="1">1px</option>
+                    <option value="2" selected>2px</option>
+                    <option value="3">3px</option>
+                    <option value="4">4px</option>
+                    <option value="6">6px</option>
+                    <option value="8">8px</option>
+                    <option value="10">10px</option>
+                </select>
+                <select id="editorOpacity" title="Opacity">
+                    <option value="1">100%</option>
+                    <option value="0.8">80%</option>
+                    <option value="0.6">60%</option>
+                    <option value="0.4">40%</option>
+                    <option value="0.2">20%</option>
+                </select>
+            </div>
+
+            <!-- Actions -->
+            <div class="toolbar-group actions">
+                <button onclick="editorUndo()" class="editor-btn" title="Undo (Ctrl+Z)">
+                    <i class="fas fa-undo"></i>
+                </button>
+                <button onclick="editorRedo()" class="editor-btn" title="Redo (Ctrl+Y)">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button onclick="deleteSelected()" class="editor-btn" title="Delete Selected">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button onclick="editorZoomOut()" class="editor-btn" title="Zoom Out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <span class="zoom-display" id="editorZoomDisplay">100%</span>
+                <button onclick="editorZoomIn()" class="editor-btn" title="Zoom In">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button onclick="editorFitWidth()" class="editor-btn" title="Fit Width">
+                    <i class="fas fa-arrows-alt-h"></i>
+                </button>
+            </div>
+
+            <!-- Save -->
+            <div class="toolbar-group save">
+                <button onclick="previewEditedPdf()" class="editor-btn preview-btn" title="Preview">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button onclick="saveEditedPdf()" class="editor-btn save-btn" title="Save & Download PDF">
+                    <i class="fas fa-download"></i> Save PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Workspace -->
+        <div class="editor-workspace">
+            <!-- Left Sidebar - Pages -->
+            <div class="editor-sidebar-left" id="editorPages">
+                <div class="sidebar-header">
+                    <span><i class="fas fa-file"></i> Pages</span>
+                </div>
+                <div class="page-thumbnails" id="editorPageThumbnails"></div>
+            </div>
+
+            <!-- Main Canvas -->
+            <div class="editor-canvas-area" id="editorCanvasArea">
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="editorBackgroundCanvas"></canvas>
+                    <canvas id="editorOverlayCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Right Sidebar - Properties -->
+            <div class="editor-sidebar-right" id="editorProperties">
+                <div class="sidebar-header">
+                    <span><i class="fas fa-cog"></i> Properties</span>
+                </div>
+                <div class="properties-content" id="propertiesContent">
+                    <p class="no-selection">Select an element to edit its properties</p>
+                </div>
+                <div class="sidebar-header" style="margin-top:1rem;">
+                    <span><i class="fas fa-layer-group"></i> Layers</span>
+                </div>
+                <div id="editorLayers"></div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="editor-status">
+            <div class="status-left">
+                <button onclick="editorPrevPage()" class="page-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                <span>Page <span id="editorCurrentPage">1</span> of <span id="editorTotalPages">1</span></span>
+                <button onclick="editorNextPage()" class="page-nav-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <span id="editorStatus">Ready</span>
+            <div class="status-right">
+                <span class="status-info">Ctrl+Z Undo | Ctrl+S Save | Esc Close</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Find & Replace Panel -->
+    <div class="find-replace-panel" id="findReplacePanel">
+        <div class="panel-header">
+            <h4><i class="fas fa-search-plus"></i> Find & Replace</h4>
+            <button onclick="closeFindReplace()" class="close-panel"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="panel-body">
+            <div class="input-group">
+                <label>Find:</label>
+                <input type="text" id="findText" placeholder="Text to find...">
+            </div>
+            <div class="input-group">
+                <label>Replace with:</label>
+                <input type="text" id="replaceText" placeholder="Replacement text...">
+            </div>
+            <div class="panel-actions">
+                <button onclick="findNextText()" class="action-btn"><i class="fas fa-search"></i> Find Next</button>
+                <button onclick="replaceCurrentText()" class="action-btn primary"><i class="fas fa-exchange-alt"></i>
+                    Replace</button>
+                <button onclick="replaceAllText()" class="action-btn"><i class="fas fa-sync"></i> Replace All</button>
+            </div>
+            <div class="find-results" id="findResults"></div>
+        </div>
+    </div>
+
+    <!-- Signature Panel -->
+    <div class="signature-panel" id="signaturePanel">
+        <div class="panel-header">
+            <h4><i class="fas fa-signature"></i> Create Signature</h4>
+            <button onclick="closeSignaturePanel()" class="close-panel"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="panel-body">
+            <div class="signature-tabs">
+                <button class="sig-tab active" onclick="switchSigTab('draw')">Draw</button>
+                <button class="sig-tab" onclick="switchSigTab('type')">Type</button>
+                <button class="sig-tab" onclick="switchSigTab('upload')">Upload</button>
+            </div>
+            <div class="sig-content" id="sigDrawContent">
+                <canvas id="signatureCanvas" width="400" height="150"></canvas>
+                <button onclick="clearSignature()" class="clear-sig-btn"><i class="fas fa-eraser"></i> Clear</button>
+            </div>
+            <div class="sig-content hidden" id="sigTypeContent">
+                <input type="text" id="signatureText" placeholder="Type your signature..." class="sig-text-input">
+                <select id="signatureFont" class="sig-font-select">
+                    <option value="cursive">Cursive</option>
+                    <option value="Dancing Script">Dancing Script</option>
+                    <option value="Pacifico">Pacifico</option>
+                    <option value="Great Vibes">Great Vibes</option>
+                </select>
+            </div>
+            <div class="sig-content hidden" id="sigUploadContent">
+                <input type="file" id="signatureUpload" accept="image/*" class="sig-upload-input">
+                <p class="sig-upload-hint">Upload an image of your signature (PNG with transparent background
+                    recommended)</p>
+            </div>
+            <div class="panel-actions">
+                <button onclick="closeSignaturePanel()" class="action-btn">Cancel</button>
+                <button onclick="insertSignature()" class="action-btn primary"><i class="fas fa-check"></i> Insert
+                    Signature</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Whiteout & Replace Modal -->
+    <div class="whiteout-modal" id="whiteoutModal">
+        <div class="modal-content compact">
+            <h4><i class="fas fa-eraser"></i> Whiteout Area</h4>
+            <p class="hint">Draw a rectangle over the text you want to replace. After whiteout, you can add new text.
+            </p>
+            <div class="input-group">
+                <label>Replacement text (optional):</label>
+                <input type="text" id="whiteoutReplaceText" placeholder="Enter replacement text...">
+            </div>
+            <div class="modal-actions">
+                <button onclick="cancelWhiteout()" class="action-btn">Just Whiteout</button>
+                <button onclick="confirmWhiteoutReplace()" class="action-btn primary"><i
+                        class="fas fa-exchange-alt"></i> Whiteout & Replace</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Input Modal for Editor -->
+    <div class="text-input-modal" id="textInputModal">
+        <div class="text-input-content">
+            <textarea id="editorTextInput" placeholder="Enter text here..."></textarea>
+            <div class="text-input-actions">
+                <button onclick="cancelTextInput()" class="cancel-btn">Cancel</button>
+                <button onclick="confirmTextInput()" class="confirm-btn">Add Text</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stamp Selection Modal -->
+    <div class="stamp-modal" id="stampModal">
+        <div class="stamp-content">
+            <h3><i class="fas fa-stamp"></i> Select Stamp</h3>
+            <div class="stamp-grid">
+                <button onclick="selectStamp('APPROVED')" class="stamp-option approved">APPROVED</button>
+                <button onclick="selectStamp('REJECTED')" class="stamp-option rejected">REJECTED</button>
+                <button onclick="selectStamp('CONFIDENTIAL')" class="stamp-option confidential">CONFIDENTIAL</button>
+                <button onclick="selectStamp('DRAFT')" class="stamp-option draft">DRAFT</button>
+                <button onclick="selectStamp('FINAL')" class="stamp-option final">FINAL</button>
+                <button onclick="selectStamp('COPY')" class="stamp-option copy">COPY</button>
+                <button onclick="selectStamp('VOID')" class="stamp-option void">VOID</button>
+                <button onclick="selectStamp('PAID')" class="stamp-option paid">PAID</button>
+            </div>
+            <button onclick="closeStampModal()" class="close-stamp-btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-upload"></i></div>
+                    <h3>1. Upload</h3>
+                    <p>Drag & drop or select your PDF files</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-cog"></i></div>
+                    <h3>2. Process</h3>
+                    <p>Choose options and click process</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-download"></i></div>
+                    <h3>3. Download</h3>
+                    <p>Download your processed file instantly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section">
+        <div class="container">
+            <h2>Why Choose Our PDF Tools?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>Process files in seconds, not minutes</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% Secure</h3>
+                    <p>Files processed locally in your browser</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-user-slash"></i>
+                    <h3>No Signup</h3>
+                    <p>Use all tools without registration</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works on all devices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pdf-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-icon"><i class="fas fa-file-pdf"></i></div>
+                    <span>PDF Tools by DS Financial</span>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="tax-portal.html">Tax Tools</a>
+                    <a href="blog.html">Blog</a>
+                </div>
+            </div>
+            <p class="copyright">© 2024 DS Financial Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="pdf-tools.js"></script>
+</body>
+
+</html>

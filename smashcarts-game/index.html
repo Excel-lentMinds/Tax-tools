@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smash Karts - Vehicular Combat Arena</title>
+    <meta name="description"
+        content="Fast-paced browser-based vehicular combat game. Battle with weapons, power-ups, and drift your way to victory!">
+    <link rel="stylesheet" href="css/styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="screen">
+        <div class="loading-content">
+            <h1 class="game-title">SMASH KARTS</h1>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <p class="loading-text" id="loading-text">Loading assets...</p>
+        </div>
+    </div>
+
+    <!-- Main Menu Screen -->
+    <div id="menu-screen" class="screen hidden">
+        <div class="menu-background"></div>
+        <div class="menu-content">
+            <h1 class="game-title glitch" data-text="SMASH KARTS">SMASH KARTS</h1>
+            <p class="tagline">Vehicular Combat Arena</p>
+
+            <div class="menu-buttons">
+                <button class="menu-btn primary" id="btn-play">
+                    <span class="btn-icon">🎮</span>
+                    <span class="btn-text">PLAY</span>
+                </button>
+                <button class="menu-btn" id="btn-mode-select">
+                    <span class="btn-icon">⚔️</span>
+                    <span class="btn-text">GAME MODE</span>
+                </button>
+                <button class="menu-btn" id="btn-settings">
+                    <span class="btn-icon">⚙️</span>
+                    <span class="btn-text">SETTINGS</span>
+                </button>
+                <button class="menu-btn" id="btn-controls">
+                    <span class="btn-icon">🎹</span>
+                    <span class="btn-text">CONTROLS</span>
+                </button>
+            </div>
+
+            <div class="current-mode">
+                <span>Mode: </span>
+                <span id="current-mode-text">Deathmatch</span>
+                <span> | Map: </span>
+                <span id="current-map-text">Tropical Paradise</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mode Selection Modal -->
+    <div id="mode-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>SELECT GAME MODE</h2>
+            <div class="mode-options">
+                <div class="mode-card selected" data-mode="deathmatch">
+                    <div class="mode-icon">💀</div>
+                    <h3>DEATHMATCH</h3>
+                    <p>3 minutes of chaos. Most kills wins!</p>
+                </div>
+                <div class="mode-card" data-mode="laststanding">
+                    <div class="mode-icon">🏆</div>
+                    <h3>LAST STANDING</h3>
+                    <p>One life only. Be the last survivor!</p>
+                </div>
+            </div>
+            <div class="difficulty-select">
+                <h3>AI DIFFICULTY</h3>
+                <div class="difficulty-options">
+                    <button class="diff-btn" data-diff="easy">EASY</button>
+                    <button class="diff-btn selected" data-diff="medium">MEDIUM</button>
+                    <button class="diff-btn" data-diff="hard">HARD</button>
+                </div>
+            </div>
+            <div class="ai-count-select">
+                <h3>OPPONENTS: <span id="ai-count-display">4</span></h3>
+                <input type="range" id="ai-count" min="1" max="8" value="4">
+            </div>
+            <div class="map-select">
+                <h3>SELECT MAP</h3>
+                <div class="map-grid" id="map-grid">
+                    <div class="map-card selected" data-map="tropical">
+                        <div class="map-icon">🏝️</div>
+                        <span>Tropical Paradise</span>
+                    </div>
+                    <div class="map-card" data-map="neon_city">
+                        <div class="map-icon">🌆</div>
+                        <span>Neon City</span>
+                    </div>
+                    <div class="map-card" data-map="candy">
+                        <div class="map-icon">🍭</div>
+                        <span>Candy Land</span>
+                    </div>
+                    <div class="map-card" data-map="volcanic">
+                        <div class="map-icon">🌋</div>
+                        <span>Volcanic Wasteland</span>
+                    </div>
+                    <div class="map-card" data-map="arctic">
+                        <div class="map-icon">❄️</div>
+                        <span>Arctic Tundra</span>
+                    </div>
+                    <div class="map-card" data-map="space">
+                        <div class="map-icon">🚀</div>
+                        <span>Space Station</span>
+                    </div>
+                    <div class="map-card" data-map="jungle">
+                        <div class="map-icon">🏛️</div>
+                        <span>Jungle Ruins</span>
+                    </div>
+                    <div class="map-card" data-map="desert">
+                        <div class="map-icon">🏜️</div>
+                        <span>Desert Oasis</span>
+                    </div>
+                    <div class="map-card" data-map="cyberpunk">
+                        <div class="map-icon">🤖</div>
+                        <span>Cyberpunk District</span>
+                    </div>
+                    <div class="map-card" data-map="rainbow">
+                        <div class="map-icon">🌈</div>
+                        <span>Rainbow Road</span>
+                    </div>
+                </div>
+            </div>
+            <button class="menu-btn" id="btn-close-mode">CONFIRM</button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>SETTINGS</h2>
+            <div class="settings-group">
+                <label>
+                    <span>Master Volume</span>
+                    <input type="range" id="master-volume" min="0" max="100" value="70">
+                </label>
+                <label>
+                    <span>Music Volume</span>
+                    <input type="range" id="music-volume" min="0" max="100" value="50">
+                </label>
+                <label>
+                    <span>SFX Volume</span>
+                    <input type="range" id="sfx-volume" min="0" max="100" value="80">
+                </label>
+                <label>
+                    <span>Screen Shake</span>
+                    <input type="checkbox" id="screen-shake" checked>
+                </label>
+                <label>
+                    <span>Show FPS</span>
+                    <input type="checkbox" id="show-fps">
+                </label>
+                <label>
+                    <span>Particles</span>
+                    <select id="particle-quality">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </label>
+            </div>
+            <button class="menu-btn" id="btn-close-settings">SAVE</button>
+        </div>
+    </div>
+
+    <!-- Controls Modal -->
+    <div id="controls-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>CONTROLS</h2>
+            <div class="controls-list">
+                <div class="control-row">
+                    <span class="key">W / ↑</span>
+                    <span class="action">Accelerate</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">S / ↓</span>
+                    <span class="action">Brake / Reverse</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">A / ←</span>
+                    <span class="action">Steer Left</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">D / →</span>
+                    <span class="action">Steer Right</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">SPACE</span>
+                    <span class="action">Fire Weapon</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">SHIFT</span>
+                    <span class="action">Drift</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">E</span>
+                    <span class="action">Drop Weapon</span>
+                </div>
+                <div class="control-row">
+                    <span class="key">ESC</span>
+                    <span class="action">Pause</span>
+                </div>
+            </div>
+            <button class="menu-btn" id="btn-close-controls">GOT IT</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+        <canvas id="game-canvas"></canvas>
+
+        <!-- HUD Overlay -->
+        <div id="hud">
+            <!-- Top Left - Health -->
+            <div class="hud-section hud-top-left">
+                <div class="health-container">
+                    <div class="health-bar">
+                        <div class="health-fill" id="health-fill"></div>
+                    </div>
+                    <span class="health-text" id="health-text">100</span>
+                </div>
+                <div class="boost-container">
+                    <div class="boost-bar">
+                        <div class="boost-fill" id="boost-fill"></div>
+                    </div>
+                    <span class="boost-label">BOOST</span>
+                </div>
+            </div>
+
+            <!-- Top Center - Game Info -->
+            <div class="hud-section hud-top-center">
+                <div class="game-timer" id="game-timer">3:00</div>
+                <div class="game-score">
+                    <span>KILLS: </span>
+                    <span id="kill-count">0</span>
+                </div>
+            </div>
+
+            <!-- Top Right - Minimap -->
+            <div class="hud-section hud-top-right">
+                <canvas id="minimap" width="180" height="180"></canvas>
+            </div>
+
+            <!-- Bottom Right - Weapon -->
+            <div class="hud-section hud-bottom-right">
+                <div class="weapon-display" id="weapon-display">
+                    <div class="weapon-icon" id="weapon-icon">🔫</div>
+                    <div class="weapon-info">
+                        <span class="weapon-name" id="weapon-name">No Weapon</span>
+                        <span class="weapon-ammo" id="weapon-ammo">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Kill Feed -->
+            <div class="hud-section hud-right">
+                <div class="kill-feed" id="kill-feed"></div>
+            </div>
+
+            <!-- Center - Announcements -->
+            <div class="hud-section hud-center">
+                <div class="announcement" id="announcement"></div>
+            </div>
+
+            <!-- Active Power-ups -->
+            <div class="hud-section hud-bottom-left">
+                <div class="active-powerups" id="active-powerups"></div>
+            </div>
+        </div>
+
+        <!-- Pause Menu -->
+        <div id="pause-menu" class="overlay hidden">
+            <div class="pause-content">
+                <h2>PAUSED</h2>
+                <button class="menu-btn" id="btn-resume">RESUME</button>
+                <button class="menu-btn" id="btn-restart">RESTART</button>
+                <button class="menu-btn" id="btn-quit">QUIT TO MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen hidden">
+        <div class="gameover-content">
+            <h1 id="gameover-title">GAME OVER</h1>
+            <div class="final-stats">
+                <div class="stat-row">
+                    <span>Final Position</span>
+                    <span id="final-position">1st</span>
+                </div>
+                <div class="stat-row">
+                    <span>Kills</span>
+                    <span id="final-kills">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Deaths</span>
+                    <span id="final-deaths">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Damage Dealt</span>
+                    <span id="final-damage">0</span>
+                </div>
+            </div>
+            <div class="gameover-buttons">
+                <button class="menu-btn primary" id="btn-play-again">PLAY AGAIN</button>
+                <button class="menu-btn" id="btn-main-menu">MAIN MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Countdown Overlay -->
+    <div id="countdown-overlay" class="overlay hidden">
+        <div class="countdown-number" id="countdown-number">3</div>
+    </div>
+
+    <!-- FPS Counter -->
+    <div id="fps-counter" class="hidden">FPS: 60</div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/arena.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/weapons.js"></script>
+    <script src="js/powerups.js"></script>
+    <script src="js/kart.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/hud.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
