@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Free Professional Resume Builder - Create stunning ATS-friendly resumes in minutes. 6+ templates, real-time preview, PDF export.">
+    <title>Resume Builder | DS Financial - Create Professional Resumes</title>
+
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231A237E' rx='15' width='100' height='100'/><text x='50' y='65' font-size='50' font-weight='bold' fill='%23FFB300' text-anchor='middle'>DS</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="resume-builder.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">DS</div>
+                <span class="logo-text">DS Financial</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="tax-portal.html" class="nav-link">Tax Tools</a></li>
+                <li><a href="pdf-tools.html" class="nav-link">PDF Tools</a></li>
+                <li><a href="#" class="nav-link active">Resume Builder</a></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="rb-hero">
+        <div class="container">
+            <div class="rb-hero-content">
+                <span class="rb-badge"><i class="fas fa-star"></i> Free Professional Tool</span>
+                <h1>Build Your Dream Resume<br><span>in Minutes</span></h1>
+                <p>Create stunning, ATS-friendly resumes with our easy-to-use builder. Choose from 6 professional
+                    templates, customize every detail, and download as PDF instantly.</p>
+                <div class="rb-stats">
+                    <div class="rb-stat"><span>6+</span> Templates</div>
+                    <div class="rb-stat"><span>100%</span> Free</div>
+                    <div class="rb-stat"><span>ATS</span> Optimized</div>
+                </div>
+                <button class="btn btn-primary rb-cta" onclick="scrollToBuilder()">
+                    <i class="fas fa-rocket"></i> Create My Resume
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Template Selection -->
+    <section class="rb-templates" id="templates">
+        <div class="container">
+            <h2><i class="fas fa-palette"></i> Choose Your Template</h2>
+            <div class="template-grid">
+                <div class="template-card active" data-template="modern" onclick="selectTemplate('modern')">
+                    <div class="template-preview modern-preview"></div>
+                    <h4>Modern</h4>
+                    <span class="template-badge">Popular</span>
+                </div>
+                <div class="template-card" data-template="classic" onclick="selectTemplate('classic')">
+                    <div class="template-preview classic-preview"></div>
+                    <h4>Classic</h4>
+                </div>
+                <div class="template-card" data-template="creative" onclick="selectTemplate('creative')">
+                    <div class="template-preview creative-preview"></div>
+                    <h4>Creative</h4>
+                </div>
+                <div class="template-card" data-template="minimal" onclick="selectTemplate('minimal')">
+                    <div class="template-preview minimal-preview"></div>
+                    <h4>Minimal</h4>
+                </div>
+                <div class="template-card" data-template="executive" onclick="selectTemplate('executive')">
+                    <div class="template-preview executive-preview"></div>
+                    <h4>Executive</h4>
+                </div>
+                <div class="template-card" data-template="tech" onclick="selectTemplate('tech')">
+                    <div class="template-preview tech-preview"></div>
+                    <h4>Tech</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Builder -->
+    <section class="rb-builder" id="builder">
+        <div class="container">
+            <div class="rb-layout">
+                <!-- Form Panel -->
+                <div class="rb-form-panel">
+                    <div class="rb-form-header">
+                        <h3><i class="fas fa-edit"></i> Build Your Resume</h3>
+                        <button class="rb-autosave-btn" onclick="saveToLocalStorage()">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+
+                    <!-- Personal Info -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('personal')">
+                            <h4><i class="fas fa-user"></i> Personal Information</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body" id="personal">
+                            <div class="rb-row">
+                                <div class="rb-field">
+                                    <label>Full Name *</label>
+                                    <input type="text" id="fullName" placeholder="John Doe" oninput="updatePreview()">
+                                </div>
+                                <div class="rb-field">
+                                    <label>Professional Title</label>
+                                    <input type="text" id="jobTitle" placeholder="Software Engineer"
+                                        oninput="updatePreview()">
+                                </div>
+                            </div>
+                            <div class="rb-row">
+                                <div class="rb-field">
+                                    <label>Email *</label>
+                                    <input type="email" id="email" placeholder="john@example.com"
+                                        oninput="updatePreview()">
+                                </div>
+                                <div class="rb-field">
+                                    <label>Phone</label>
+                                    <input type="tel" id="phone" placeholder="+91 98765 43210"
+                                        oninput="updatePreview()">
+                                </div>
+                            </div>
+                            <div class="rb-row">
+                                <div class="rb-field">
+                                    <label>Location</label>
+                                    <input type="text" id="location" placeholder="New Delhi, India"
+                                        oninput="updatePreview()">
+                                </div>
+                                <div class="rb-field">
+                                    <label>LinkedIn</label>
+                                    <input type="url" id="linkedin" placeholder="linkedin.com/in/johndoe"
+                                        oninput="updatePreview()">
+                                </div>
+                            </div>
+                            <div class="rb-field">
+                                <label>Portfolio/Website</label>
+                                <input type="url" id="website" placeholder="johndoe.com" oninput="updatePreview()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('summary')">
+                            <h4><i class="fas fa-file-alt"></i> Professional Summary</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body" id="summary">
+                            <div class="rb-field">
+                                <label>About You</label>
+                                <textarea id="summaryText" rows="4"
+                                    placeholder="Brief professional summary highlighting your experience, skills, and career goals..."
+                                    oninput="updatePreview()"></textarea>
+                                <span class="char-count"><span id="summaryCount">0</span>/500</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Experience -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('experience')">
+                            <h4><i class="fas fa-briefcase"></i> Work Experience</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body" id="experience">
+                            <div id="experienceList"></div>
+                            <button class="rb-add-btn" onclick="addExperience()">
+                                <i class="fas fa-plus"></i> Add Experience
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('education')">
+                            <h4><i class="fas fa-graduation-cap"></i> Education</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body" id="education">
+                            <div id="educationList"></div>
+                            <button class="rb-add-btn" onclick="addEducation()">
+                                <i class="fas fa-plus"></i> Add Education
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('skills')">
+                            <h4><i class="fas fa-cogs"></i> Skills</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body" id="skills">
+                            <div class="rb-field">
+                                <label>Skills (comma separated)</label>
+                                <textarea id="skillsText" rows="3"
+                                    placeholder="JavaScript, Python, React, Node.js, SQL, Git, AWS..."
+                                    oninput="updatePreview()"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('projects')">
+                            <h4><i class="fas fa-project-diagram"></i> Projects</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body collapsed" id="projects">
+                            <div id="projectsList"></div>
+                            <button class="rb-add-btn" onclick="addProject()">
+                                <i class="fas fa-plus"></i> Add Project
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('certifications')">
+                            <h4><i class="fas fa-certificate"></i> Certifications</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body collapsed" id="certifications">
+                            <div id="certificationsList"></div>
+                            <button class="rb-add-btn" onclick="addCertification()">
+                                <i class="fas fa-plus"></i> Add Certification
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="rb-section">
+                        <div class="rb-section-header" onclick="toggleSection('languages')">
+                            <h4><i class="fas fa-language"></i> Languages</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="rb-section-body collapsed" id="languages">
+                            <div class="rb-field">
+                                <label>Languages (comma separated with proficiency)</label>
+                                <textarea id="languagesText" rows="2"
+                                    placeholder="English (Fluent), Hindi (Native), Spanish (Intermediate)"
+                                    oninput="updatePreview()"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="rb-preview-panel">
+                    <div class="rb-preview-header">
+                        <h3><i class="fas fa-eye"></i> Live Preview</h3>
+                        <div class="rb-preview-actions">
+                            <select id="colorTheme" onchange="changeColorTheme()">
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                                <option value="purple">Purple</option>
+                                <option value="red">Red</option>
+                                <option value="teal">Teal</option>
+                                <option value="dark">Dark</option>
+                            </select>
+                            <button class="rb-download-btn" onclick="downloadPDF()">
+                                <i class="fas fa-download"></i> Download PDF
+                            </button>
+                        </div>
+                    </div>
+                    <div class="rb-preview-container">
+                        <div class="rb-resume" id="resumePreview">
+                            <!-- Resume content rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="rb-footer">
+        <div class="container">
+            <p>&copy; 2024 DS Financial. Free Resume Builder - No signup required.</p>
+        </div>
+    </footer>
+
+    <script src="resume-builder.js"></script>
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+            themeToggle.innerHTML = current === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        });
+    </script>
+</body>
+
+</html>
