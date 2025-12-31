@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="resume-builder.css">
 </head>
@@ -52,7 +54,7 @@
                 <p>Create stunning, ATS-friendly resumes with our easy-to-use builder. Choose from 6 professional
                     templates, customize every detail, and download as PDF instantly.</p>
                 <div class="rb-stats">
-                    <div class="rb-stat"><span>10+</span> Templates</div>
+                    <div class="rb-stat"><span>14+</span> Templates</div>
                     <div class="rb-stat"><span>100%</span> Free</div>
                     <div class="rb-stat"><span>ATS</span> Optimized</div>
                 </div>
@@ -116,6 +118,28 @@
                     <h4>Sales</h4>
                     <span class="template-badge" style="background:#F59E0B;">Business</span>
                 </div>
+                <!-- Photo-enabled templates -->
+                <div class="template-card" data-template="photo-sidebar" onclick="selectTemplate('photo-sidebar')">
+                    <div class="template-preview photo-sidebar-preview"></div>
+                    <h4>Photo Sidebar</h4>
+                    <span class="template-badge" style="background:#0F766E;">With Photo</span>
+                </div>
+                <div class="template-card" data-template="photo-timeline" onclick="selectTemplate('photo-timeline')">
+                    <div class="template-preview photo-timeline-preview"></div>
+                    <h4>Photo Timeline</h4>
+                    <span class="template-badge" style="background:#2563EB;">With Photo</span>
+                </div>
+                <div class="template-card" data-template="photo-creative" onclick="selectTemplate('photo-creative')">
+                    <div class="template-preview photo-creative-preview"></div>
+                    <h4>Photo Creative</h4>
+                    <span class="template-badge" style="background:#7C3AED;">With Photo</span>
+                </div>
+                <div class="template-card" data-template="photo-professional"
+                    onclick="selectTemplate('photo-professional')">
+                    <div class="template-preview photo-professional-preview"></div>
+                    <h4>Photo Pro</h4>
+                    <span class="template-badge" style="background:#3B82F6;">With Photo</span>
+                </div>
             </div>
         </div>
     </section>
@@ -178,6 +202,29 @@
                             <div class="rb-field">
                                 <label>Portfolio/Website</label>
                                 <input type="url" id="website" placeholder="johndoe.com" oninput="updatePreview()">
+                            </div>
+
+                            <!-- Photo Upload -->
+                            <div class="rb-photo-upload">
+                                <label><i class="fas fa-camera"></i> Profile Photo</label>
+                                <div class="photo-upload-area">
+                                    <div class="photo-preview" id="photoPreview">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="photo-actions">
+                                        <input type="file" id="photoInput" accept="image/*"
+                                            onchange="handlePhotoUpload(event)" hidden>
+                                        <button type="button" class="photo-btn upload"
+                                            onclick="document.getElementById('photoInput').click()">
+                                            <i class="fas fa-upload"></i> Upload Photo
+                                        </button>
+                                        <button type="button" class="photo-btn remove" onclick="removePhoto()"
+                                            id="removePhotoBtn" style="display:none;">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <p class="photo-hint">Recommended: Square photo, 400x400px</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -315,6 +362,38 @@
             </div>
         </div>
     </section>
+
+    <!-- Photo Crop Modal -->
+    <div class="crop-modal" id="cropModal">
+        <div class="crop-modal-content">
+            <div class="crop-modal-header">
+                <h3><i class="fas fa-crop-alt"></i> Crop Your Photo</h3>
+                <button class="crop-close" onclick="closeCropModal()">&times;</button>
+            </div>
+            <div class="crop-modal-body">
+                <div class="crop-container">
+                    <img id="cropImage" src="" alt="Crop preview">
+                </div>
+            </div>
+            <div class="crop-modal-footer">
+                <div class="crop-options">
+                    <button type="button" class="crop-shape-btn active" data-shape="circle"
+                        onclick="setCropShape('circle')">
+                        <i class="fas fa-circle"></i> Circular
+                    </button>
+                    <button type="button" class="crop-shape-btn" data-shape="square" onclick="setCropShape('square')">
+                        <i class="fas fa-square"></i> Square
+                    </button>
+                </div>
+                <div class="crop-actions">
+                    <button type="button" class="crop-btn cancel" onclick="closeCropModal()">Cancel</button>
+                    <button type="button" class="crop-btn confirm" onclick="confirmCrop()">
+                        <i class="fas fa-check"></i> Apply Photo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="rb-footer">

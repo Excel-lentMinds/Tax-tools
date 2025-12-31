@@ -14,6 +14,9 @@ let resumeData = {
 
 let currentTemplate = 'modern';
 let currentColor = 'blue';
+let currentPhoto = null; // Base64 photo data
+let cropShape = 'circle'; // circle or square
+let cropper = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -268,6 +271,9 @@ function collectData() {
         }
     });
 
+    // Add photo
+    data.photo = currentPhoto;
+
     return data;
 }
 
@@ -296,6 +302,11 @@ function getTemplateHTML(template, data) {
         case 'designer': return getDesignerTemplate(data);
         case 'healthcare': return getHealthcareTemplate(data);
         case 'sales': return getSalesTemplate(data);
+        // Photo templates
+        case 'photo-sidebar': return getPhotoSidebarTemplate(data);
+        case 'photo-timeline': return getPhotoTimelineTemplate(data);
+        case 'photo-creative': return getPhotoCreativeTemplate(data);
+        case 'photo-professional': return getPhotoProfessionalTemplate(data);
         default: return getModernTemplate(data);
     }
 }
@@ -619,4 +630,273 @@ function showToast(message) {
     document.body.appendChild(toast);
 
     setTimeout(() => toast.remove(), 3000);
+}
+
+// ==================== PHOTO HANDLING ====================
+
+// Handle photo upload
+function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file
+    if (!file.type.startsWith('image/')) {
+        showToast('Please select an image file');
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Image must be less than 5MB');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        openCropModal(e.target.result);
+    };
+    reader.readAsDataURL(file);
+}
+
+// Open crop modal
+function openCropModal(imageSrc) {
+    const modal = document.getElementById('cropModal');
+    const image = document.getElementById('cropImage');
+
+    modal.classList.add('active');
+    image.src = imageSrc;
+
+    // Initialize Cropper
+    if (cropper) cropper.destroy();
+
+    setTimeout(() => {
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            dragMode: 'move',
+            autoCropArea: 0.8,
+            restore: false,
+            guides: true,
+            center: true,
+            highlight: false,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: false
+        });
+        setCropShape(cropShape);
+    }, 100);
+}
+
+// Set crop shape (circle or square)
+function setCropShape(shape) {
+    cropShape = shape;
+
+    // Update buttons
+    document.querySelectorAll('.crop-shape-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.shape === shape);
+    });
+
+    // Update cropper view
+    const cropperViewBox = document.querySelector('.cropper-view-box');
+    const cropperFace = document.querySelector('.cropper-face');
+
+    if (shape === 'circle') {
+        cropperViewBox?.style.setProperty('border-radius', '50%');
+        cropperFace?.style.setProperty('border-radius', '50%');
+    } else {
+        cropperViewBox?.style.setProperty('border-radius', '0');
+        cropperFace?.style.setProperty('border-radius', '0');
+    }
+}
+
+// Close crop modal
+function closeCropModal() {
+    const modal = document.getElementById('cropModal');
+    modal.classList.remove('active');
+
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+
+    document.getElementById('photoInput').value = '';
+}
+
+// Confirm crop
+function confirmCrop() {
+    if (!cropper) return;
+
+    const canvas = cropper.getCroppedCanvas({
+        width: 400,
+        height: 400,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high'
+    });
+
+    // If circular, apply circular mask
+    if (cropShape === 'circle') {
+        const ctx = canvas.getContext('2d');
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.beginPath();
+        ctx.arc(200, 200, 200, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    currentPhoto = canvas.toDataURL('image/png');
+
+    // Update preview
+    const photoPreview = document.getElementById('photoPreview');
+    photoPreview.innerHTML = `<img src="${currentPhoto}" alt="Profile photo">`;
+    photoPreview.style.borderRadius = cropShape === 'circle' ? '50%' : '8px';
+
+    document.getElementById('removePhotoBtn').style.display = 'flex';
+
+    closeCropModal();
+    updatePreview();
+    showToast('Photo added successfully!');
+}
+
+// Remove photo
+function removePhoto() {
+    currentPhoto = null;
+
+    const photoPreview = document.getElementById('photoPreview');
+    photoPreview.innerHTML = '<i class="fas fa-user"></i>';
+    photoPreview.style.borderRadius = '50%';
+
+    document.getElementById('removePhotoBtn').style.display = 'none';
+    document.getElementById('photoInput').value = '';
+
+    updatePreview();
+    showToast('Photo removed');
+}
+
+// ==================== PHOTO TEMPLATES ====================
+// These templates match industry-standard resume designs with photo
+
+// PHOTO SIDEBAR Template - Dark sidebar with circular photo (like Max Johnson)
+function getPhotoSidebarTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    const photoHTML = data.photo
+        ? `<img src="${data.photo}" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; object-fit: cover;">`
+        : `<div style="width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 3em; color: rgba(255,255,255,0.5);">👤</div>`;
+
+    return `
+        <div class="tpl-photo-sidebar" style="display: grid; grid-template-columns: 180px 1fr; gap: 0; min-height: 100%;">
+            <div style="background: linear-gradient(180deg, #0F766E 0%, #115E59 100%); color: white; padding: 1.5rem 1rem; margin: -2rem 0 -2rem -2rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    ${photoHTML}
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 0.8em; text-transform: uppercase; opacity: 0.8; margin: 0 0 0.5rem;">Contact</h4>
+                    ${data.location ? `<div style="font-size: 0.75em; margin: 0.4rem 0;"><i class="fas fa-map-marker-alt" style="width: 16px;"></i> ${data.location}</div>` : ''}
+                    ${data.phone ? `<div style="font-size: 0.75em; margin: 0.4rem 0;"><i class="fas fa-phone" style="width: 16px;"></i> ${data.phone}</div>` : ''}
+                    ${data.email ? `<div style="font-size: 0.75em; margin: 0.4rem 0;"><i class="fas fa-envelope" style="width: 16px;"></i> ${data.email}</div>` : ''}
+                </div>
+                ${skillsArr.length ? `<div style="margin-bottom: 1.5rem;"><h4 style="font-size: 0.8em; text-transform: uppercase; opacity: 0.8; margin: 0 0 0.5rem;">Skills</h4>${skillsArr.slice(0, 8).map(s => `<div style="font-size: 0.75em; margin: 0.3rem 0; padding: 0.2rem 0.5rem; background: rgba(255,255,255,0.15); border-radius: 4px;">• ${s}</div>`).join('')}</div>` : ''}
+                ${data.languages ? `<div><h4 style="font-size: 0.8em; text-transform: uppercase; opacity: 0.8; margin: 0 0 0.5rem;">Languages</h4><div style="font-size: 0.75em;">${data.languages}</div></div>` : ''}
+            </div>
+            <div style="padding: 0 1rem;">
+                <h1 style="font-size: 1.8em; color: #0F766E; margin: 0; text-transform: uppercase; letter-spacing: 1px;">${data.fullName || 'Your Name'}</h1>
+                <div style="color: #6B7280; font-size: 1.1em; margin-bottom: 1rem;">${data.jobTitle || 'Professional Title'}</div>
+                ${data.summary ? `<div style="margin-bottom: 1rem;"><h3 style="color: #0F766E; font-size: 1em; margin-bottom: 0.5rem;">Profile</h3><p style="color: #4B5563; line-height: 1.6; font-size: 0.9em;">${data.summary}</p></div>` : ''}
+                ${data.experience.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #0F766E; font-size: 1em; margin-bottom: 0.5rem;">Work Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 0.75rem;"><div style="display: flex; justify-content: space-between;"><strong style="font-size: 0.95em;">${e.title}</strong><span style="color: #0F766E; font-size: 0.8em;">${e.startDate} - ${e.endDate}</span></div><div style="color: #6B7280; font-size: 0.85em;">${e.company}</div><p style="margin: 0.25rem 0; font-size: 0.85em; color: #4B5563;">${e.description}</p></div>`).join('')}</div>` : ''}
+                ${data.education.length ? `<div><h3 style="color: #0F766E; font-size: 1em; margin-bottom: 0.5rem;">Education</h3>${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><strong style="font-size: 0.9em;">${e.degree}</strong><div style="color: #6B7280; font-size: 0.85em;">${e.institution} | ${e.year}</div></div>`).join('')}</div>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// PHOTO TIMELINE Template - Clean layout with square photo and timeline (like Devika Parmar)
+function getPhotoTimelineTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    const photoHTML = data.photo
+        ? `<img src="${data.photo}" style="width: 100px; height: 100px; border-radius: 8px; object-fit: cover;">`
+        : '';
+
+    return `
+        <div class="tpl-photo-timeline">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 3px solid #2563EB;">
+                <div style="flex: 1;">
+                    <h1 style="font-size: 1.8em; color: #2563EB; margin: 0;">${data.fullName || 'Your Name'}</h1>
+                    <div style="color: #6B7280; font-size: 1em; margin: 0.25rem 0;">${data.jobTitle || 'Professional Title'}</div>
+                    <div style="font-size: 0.8em; color: #6B7280; display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem;">
+                        ${data.email ? `<span>${data.email}</span>` : ''}
+                        ${data.phone ? `<span>${data.phone}</span>` : ''}
+                        ${data.location ? `<span>${data.location}</span>` : ''}
+                    </div>
+                </div>
+                ${photoHTML}
+            </div>
+            ${data.summary ? `<p style="color: #4B5563; line-height: 1.6; font-size: 0.9em; margin-bottom: 1rem;">${data.summary}</p>` : ''}
+            ${data.experience.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #2563EB; font-size: 1em; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><span style="width: 24px; height: 24px; background: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7em;">💼</span> Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 0.75rem; padding-left: 1.5rem; border-left: 2px solid #DBEAFE; position: relative;"><div style="position: absolute; left: -5px; top: 0; width: 8px; height: 8px; background: #2563EB; border-radius: 50%;"></div><div style="display: flex; justify-content: space-between;"><strong style="font-size: 0.95em;">${e.title}</strong><span style="color: #2563EB; font-size: 0.8em;">${e.startDate} - ${e.endDate}</span></div><div style="color: #6B7280; font-size: 0.85em;">${e.company}</div><p style="margin: 0.25rem 0; font-size: 0.85em; color: #4B5563;">${e.description}</p></div>`).join('')}</div>` : ''}
+            ${data.education.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #2563EB; font-size: 1em; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><span style="width: 24px; height: 24px; background: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7em;">🎓</span> Education</h3>${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><strong style="font-size: 0.9em;">${e.degree}</strong><div style="color: #6B7280; font-size: 0.85em;">${e.institution}, ${e.year}</div></div>`).join('')}</div>` : ''}
+            ${skillsArr.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #2563EB; font-size: 1em; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><span style="width: 24px; height: 24px; background: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7em;">⚡</span> Technical Skills</h3><div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">${skillsArr.map(s => `<span style="background: #DBEAFE; color: #1E40AF; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.8em;">${s}</span>`).join('')}</div></div>` : ''}
+        </div>
+    `;
+}
+
+// PHOTO CREATIVE Template - Purple gradient sidebar (like Wade Calhoun)
+function getPhotoCreativeTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    const photoHTML = data.photo
+        ? `<img src="${data.photo}" style="width: 100px; height: 100px; border-radius: 12px; border: 3px solid white; object-fit: cover;">`
+        : `<div style="width: 100px; height: 100px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 2.5em; color: rgba(255,255,255,0.6); border: 3px solid white;">👤</div>`;
+
+    return `
+        <div class="tpl-photo-creative" style="display: grid; grid-template-columns: 160px 1fr; gap: 0; min-height: 100%;">
+            <div style="background: linear-gradient(180deg, #7C3AED 0%, #5B21B6 50%, #4C1D95 100%); color: white; padding: 1.5rem 0.75rem; margin: -2rem 0 -2rem -2rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    ${photoHTML}
+                    <h2 style="font-size: 1em; margin: 0.75rem 0 0.25rem;">${data.fullName || 'Your Name'}</h2>
+                    <div style="font-size: 0.75em; opacity: 0.9;">${data.jobTitle || 'Professional Title'}</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin: 0 0 0.5rem; padding-left: 0.5rem;">Contact</h4>
+                    ${data.phone ? `<div style="font-size: 0.7em; margin: 0.3rem 0; padding: 0.25rem 0.5rem;"><span style="opacity: 0.7;">📱</span> ${data.phone}</div>` : ''}
+                    ${data.email ? `<div style="font-size: 0.7em; margin: 0.3rem 0; padding: 0.25rem 0.5rem; word-break: break-all;"><span style="opacity: 0.7;">✉</span> ${data.email}</div>` : ''}
+                    ${data.location ? `<div style="font-size: 0.7em; margin: 0.3rem 0; padding: 0.25rem 0.5rem;"><span style="opacity: 0.7;">📍</span> ${data.location}</div>` : ''}
+                </div>
+                ${data.education.length ? `<div style="margin-bottom: 1rem;"><h4 style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin: 0 0 0.5rem; padding-left: 0.5rem;">Education</h4>${data.education.map(e => `<div style="font-size: 0.7em; margin: 0.3rem 0; padding: 0.25rem 0.5rem;"><strong>${e.degree}</strong><div style="opacity: 0.8;">${e.institution}</div></div>`).join('')}</div>` : ''}
+                ${data.linkedin ? `<div><h4 style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin: 0 0 0.5rem; padding-left: 0.5rem;">Links</h4><div style="font-size: 0.65em; padding: 0.25rem 0.5rem; word-break: break-all;">${data.linkedin}</div></div>` : ''}
+            </div>
+            <div style="padding: 0 1rem; background: #FAF5FF;">
+                ${data.summary ? `<div style="margin-bottom: 1rem;"><h3 style="color: #7C3AED; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Professional Summary</h3><p style="color: #4B5563; line-height: 1.6; font-size: 0.85em;">${data.summary}</p></div>` : ''}
+                ${data.experience.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #7C3AED; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 0.75rem; padding: 0.75rem; background: white; border-radius: 8px; border-left: 3px solid #7C3AED;"><div style="display: flex; justify-content: space-between;"><strong style="font-size: 0.9em; color: #7C3AED;">${e.title}</strong><span style="color: #6B7280; font-size: 0.75em;">${e.startDate} - ${e.endDate}</span></div><div style="color: #6B7280; font-size: 0.8em;">${e.company}</div><p style="margin: 0.25rem 0 0; font-size: 0.8em; color: #4B5563;">${e.description}</p></div>`).join('')}</div>` : ''}
+                ${skillsArr.length ? `<div><h3 style="color: #7C3AED; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Skills</h3><div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">${skillsArr.map(s => `<span style="background: #7C3AED; color: white; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75em;">${s}</span>`).join('')}</div></div>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// PHOTO PROFESSIONAL Template - Two-column with skill bars (like Frank Shelby)
+function getPhotoProfessionalTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    const photoHTML = data.photo
+        ? `<img src="${data.photo}" style="width: 90px; height: 90px; border-radius: 8px; object-fit: cover;">`
+        : `<div style="width: 90px; height: 90px; border-radius: 8px; background: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 2em; color: #9CA3AF;">👤</div>`;
+
+    return `
+        <div class="tpl-photo-professional" style="display: grid; grid-template-columns: 180px 1fr; gap: 0; min-height: 100%;">
+            <div style="background: #F3F4F6; padding: 1.5rem 1rem; margin: -2rem 0 -2rem -2rem; border-right: 3px solid #3B82F6;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    ${photoHTML}
+                    <h2 style="font-size: 1.1em; color: #1F2937; margin: 0.75rem 0 0.25rem;">${data.fullName || 'Your Name'}</h2>
+                    <div style="font-size: 0.8em; color: #3B82F6; font-weight: 500;">${data.jobTitle || 'Professional Title'}</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <h4 style="font-size: 0.8em; color: #3B82F6; text-transform: uppercase; margin: 0 0 0.5rem;">Personal Info</h4>
+                    ${data.email ? `<div style="font-size: 0.75em; margin: 0.3rem 0; color: #4B5563;"><strong>Email</strong><div>${data.email}</div></div>` : ''}
+                    ${data.phone ? `<div style="font-size: 0.75em; margin: 0.3rem 0; color: #4B5563;"><strong>Phone</strong><div>${data.phone}</div></div>` : ''}
+                    ${data.linkedin ? `<div style="font-size: 0.75em; margin: 0.3rem 0; color: #4B5563;"><strong>LinkedIn</strong><div style="word-break: break-all;">${data.linkedin}</div></div>` : ''}
+                </div>
+                ${skillsArr.length ? `<div style="margin-bottom: 1rem;"><h4 style="font-size: 0.8em; color: #3B82F6; text-transform: uppercase; margin: 0 0 0.5rem;">Skills</h4>${skillsArr.slice(0, 6).map((s, i) => `<div style="margin: 0.4rem 0;"><div style="font-size: 0.75em; color: #4B5563; margin-bottom: 0.2rem;">${s}</div><div style="height: 6px; background: #E5E7EB; border-radius: 3px;"><div style="height: 100%; background: linear-gradient(90deg, #3B82F6, #60A5FA); border-radius: 3px; width: ${90 - i * 10}%;"></div></div></div>`).join('')}</div>` : ''}
+                ${data.languages ? `<div><h4 style="font-size: 0.8em; color: #3B82F6; text-transform: uppercase; margin: 0 0 0.5rem;">Languages</h4><div style="font-size: 0.75em; color: #4B5563;">${data.languages}</div></div>` : ''}
+            </div>
+            <div style="padding: 0 1rem;">
+                ${data.experience.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #1F2937; font-size: 1em; border-bottom: 2px solid #3B82F6; padding-bottom: 0.25rem; margin-bottom: 0.75rem;">Work History</h3>${data.experience.map(e => `<div style="margin-bottom: 0.75rem;"><div style="display: flex; justify-content: space-between; align-items: baseline;"><strong style="font-size: 0.95em;">${e.title}</strong><span style="color: #3B82F6; font-size: 0.8em; font-weight: 500;">${e.startDate} - ${e.endDate}</span></div><div style="color: #3B82F6; font-size: 0.85em; font-weight: 500;">${e.company}</div><ul style="margin: 0.25rem 0 0; padding-left: 1.25rem; font-size: 0.85em; color: #4B5563;"><li>${e.description}</li></ul></div>`).join('')}</div>` : ''}
+                ${data.education.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #1F2937; font-size: 1em; border-bottom: 2px solid #3B82F6; padding-bottom: 0.25rem; margin-bottom: 0.75rem;">Education</h3>${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><div style="display: flex; justify-content: space-between;"><strong style="font-size: 0.9em;">${e.degree}</strong><span style="color: #3B82F6; font-size: 0.8em;">${e.year}</span></div><div style="color: #6B7280; font-size: 0.85em;">${e.institution}</div></div>`).join('')}</div>` : ''}
+                ${data.projects.length ? `<div><h3 style="color: #1F2937; font-size: 1em; border-bottom: 2px solid #3B82F6; padding-bottom: 0.25rem; margin-bottom: 0.75rem;">Projects</h3>${data.projects.map(p => `<div style="margin-bottom: 0.5rem;"><strong style="font-size: 0.9em;">${p.name}</strong> <span style="color: #3B82F6; font-size: 0.8em;">(${p.tech})</span><p style="margin: 0.25rem 0; font-size: 0.85em; color: #4B5563;">${p.description}</p></div>`).join('')}</div>` : ''}
+            </div>
+        </div>
+    `;
 }

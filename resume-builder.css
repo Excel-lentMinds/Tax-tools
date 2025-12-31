@@ -200,6 +200,73 @@
     background: linear-gradient(180deg, #F59E0B 18%, #1F2937 18%, #1F2937 22%, #fff 22%);
 }
 
+/* Photo template previews */
+.photo-sidebar-preview {
+    background: linear-gradient(90deg, #0F766E 40%, #fff 40%);
+    position: relative;
+}
+
+.photo-sidebar-preview::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    top: 20px;
+    left: 25px;
+}
+
+.photo-timeline-preview {
+    background: #fff;
+    border-bottom: 3px solid #2563EB;
+    position: relative;
+}
+
+.photo-timeline-preview::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: #E5E7EB;
+    border-radius: 6px;
+    top: 15px;
+    right: 15px;
+}
+
+.photo-creative-preview {
+    background: linear-gradient(90deg, #7C3AED 38%, #FAF5FF 38%);
+    position: relative;
+}
+
+.photo-creative-preview::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    background: white;
+    border-radius: 8px;
+    top: 15px;
+    left: 20px;
+}
+
+.photo-professional-preview {
+    background: linear-gradient(90deg, #F3F4F6 40%, #fff 40%);
+    border-right: 3px solid #3B82F6;
+    position: relative;
+}
+
+.photo-professional-preview::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #E5E7EB;
+    border-radius: 6px;
+    top: 18px;
+    left: 22px;
+}
+
 .template-card h4 {
     color: var(--rb-text);
     margin: 0;
@@ -711,4 +778,236 @@
 .rb-resume[data-color="dark"] .resume-skill {
     background: #E5E7EB;
     color: #1F2937;
+}
+
+/* Photo Upload Styles */
+.rb-photo-upload {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--rb-border);
+}
+
+.rb-photo-upload>label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--rb-text);
+    margin-bottom: 0.75rem;
+}
+
+.photo-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.photo-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 3px solid var(--rb-primary);
+    flex-shrink: 0;
+}
+
+.photo-preview i {
+    font-size: 2.5rem;
+    color: #9CA3AF;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.photo-btn {
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.photo-btn.upload {
+    background: linear-gradient(135deg, var(--rb-primary), #4338CA);
+    color: white;
+}
+
+.photo-btn.upload:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.photo-btn.remove {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.photo-btn.remove:hover {
+    background: #DC2626;
+    color: white;
+}
+
+.photo-hint {
+    font-size: 0.75rem;
+    color: var(--rb-text-light);
+    margin: 0;
+}
+
+/* Crop Modal */
+.crop-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.crop-modal.active {
+    display: flex;
+}
+
+.crop-modal-content {
+    background: var(--rb-card);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.crop-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--rb-primary), #4338CA);
+    color: white;
+}
+
+.crop-modal-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.crop-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.crop-close:hover {
+    opacity: 1;
+}
+
+.crop-modal-body {
+    padding: 1.5rem;
+}
+
+.crop-container {
+    max-height: 400px;
+    background: #111;
+}
+
+.crop-container img {
+    max-width: 100%;
+    display: block;
+}
+
+.crop-modal-footer {
+    padding: 1rem 1.5rem;
+    background: #F8FAFC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+[data-theme="dark"] .crop-modal-footer {
+    background: #1E293B;
+}
+
+.crop-options {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.crop-shape-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--rb-border);
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--rb-text);
+    transition: all 0.2s;
+}
+
+.crop-shape-btn.active {
+    border-color: var(--rb-primary);
+    background: rgba(30, 58, 138, 0.1);
+    color: var(--rb-primary);
+}
+
+.crop-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.crop-btn {
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.crop-btn.cancel {
+    background: #E5E7EB;
+    color: #374151;
+}
+
+.crop-btn.confirm {
+    background: linear-gradient(135deg, var(--rb-accent), #059669);
+    color: white;
+}
+
+.crop-btn.confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Cropper.js circular viewBox */
+.cropper-view-box,
+.cropper-face {
+    border-radius: 50%;
 }
