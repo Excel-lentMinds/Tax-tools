@@ -319,6 +319,15 @@ function openTool(toolId) {
             accept: '.pdf',
             content: getBatchContent()
         },
+        'pdf-templates': {
+            title: 'PDF Templates',
+            desc: 'Generate Invoice, Receipt, Certificate',
+            icon: 'fa-file-invoice',
+            color: 'advanced',
+            multi: false,
+            accept: '',
+            content: getPdfTemplatesContent()
+        },
         'pdf-optimize': {
             title: 'PDF Optimizer',
             desc: 'Advanced compression & cleanup',
@@ -3320,6 +3329,40 @@ function copyOcrText() {
 function downloadOcrText() {
     const blob = new Blob([document.getElementById('ocrText').value], { type: 'text/plain' });
     downloadFile(blob, 'ocr_result.txt');
+}
+
+// PDF Templates Content
+function getPdfTemplatesContent() {
+    return `
+        <div style="text-align:center;padding:2rem;">
+            <h3 style="color:var(--neon-cyan);margin-bottom:1.5rem;">📄 Generate PDF Templates</h3>
+            <p style="color:var(--text-light);margin-bottom:2rem;">Create professional PDFs instantly. Click to download.</p>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;">
+                <div style="background:linear-gradient(135deg,rgba(0,245,255,0.1),rgba(0,200,200,0.1));border:1px solid var(--neon-cyan);border-radius:16px;padding:2rem;cursor:pointer;transition:all 0.3s;" onclick="generateInvoiceTemplate()" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 10px 30px rgba(0,245,255,0.3)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
+                    <i class="fas fa-file-invoice" style="font-size:3rem;color:var(--neon-cyan);margin-bottom:1rem;display:block;"></i>
+                    <h4 style="color:#fff;margin-bottom:0.5rem;">Invoice</h4>
+                    <p style="color:var(--text-light);font-size:0.85rem;margin:0;">Professional invoice with line items</p>
+                </div>
+                
+                <div style="background:linear-gradient(135deg,rgba(0,255,136,0.1),rgba(0,200,100,0.1));border:1px solid var(--neon-green);border-radius:16px;padding:2rem;cursor:pointer;transition:all 0.3s;" onclick="generateReceiptTemplate()" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 10px 30px rgba(0,255,136,0.3)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
+                    <i class="fas fa-receipt" style="font-size:3rem;color:var(--neon-green);margin-bottom:1rem;display:block;"></i>
+                    <h4 style="color:#fff;margin-bottom:0.5rem;">Receipt</h4>
+                    <p style="color:var(--text-light);font-size:0.85rem;margin:0;">Compact receipt format</p>
+                </div>
+                
+                <div style="background:linear-gradient(135deg,rgba(255,0,255,0.1),rgba(200,0,200,0.1));border:1px solid var(--neon-magenta);border-radius:16px;padding:2rem;cursor:pointer;transition:all 0.3s;" onclick="generateCertificateTemplate()" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 10px 30px rgba(255,0,255,0.3)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
+                    <i class="fas fa-award" style="font-size:3rem;color:var(--neon-magenta);margin-bottom:1rem;display:block;"></i>
+                    <h4 style="color:#fff;margin-bottom:0.5rem;">Certificate</h4>
+                    <p style="color:var(--text-light);font-size:0.85rem;margin:0;">Elegant certificate design</p>
+                </div>
+            </div>
+            
+            <p style="color:var(--text-light);margin-top:2rem;font-size:0.85rem;">
+                <i class="fas fa-info-circle"></i> Templates are generated as editable PDFs
+            </p>
+        </div>
+    `;
 }
 
 // Header & Footer

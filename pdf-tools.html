@@ -1,14 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Enhanced SEO Meta Tags -->
     <meta name="description"
-        content="Free online PDF tools - Merge, Split, Compress, Convert PDF files. No signup required. Fast, secure, and easy to use.">
+        content="Free online PDF tools - Merge, Split, Compress, Convert, OCR, Sign PDFs instantly. No signup, 100% secure browser-based processing. 35+ powerful PDF tools at your fingertips.">
     <meta name="keywords"
-        content="PDF tools, merge PDF, split PDF, compress PDF, convert PDF, PDF to Word, Word to PDF, JPG to PDF">
+        content="PDF tools, merge PDF, split PDF, compress PDF, convert PDF, PDF to Word, Word to PDF, JPG to PDF, PDF editor, OCR PDF, sign PDF, free PDF tools, online PDF converter">
+    <meta name="author" content="DS Financial Solutions">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://excel-lentminds.github.io/Tax-tools/pdf-tools.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://excel-lentminds.github.io/Tax-tools/pdf-tools.html">
+    <meta property="og:title" content="PDF Tools | DS Financial - Free Online PDF Editor">
+    <meta property="og:description"
+        content="35+ Free PDF tools - Merge, Split, Compress, Convert, OCR, Sign PDFs instantly. No signup required.">
+    <meta property="og:image" content="https://excel-lentminds.github.io/Tax-tools/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDF Tools | DS Financial - Free Online PDF Editor">
+    <meta name="twitter:description"
+        content="35+ Free PDF tools - Merge, Split, Compress, Convert, OCR, Sign PDFs instantly.">
+
     <title>PDF Tools | DS Financial - Free Online PDF Editor</title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "DS Financial PDF Tools",
+        "url": "https://excel-lentminds.github.io/Tax-tools/pdf-tools.html",
+        "description": "Free online PDF tools for merging, splitting, compressing, converting, and editing PDF files.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Merge PDF files",
+            "Split PDF pages",
+            "Compress PDF size",
+            "Convert PDF to images",
+            "OCR text extraction",
+            "E-Sign PDF documents",
+            "Add watermarks",
+            "PDF password protection"
+        ],
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "2.0",
+        "author": {
+            "@type": "Organization",
+            "name": "DS Financial Solutions"
+        }
+    }
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml"
@@ -29,6 +83,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- Tesseract.js for OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
 </head>
 
 <body>
@@ -981,6 +1038,539 @@
 
             // Delay magnetic buttons to allow page to fully load
             setTimeout(setupMagneticButtons, 1000);
+        });
+    </script>
+
+    <!-- History Panel -->
+    <div class="history-panel" id="historyPanel">
+        <div class="history-header">
+            <h3><i class="fas fa-history"></i> Recent History</h3>
+            <button class="history-close" onclick="toggleHistoryPanel()">×</button>
+        </div>
+        <div id="historyList">
+            <div class="empty-state">
+                <i class="fas fa-clock"></i>
+                <p>No recent activity</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Toggle Button -->
+    <button class="history-toggle" onclick="toggleHistoryPanel()" title="Recent History">
+        <i class="fas fa-history"></i>
+    </button>
+
+    <!-- Keyboard Shortcuts Panel -->
+    <div class="shortcuts-hint" id="shortcutsHint" style="display:none;">
+        <h4><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h4>
+        <div class="shortcut-row">
+            <span>Merge PDF</span>
+            <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>M</kbd></span>
+        </div>
+        <div class="shortcut-row">
+            <span>Split PDF</span>
+            <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>P</kbd></span>
+        </div>
+        <div class="shortcut-row">
+            <span>Compress</span>
+            <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>K</kbd></span>
+        </div>
+        <div class="shortcut-row">
+            <span>Close Modal</span>
+            <span class="shortcut-key"><kbd>Esc</kbd></span>
+        </div>
+        <div class="shortcut-row">
+            <span>Search Tools</span>
+            <span class="shortcut-key"><kbd>/</kbd></span>
+        </div>
+    </div>
+
+    <!-- Shortcuts Toggle -->
+    <button class="shortcuts-toggle" onclick="toggleShortcuts()" title="Keyboard Shortcuts">
+        <i class="fas fa-keyboard"></i>
+    </button>
+
+    <!-- Enhanced Features JavaScript -->
+    <script>
+        // ==================== FAVORITES SYSTEM ====================
+        let favorites = JSON.parse(localStorage.getItem('pdfToolFavorites') || '[]');
+
+        function initFavorites() {
+            // Add star buttons to all tool cards
+            document.querySelectorAll('.tool-card').forEach(card => {
+                const toolId = card.dataset.tool;
+                if (!toolId) return;
+
+                const starBtn = document.createElement('button');
+                starBtn.className = 'favorite-btn' + (favorites.includes(toolId) ? ' active' : '');
+                starBtn.innerHTML = '<i class="fas fa-star"></i>';
+                starBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleFavorite(toolId, starBtn);
+                };
+                card.style.position = 'relative';
+                card.appendChild(starBtn);
+            });
+
+            renderFavoritesSection();
+        }
+
+        function toggleFavorite(toolId, btn) {
+            if (favorites.includes(toolId)) {
+                favorites = favorites.filter(f => f !== toolId);
+                btn.classList.remove('active');
+                showToast('⭐ Removed from favorites');
+            } else {
+                favorites.push(toolId);
+                btn.classList.add('active');
+                showToast('⭐ Added to favorites!');
+            }
+            localStorage.setItem('pdfToolFavorites', JSON.stringify(favorites));
+            renderFavoritesSection();
+        }
+
+        function renderFavoritesSection() {
+            let section = document.getElementById('favoritesSection');
+
+            if (favorites.length === 0) {
+                if (section) section.remove();
+                return;
+            }
+
+            if (!section) {
+                section = document.createElement('div');
+                section.id = 'favoritesSection';
+                section.className = 'favorites-section';
+                const toolsContainer = document.querySelector('.tools-section .container');
+                if (toolsContainer) {
+                    toolsContainer.insertBefore(section, toolsContainer.firstChild);
+                }
+            }
+
+            section.innerHTML = `
+                <h3><i class="fas fa-star"></i> Your Favorites</h3>
+                <div class="favorites-grid">
+                    ${favorites.map(toolId => {
+                const card = document.querySelector(`[data-tool="${toolId}"]`);
+                if (!card) return '';
+                const title = card.querySelector('h3')?.textContent || toolId;
+                const icon = card.querySelector('.tool-icon i')?.className || 'fas fa-file';
+                return `<div class="favorite-chip" onclick="openTool('${toolId}')">
+                            <i class="${icon}"></i> ${title}
+                        </div>`;
+            }).join('')}
+                </div>
+            `;
+        }
+
+        // ==================== HISTORY SYSTEM ====================
+        let history = JSON.parse(localStorage.getItem('pdfToolHistory') || '[]');
+
+        function addToHistory(toolId, toolTitle) {
+            const entry = {
+                id: toolId,
+                title: toolTitle,
+                time: new Date().toISOString()
+            };
+
+            // Remove duplicate if exists
+            history = history.filter(h => h.id !== toolId);
+
+            // Add to beginning
+            history.unshift(entry);
+
+            // Keep only last 10
+            history = history.slice(0, 10);
+
+            localStorage.setItem('pdfToolHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            if (!container) return;
+
+            if (history.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clock"></i>
+                        <p>No recent activity</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = history.map(item => {
+                const card = document.querySelector(`[data-tool="${item.id}"]`);
+                const icon = card?.querySelector('.tool-icon i')?.className || 'fas fa-file';
+                const timeAgo = getTimeAgo(new Date(item.time));
+
+                return `
+                    <div class="history-item" onclick="openTool('${item.id}')">
+                        <div class="history-icon"><i class="${icon}"></i></div>
+                        <div class="history-info">
+                            <h4>${item.title}</h4>
+                            <span>${timeAgo}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+            return `${Math.floor(seconds / 86400)}d ago`;
+        }
+
+        function toggleHistoryPanel() {
+            document.getElementById('historyPanel').classList.toggle('open');
+        }
+
+        // ==================== KEYBOARD SHORTCUTS ====================
+        function toggleShortcuts() {
+            const panel = document.getElementById('shortcutsHint');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            // Don't trigger if typing in input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                if (e.key === 'Escape') {
+                    e.target.blur();
+                }
+                return;
+            }
+
+            // Ctrl + M = Merge
+            if (e.ctrlKey && e.key === 'm') {
+                e.preventDefault();
+                openTool('merge-pdf');
+            }
+
+            // Ctrl + P = Split (prevent print)
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                openTool('split-pdf');
+            }
+
+            // Ctrl + K = Compress
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                openTool('compress-pdf');
+            }
+
+            // / = Focus search
+            if (e.key === '/') {
+                e.preventDefault();
+                document.getElementById('toolSearch')?.focus();
+            }
+
+            // Escape = Close modal
+            if (e.key === 'Escape') {
+                closeTool();
+                toggleHistoryPanel();
+                document.getElementById('shortcutsHint').style.display = 'none';
+            }
+
+            // ? = Toggle shortcuts
+            if (e.key === '?') {
+                toggleShortcuts();
+            }
+        });
+
+        // ==================== DRAG AND DROP REORDER ====================
+        function setupDragAndDrop() {
+            document.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('file-item')) {
+                    e.target.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', e.target.dataset.index);
+                }
+            });
+
+            document.addEventListener('dragend', (e) => {
+                if (e.target.classList.contains('file-item')) {
+                    e.target.classList.remove('dragging');
+                }
+            });
+
+            document.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const fileItem = e.target.closest('.file-item');
+                if (fileItem && !fileItem.classList.contains('dragging')) {
+                    fileItem.classList.add('drag-over');
+                }
+            });
+
+            document.addEventListener('dragleave', (e) => {
+                const fileItem = e.target.closest('.file-item');
+                if (fileItem) {
+                    fileItem.classList.remove('drag-over');
+                }
+            });
+
+            document.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const fileItem = e.target.closest('.file-item');
+                if (fileItem) {
+                    fileItem.classList.remove('drag-over');
+                    const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                    const toIndex = parseInt(fileItem.dataset.index);
+
+                    if (fromIndex !== toIndex && !isNaN(fromIndex) && !isNaN(toIndex)) {
+                        // Reorder files
+                        const temp = uploadedFiles[fromIndex];
+                        uploadedFiles.splice(fromIndex, 1);
+                        uploadedFiles.splice(toIndex, 0, temp);
+                        updateFileList();
+                        showToast('📁 Files reordered');
+                    }
+                }
+            });
+        }
+
+        // ==================== OCR TOOL ====================
+        async function processOCR() {
+            if (uploadedFiles.length === 0) {
+                showToast('❌ Please upload a PDF first');
+                return;
+            }
+
+            const progressContainer = document.getElementById('progressContainer');
+            progressContainer.classList.add('active');
+
+            try {
+                updateProgress(10, 'Loading PDF for OCR...');
+
+                const file = uploadedFiles[0];
+                const arrayBuffer = await file.arrayBuffer();
+
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+                let fullText = '';
+                const pageCount = pdf.numPages;
+
+                for (let i = 1; i <= pageCount; i++) {
+                    updateProgress(10 + (i / pageCount) * 70, `Processing page ${i} of ${pageCount}...`);
+
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 2 });
+
+                    // Create canvas
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+                    // OCR using Tesseract
+                    updateProgress(10 + (i / pageCount) * 70, `Running OCR on page ${i}...`);
+
+                    const result = await Tesseract.recognize(canvas, 'eng', {
+                        logger: m => {
+                            if (m.status === 'recognizing text') {
+                                updateProgress(10 + (i / pageCount) * 70 + m.progress * 10, `OCR page ${i}: ${Math.round(m.progress * 100)}%`);
+                            }
+                        }
+                    });
+
+                    fullText += `\n--- Page ${i} ---\n${result.data.text}\n`;
+                }
+
+                updateProgress(95, 'Finalizing...');
+
+                // Display results
+                const resultSection = document.getElementById('resultSection');
+                resultSection.innerHTML = `
+                    <i class="fas fa-check-circle" style="color:var(--neon-green);font-size:2rem;"></i>
+                    <h3>OCR Complete!</h3>
+                    <textarea id="ocrText" style="width:100%;height:300px;background:#0a0a1a;color:#fff;border:1px solid var(--neon-cyan);border-radius:8px;padding:1rem;margin:1rem 0;font-family:monospace;">${fullText}</textarea>
+                    <div style="display:flex;gap:1rem;justify-content:center;">
+                        <button class="download-btn" onclick="copyOCRText()"><i class="fas fa-copy"></i> Copy Text</button>
+                        <button class="download-btn" onclick="downloadOCRText()"><i class="fas fa-download"></i> Download TXT</button>
+                    </div>
+                `;
+
+                showResult();
+                showToast(`✅ OCR extracted text from ${pageCount} pages!`);
+
+            } catch (error) {
+                console.error('OCR Error:', error);
+                showToast('❌ OCR Error: ' + error.message);
+                progressContainer.classList.remove('active');
+            }
+        }
+
+        function copyOCRText() {
+            const text = document.getElementById('ocrText')?.value;
+            if (text) {
+                navigator.clipboard.writeText(text);
+                showToast('📋 Text copied to clipboard!');
+            }
+        }
+
+        function downloadOCRText() {
+            const text = document.getElementById('ocrText')?.value;
+            if (text) {
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ocr_extracted_text.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // ==================== PDF TEMPLATES ====================
+        function generateInvoiceTemplate() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header
+            doc.setFillColor(102, 126, 234);
+            doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(24);
+            doc.text('INVOICE', 105, 25, { align: 'center' });
+
+            // Reset text color
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(12);
+
+            // Company Info
+            doc.text('Your Company Name', 20, 55);
+            doc.setFontSize(10);
+            doc.text('123 Business Street', 20, 62);
+            doc.text('City, State 12345', 20, 68);
+
+            // Invoice Details
+            doc.text(`Invoice #: INV-${Date.now().toString().slice(-6)}`, 140, 55);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 62);
+
+            // Table Header
+            doc.setFillColor(240, 240, 240);
+            doc.rect(20, 85, 170, 10, 'F');
+            doc.setFontSize(10);
+            doc.text('Description', 25, 92);
+            doc.text('Qty', 110, 92);
+            doc.text('Price', 135, 92);
+            doc.text('Total', 165, 92);
+
+            // Sample rows
+            doc.text('Product/Service 1', 25, 105);
+            doc.text('1', 110, 105);
+            doc.text('$100.00', 135, 105);
+            doc.text('$100.00', 165, 105);
+
+            doc.text('Product/Service 2', 25, 115);
+            doc.text('2', 110, 115);
+            doc.text('$50.00', 135, 115);
+            doc.text('$100.00', 165, 115);
+
+            // Total
+            doc.setFontSize(12);
+            doc.text('Total: $200.00', 165, 140, { align: 'right' });
+
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('Thank you for your business!', 105, 270, { align: 'center' });
+
+            doc.save('invoice_template.pdf');
+            showToast('📄 Invoice template downloaded!');
+        }
+
+        function generateReceiptTemplate() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ format: [80, 150] }); // Receipt size
+
+            doc.setFontSize(14);
+            doc.text('RECEIPT', 40, 15, { align: 'center' });
+
+            doc.setFontSize(8);
+            doc.text('--------------------------------', 40, 22, { align: 'center' });
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 5, 30);
+            doc.text(`Receipt #: ${Date.now().toString().slice(-6)}`, 5, 36);
+            doc.text('--------------------------------', 40, 42, { align: 'center' });
+
+            doc.text('Item 1                    $10.00', 5, 50);
+            doc.text('Item 2                    $15.00', 5, 56);
+            doc.text('Item 3                    $25.00', 5, 62);
+
+            doc.text('--------------------------------', 40, 70, { align: 'center' });
+            doc.setFontSize(10);
+            doc.text('TOTAL: $50.00', 40, 78, { align: 'center' });
+            doc.setFontSize(8);
+            doc.text('--------------------------------', 40, 85, { align: 'center' });
+            doc.text('Thank you!', 40, 92, { align: 'center' });
+
+            doc.save('receipt_template.pdf');
+            showToast('🧾 Receipt template downloaded!');
+        }
+
+        function generateCertificateTemplate() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape' });
+
+            // Border
+            doc.setDrawColor(102, 126, 234);
+            doc.setLineWidth(3);
+            doc.rect(10, 10, 277, 190, 'S');
+            doc.setLineWidth(1);
+            doc.rect(15, 15, 267, 180, 'S');
+
+            // Header
+            doc.setFontSize(36);
+            doc.setTextColor(102, 126, 234);
+            doc.text('CERTIFICATE', 148.5, 50, { align: 'center' });
+
+            doc.setFontSize(18);
+            doc.setTextColor(0, 0, 0);
+            doc.text('OF ACHIEVEMENT', 148.5, 62, { align: 'center' });
+
+            // Body
+            doc.setFontSize(14);
+            doc.text('This is to certify that', 148.5, 85, { align: 'center' });
+
+            doc.setFontSize(28);
+            doc.setTextColor(102, 126, 234);
+            doc.text('[Recipient Name]', 148.5, 105, { align: 'center' });
+
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            doc.text('has successfully completed', 148.5, 125, { align: 'center' });
+
+            doc.setFontSize(18);
+            doc.text('[Course/Achievement Name]', 148.5, 140, { align: 'center' });
+
+            // Date and Signature
+            doc.setFontSize(12);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 60, 170);
+            doc.text('Signature: _______________', 200, 170);
+
+            doc.save('certificate_template.pdf');
+            showToast('🏆 Certificate template downloaded!');
+        }
+
+        // ==================== OVERRIDE openTool to track history ====================
+        const originalOpenTool = window.openTool;
+        window.openTool = function (toolId) {
+            const card = document.querySelector(`[data-tool="${toolId}"]`);
+            const title = card?.querySelector('h3')?.textContent || toolId;
+            addToHistory(toolId, title);
+            originalOpenTool(toolId);
+        };
+
+        // ==================== INITIALIZE ON LOAD ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            initFavorites();
+            renderHistory();
+            setupDragAndDrop();
         });
     </script>
 </body>
