@@ -1369,7 +1369,22 @@ async function processExtractPages() {
 
 // PDF to Image - Convert PDF pages to images
 async function processPdfToImage() {
-    if (uploadedFiles.length === 0) return;
+    if (uploadedFiles.length === 0) {
+        showToast('❌ Please upload a PDF file first');
+        return;
+    }
+
+    // Ensure PDF.js is available
+    if (typeof pdfjsLib === 'undefined') {
+        showToast('❌ PDF library not loaded. Please refresh the page.');
+        return;
+    }
+
+    // Set up PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const progressContainer = document.getElementById('progressContainer');
+    progressContainer.classList.add('active');
 
     try {
         const file = uploadedFiles[0];
@@ -1380,13 +1395,21 @@ async function processPdfToImage() {
 
         // Load PDF using PDF.js
         const arrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
         const pageCount = pdf.numPages;
 
+        if (pageCount === 0) {
+            throw new Error('PDF has no pages');
+        }
+
         const downloadLinks = document.getElementById('downloadLinks');
-        downloadLinks.innerHTML = '';
+        downloadLinks.innerHTML = '<p style="color:#94a3b8;margin-bottom:1rem;">Click each button to download:</p>';
 
         updateProgress(20, `Converting ${pageCount} pages...`);
+
+        const generatedImages = [];
 
         for (let i = 1; i <= pageCount; i++) {
             updateProgress(20 + (i / pageCount) * 70, `Converting page ${i} of ${pageCount}...`);
@@ -1401,29 +1424,55 @@ async function processPdfToImage() {
             canvas.width = viewport.width;
             canvas.height = viewport.height;
 
+            // Fill with white background for JPG
+            if (format === 'jpg') {
+                context.fillStyle = '#ffffff';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
             // Render page to canvas
-            await page.render({
+            const renderContext = {
                 canvasContext: context,
                 viewport: viewport
-            }).promise;
+            };
 
-            // Convert to image
-            const imageData = canvas.toDataURL(mimeType, 0.95);
+            await page.render(renderContext).promise;
 
-            downloadLinks.innerHTML += `
-                <a href="${imageData}" download="page_${i}.${format}" class="download-btn" style="margin:0.25rem;">
-                    <i class="fas fa-download"></i> Page ${i}
-                </a>
-            `;
+            // Convert to image data URL
+            const imageData = canvas.toDataURL(mimeType, 0.92);
+            generatedImages.push({ data: imageData, page: i });
+
+            // Create download link
+            const linkContainer = document.createElement('div');
+            linkContainer.style.cssText = 'display:inline-block;margin:0.25rem;';
+
+            const link = document.createElement('a');
+            link.href = imageData;
+            link.download = `page_${i}.${format}`;
+            link.className = 'download-btn';
+            link.style.cssText = 'display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:linear-gradient(135deg,rgba(0,255,136,0.3),rgba(0,200,100,0.3));border:2px solid var(--neon-green);border-radius:8px;color:#fff;text-decoration:none;cursor:pointer;';
+            link.innerHTML = `<i class="fas fa-download"></i> Page ${i}`;
+
+            linkContainer.appendChild(link);
+            downloadLinks.appendChild(linkContainer);
         }
 
+        // Add "Download All" button if multiple pages
+        if (pageCount > 1) {
+            const downloadAllDiv = document.createElement('div');
+            downloadAllDiv.style.cssText = 'margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(0,245,255,0.2);';
+            downloadAllDiv.innerHTML = `<p style="color:#94a3b8;font-size:0.9rem;">Tip: Click each page button above to download individual images.</p>`;
+            downloadLinks.appendChild(downloadAllDiv);
+        }
+
+        updateProgress(100, 'Complete!');
         showResult();
         showToast(`✅ Converted ${pageCount} pages to ${format.toUpperCase()}!`);
 
     } catch (error) {
         console.error('PDF to Image error:', error);
-        showToast('❌ Error converting PDF: ' + error.message);
-        document.getElementById('progressContainer').classList.remove('active');
+        showToast('❌ Error converting PDF: ' + (error.message || 'Unknown error'));
+        progressContainer.classList.remove('active');
     }
 }
 
