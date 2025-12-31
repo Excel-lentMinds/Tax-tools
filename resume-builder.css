@@ -267,6 +267,49 @@
     left: 22px;
 }
 
+/* Corporate template previews */
+.mba-preview {
+    background: linear-gradient(180deg, #F8FAFC 20%, #fff 20%);
+    border-top: 5px solid #0F172A;
+}
+
+.consultant-preview {
+    background: #fff;
+    border-left: 8px solid #064E3B;
+    position: relative;
+}
+
+.consultant-preview::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -8px;
+    width: 8px;
+    height: 30px;
+    background: #86EFAC;
+}
+
+.executive-corp-preview {
+    background: linear-gradient(135deg, #fff 80%, #EFF6FF 80%);
+    border-bottom: 2px solid #60A5FA;
+}
+
+.ivy-preview {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    position: relative;
+}
+
+.ivy-preview::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 80%;
+    height: 2px;
+    background: #1C1917;
+}
+
 .template-card h4 {
     color: var(--rb-text);
     margin: 0;

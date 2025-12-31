@@ -307,6 +307,11 @@ function getTemplateHTML(template, data) {
         case 'photo-timeline': return getPhotoTimelineTemplate(data);
         case 'photo-creative': return getPhotoCreativeTemplate(data);
         case 'photo-professional': return getPhotoProfessionalTemplate(data);
+        // Corporate templates
+        case 'mba': return getMbaTemplate(data);
+        case 'consultant': return getConsultantTemplate(data);
+        case 'executive': return getExecutiveTemplateCorp(data); // Renamed to avoid conflict
+        case 'ivy': return getIvyTemplate(data);
         default: return getModernTemplate(data);
     }
 }
@@ -897,6 +902,280 @@ function getPhotoProfessionalTemplate(data) {
                 ${data.education.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #1F2937; font-size: 1em; border-bottom: 2px solid #3B82F6; padding-bottom: 0.25rem; margin-bottom: 0.75rem;">Education</h3>${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><div style="display: flex; justify-content: space-between;"><strong style="font-size: 0.9em;">${e.degree}</strong><span style="color: #3B82F6; font-size: 0.8em;">${e.year}</span></div><div style="color: #6B7280; font-size: 0.85em;">${e.institution}</div></div>`).join('')}</div>` : ''}
                 ${data.projects.length ? `<div><h3 style="color: #1F2937; font-size: 1em; border-bottom: 2px solid #3B82F6; padding-bottom: 0.25rem; margin-bottom: 0.75rem;">Projects</h3>${data.projects.map(p => `<div style="margin-bottom: 0.5rem;"><strong style="font-size: 0.9em;">${p.name}</strong> <span style="color: #3B82F6; font-size: 0.8em;">(${p.tech})</span><p style="margin: 0.25rem 0; font-size: 0.85em; color: #4B5563;">${p.description}</p></div>`).join('')}</div>` : ''}
             </div>
+        </div>
+    `;
+}
+
+// ==================== CORPORATE TEMPLATES ====================
+
+// MBA / FINANCE Template - Conservative, serif, education focused
+function getMbaTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+
+    return `
+        <div class="tpl-mba" style="font-family: 'Times New Roman', serif; color: #000;">
+            <div style="text-align: center; border-bottom: 1px solid #000; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                <h1 style="font-size: 2.2em; text-transform: uppercase; margin: 0; letter-spacing: 1px;">${data.fullName || 'YOUR NAME'}</h1>
+                <div style="font-size: 1em; margin-top: 0.5rem;">
+                    ${[data.email, data.phone, data.location, data.linkedin].filter(Boolean).join(' | ')}
+                </div>
+            </div>
+
+            ${data.education.length ? `
+            <div style="margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin-bottom: 0.75rem; padding-bottom: 2px;">Education</h3>
+                ${data.education.map(e => `
+                    <div style="margin-bottom: 0.75rem; display: flex; justify-content: space-between;">
+                        <div>
+                            <strong style="font-size: 1.1em;">${e.institution}</strong>
+                            <div style="font-style: italic;">${e.degree}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div>${e.year}</div>
+                            ${e.location ? `<div style="font-style: italic;">${e.location}</div>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>` : ''}
+
+            ${data.experience.length ? `
+            <div style="margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin-bottom: 0.75rem; padding-bottom: 2px;">Professional Experience</h3>
+                ${data.experience.map(e => `
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                            <strong style="font-size: 1.1em;">${e.company}</strong>
+                            <span>${e.startDate} – ${e.endDate}</span>
+                        </div>
+                        <div style="font-style: italic; margin-bottom: 0.25rem;">${e.title}</div>
+                        <p style="margin: 0; font-size: 0.95em; line-height: 1.5;">${e.description}</p>
+                    </div>
+                `).join('')}
+            </div>` : ''}
+
+            ${skillsArr.length ? `
+            <div style="margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin-bottom: 0.75rem; padding-bottom: 2px;">Additional Information</h3>
+                <div style="font-size: 0.95em;">
+                    <strong>Technical Skills:</strong> ${skillsArr.join(', ')}
+                </div>
+                ${data.languages ? `<div style="font-size: 0.95em; margin-top: 0.25rem;"><strong>Languages:</strong> ${data.languages}</div>` : ''}
+            </div>` : ''}
+        </div>
+    `;
+}
+
+// CONSULTANT Template (Deloitte Style) - Structured, blue/green accents, competency based
+function getConsultantTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+
+    return `
+        <div class="tpl-consultant" style="font-family: 'Arial', sans-serif; color: #333;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 4px solid #86EFAC; margin-bottom: 2rem; padding-bottom: 1rem;">
+                <div>
+                    <h1 style="font-size: 2.5em; color: #064E3B; margin: 0; line-height: 1;">${data.fullName || 'Your Name'}</h1>
+                    <div style="font-size: 1.2em; color: #059669; margin-top: 0.5rem; letter-spacing: 0.5px;">${data.jobTitle || 'Management Consultant'}</div>
+                </div>
+                <div style="text-align: right; font-size: 0.85em; color: #555;">
+                    <div>${data.email}</div>
+                    <div>${data.phone}</div>
+                    <div>${data.location}</div>
+                </div>
+            </div>
+
+            ${data.summary ? `
+            <div style="margin-bottom: 1.5rem; background: #F0FDF4; padding: 1rem; border-left: 4px solid #059669;">
+                <h3 style="font-size: 0.9em; text-transform: uppercase; color: #064E3B; margin: 0 0 0.5rem;">Executive Summary</h3>
+                <p style="margin: 0; font-size: 0.9em; line-height: 1.6;">${data.summary}</p>
+            </div>` : ''}
+
+            ${data.experience.length ? `
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.1em; color: #064E3B; border-bottom: 1px solid #D1D5DB; padding-bottom: 0.5rem; margin-bottom: 1rem;">Professional Experience</h3>
+                ${data.experience.map(e => `
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; color: #064E3B; margin-bottom: 0.25rem;">
+                            <strong style="font-size: 1.1em;">${e.company}</strong>
+                            <span style="font-weight: bold;">${e.startDate} - ${e.endDate}</span>
+                        </div>
+                        <div style="color: #059669; font-weight: 500; margin-bottom: 0.5rem;">${e.title}</div>
+                        <p style="margin: 0; font-size: 0.95em; line-height: 1.5; color: #444;">${e.description}</p>
+                    </div>
+                `).join('')}
+            </div>` : ''}
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                ${data.education.length ? `
+                <div>
+                    <h3 style="font-size: 1.1em; color: #064E3B; border-bottom: 1px solid #D1D5DB; padding-bottom: 0.5rem; margin-bottom: 1rem;">Education</h3>
+                    ${data.education.map(e => `
+                        <div style="margin-bottom: 1rem;">
+                            <strong style="display: block; color: #1F2937;">${e.institution}</strong>
+                            <div>${e.degree}</div>
+                            <div style="font-size: 0.9em; color: #6B7280;">${e.year}</div>
+                        </div>
+                    `).join('')}
+                </div>` : ''}
+                
+                ${skillsArr.length ? `
+                <div>
+                    <h3 style="font-size: 1.1em; color: #064E3B; border-bottom: 1px solid #D1D5DB; padding-bottom: 0.5rem; margin-bottom: 1rem;">Competencies</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${skillsArr.map(s => `
+                            <span style="background: #DCFCE7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85em; border: 1px solid #86EFAC;">${s}</span>
+                        `).join('')}
+                    </div>
+                </div>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// EXECUTIVE Template (KPMG Style) - Clean blue lines, airy, professional
+function getExecutiveTemplateCorp(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+
+    return `
+        <div class="tpl-executive-corp" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e3a8a;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #3B82F6; padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                <div>
+                    <h1 style="font-size: 2.8em; margin: 0; font-weight: 700; letter-spacing: -1px;">${data.fullName || 'Your Name'}</h1>
+                    <div style="font-size: 1.4em; color: #60A5FA; font-weight: 300; margin-top: 0.25rem;">${data.jobTitle || 'Executive Director'}</div>
+                </div>
+                <div style="font-size: 2.5em; font-weight: 900; color: #DBEAFE; letter-spacing: -2px;">
+                    ${(data.fullName || 'YN').split(' ').map(n => n[0]).join('')}
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+                <div>
+                    ${data.summary ? `
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; color: #93C5FD; margin-bottom: 1rem;">Profile</h3>
+                        <p style="margin: 0; color: #334155; line-height: 1.7; font-size: 1em;">${data.summary}</p>
+                    </div>` : ''}
+
+                    ${data.experience.length ? `
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; color: #93C5FD; margin-bottom: 1.5rem;">Experience</h3>
+                        ${data.experience.map(e => `
+                            <div style="margin-bottom: 2rem; position: relative; padding-left: 1.5rem; border-left: 2px solid #E2E8F0;">
+                                <div style="position: absolute; left: -6px; top: 0; width: 10px; height: 10px; background: #3B82F6; border-radius: 50%;"></div>
+                                <div style="margin-bottom: 0.25rem;">
+                                    <strong style="color: #1e3a8a; font-size: 1.1em;">${e.title}</strong>
+                                </div>
+                                <div style="color: #64748B; font-size: 0.9em; margin-bottom: 0.75rem;">
+                                    ${e.company} | ${e.startDate} - ${e.endDate}
+                                </div>
+                                <p style="margin: 0; color: #475569; line-height: 1.6; font-size: 0.95em;">${e.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>` : ''}
+                </div>
+
+                <div>
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; color: #93C5FD; margin-bottom: 1rem;">Contact</h3>
+                        <div style="font-size: 0.9em; color: #334155; line-height: 2;">
+                            ${data.email ? `<div><span style="color: #3B82F6;">✉</span> ${data.email}</div>` : ''}
+                            ${data.phone ? `<div><span style="color: #3B82F6;">📞</span> ${data.phone}</div>` : ''}
+                            ${data.location ? `<div><span style="color: #3B82F6;">📍</span> ${data.location}</div>` : ''}
+                        </div>
+                    </div>
+
+                    ${data.education.length ? `
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; color: #93C5FD; margin-bottom: 1rem;">Education</h3>
+                        ${data.education.map(e => `
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color: #1e3a8a;">${e.degree}</strong>
+                                <div style="color: #64748B; font-size: 0.9em;">${e.institution}</div>
+                                <div style="color: #94A3B8; font-size: 0.85em;">${e.year}</div>
+                            </div>
+                        `).join('')}
+                    </div>` : ''}
+
+                    ${skillsArr.length ? `
+                    <div>
+                        <h3 style="font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; color: #93C5FD; margin-bottom: 1rem;">Expertise</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            ${skillsArr.map(s => `
+                                <li style="margin-bottom: 0.5rem; color: #334155; font-size: 0.95em; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.25rem;">${s}</li>
+                            `).join('')}
+                        </ul>
+                    </div>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// IVY LEAGUE Template (Harvard Style) - Strict black & white, dense, compact
+function getIvyTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+
+    return `
+        <div class="tpl-ivy" style="font-family: 'Times New Roman', serif; color: #000; line-height: 1.4;">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <h1 style="font-size: 1.8em; margin: 0; text-transform: uppercase; letter-spacing: 1px;">${data.fullName || 'Your Name'}</h1>
+                <div style="font-size: 1em; margin-top: 0.25rem;">
+                    ${[data.location, data.phone, data.email, data.linkedin].filter(Boolean).join(' • ')}
+                </div>
+            </div>
+
+            ${data.education.length ? `
+            <div style="margin-bottom: 1rem;">
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin: 0 0 0.5rem 0; padding-bottom: 0.1rem;">Education</h3>
+                ${data.education.map(e => `
+                    <div style="margin-bottom: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>${e.institution}</strong>
+                            <span>${e.year}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>${e.degree}</span>
+                            <span>${e.location || ''}</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>` : ''}
+
+            ${data.experience.length ? `
+            <div style="margin-bottom: 1rem;">
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin: 0 0 0.5rem 0; padding-bottom: 0.1rem;">Experience</h3>
+                ${data.experience.map(e => `
+                    <div style="margin-bottom: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong>${e.company}</strong>
+                            <span>${e.startDate} – ${e.endDate}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-style: italic; margin-bottom: 0.2rem;">
+                            <span>${e.title}</span>
+                            <span>${e.location || ''}</span>
+                        </div>
+                        <p style="margin: 0; font-size: 1em; text-align: justify;">${e.description}</p>
+                    </div>
+                `).join('')}
+            </div>` : ''}
+
+            ${data.projects.length ? `
+            <div style="margin-bottom: 1rem;">
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin: 0 0 0.5rem 0; padding-bottom: 0.1rem;">Leadership & Projects</h3>
+                ${data.projects.map(p => `
+                    <div style="margin-bottom: 0.5rem;">
+                        <strong>${p.name}</strong>: ${p.description}
+                    </div>
+                `).join('')}
+            </div>` : ''}
+
+            ${skillsArr.length ? `
+            <div>
+                <h3 style="font-size: 1em; text-transform: uppercase; border-bottom: 1px solid #000; margin: 0 0 0.5rem 0; padding-bottom: 0.1rem;">Skills & Interests</h3>
+                <div style="margin: 0;">
+                    <strong>Technical:</strong> ${skillsArr.join(', ')}
+                </div>
+                ${data.languages ? `<div style="margin-top: 0.2rem;"><strong>Languages:</strong> ${data.languages}</div>` : ''}
+            </div>` : ''}
         </div>
     `;
 }
