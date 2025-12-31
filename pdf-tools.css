@@ -8,12 +8,14 @@
     --organize-color: #3b82f6;
     --edit-color: #22c55e;
     --security-color: #8b5cf6;
-    --bg-light: #f8fafc;
-    --bg-dark: #0f172a;
-    --text-dark: #1e293b;
-    --text-light: #64748b;
-    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    --card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+    /* Dark Theme Only - Black Background */
+    --bg-light: #050510;
+    --bg-dark: #020208;
+    --text-dark: #f1f5f9;
+    --text-light: #94a3b8;
+    --card-shadow: 0 4px 20px rgba(0, 245, 255, 0.1);
+    --card-hover-shadow: 0 12px 40px rgba(0, 245, 255, 0.2);
 
     /* Futuristic Neon Colors */
     --neon-cyan: #00f5ff;
@@ -38,14 +40,6 @@
             rgba(255, 0, 128, 0.3) 100%);
 }
 
-[data-theme="dark"] {
-    --bg-light: #0a0a1a;
-    --bg-dark: #050510;
-    --text-dark: #f1f5f9;
-    --text-light: #94a3b8;
-    --card-shadow: 0 4px 20px rgba(0, 245, 255, 0.1);
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -54,8 +48,8 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: var(--bg-light);
-    color: var(--text-dark);
+    background: #050510;
+    color: #f1f5f9;
     line-height: 1.6;
 }
 
@@ -131,14 +125,8 @@ body {
 }
 
 .theme-toggle {
-    background: transparent;
-    border: 2px solid var(--text-light);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    color: var(--text-light);
-    transition: all 0.2s;
+    display: none;
+    /* Hidden - Dark mode only */
 }
 
 .theme-toggle:hover {
