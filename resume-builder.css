@@ -1054,3 +1054,69 @@
 .cropper-face {
     border-radius: 50%;
 }
+
+/* Resume Score Tooltip */
+.resume-score-widget {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.resume-score-widget:hover {
+    transform: scale(1.05);
+}
+
+.score-tooltip {
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 280px;
+    background: var(--rb-card);
+    border: 1px solid var(--rb-border);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.resume-score-widget:hover .score-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.score-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rb-border);
+    font-size: 0.85rem;
+}
+
+.score-item:last-child {
+    border-bottom: none;
+}
+
+.score-item i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+.score-item.success {
+    color: #10B981;
+}
+
+.score-item.error {
+    color: #EF4444;
+}
+
+.score-item.warning {
+    color: #F59E0B;
+}

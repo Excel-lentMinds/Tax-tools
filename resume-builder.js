@@ -463,6 +463,68 @@ function collectData() {
     return data;
 }
 
+// ==================== AI RESUME SCORE ====================
+
+function calculateResumeScore(data) {
+    let score = 0;
+    const checks = [
+        { id: 'name', label: 'Full Name Provided', points: 10, pass: !!data.personal.fullName },
+        { id: 'email', label: 'Professional Email', points: 10, pass: !!data.personal.email && data.personal.email.includes('@') },
+        { id: 'phone', label: 'Phone Number', points: 5, pass: !!data.personal.phone },
+        { id: 'summary', label: 'Strong Summary (>50 chars)', points: 15, pass: data.summary.length > 50 },
+        { id: 'experience', label: 'Work Experience Added', points: 20, pass: data.experience.length > 0 },
+        { id: 'education', label: 'Education Section', points: 10, pass: data.education.length > 0 },
+        { id: 'skills', label: 'Key Skills Listed (>5)', points: 15, pass: data.skills.split(',').length > 5 },
+        { id: 'bullets', label: 'Detailed Bullets', points: 15, pass: data.experience.some(e => e.description.length > 50) }
+    ];
+
+    checks.forEach(check => {
+        if (check.pass) score += check.points;
+    });
+
+    return { score: Math.min(score, 100), checks };
+}
+
+function updateResumeScoreUI(result) {
+    const { score, checks } = result;
+    const scoreCircle = document.getElementById('scoreCircle');
+    const scoreText = document.getElementById('scoreText');
+    const tooltip = document.getElementById('scoreTooltip');
+
+    if (!scoreCircle || !scoreText) return;
+
+    // Stroke Dasharray
+    scoreCircle.style.strokeDasharray = `${score}, 100`;
+
+    // Color
+    let color = '#10B981'; // Green
+    if (score < 50) color = '#EF4444'; // Red
+    else if (score < 80) color = '#F59E0B'; // Yellow
+    scoreCircle.setAttribute('stroke', color);
+
+    scoreText.textContent = score;
+
+    // Update Tooltip
+    if (tooltip) {
+        let html = '<div style="font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid var(--rb-border); padding-bottom: 5px; color: var(--rb-text);">AI Score Analysis</div>';
+        checks.forEach(check => {
+            const icon = check.pass ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+            const status = check.pass ? 'success' : 'error';
+            html += `
+                <div class="score-item ${status}">
+                    <span>${icon} ${check.label}</span>
+                    <span style="font-weight:bold;">${check.pass ? '+' + check.points : '0'}</span>
+                </div>
+            `;
+        });
+        // Bonus tip
+        if (score < 100) {
+            html += `<div style="margin-top:8px; font-size:0.8em; font-style:italic; color:var(--rb-text);">Tip: Add more details to reach 100%</div>`;
+        }
+        tooltip.innerHTML = html;
+    }
+}
+
 // Update preview
 function updatePreview() {
     const data = collectData();
