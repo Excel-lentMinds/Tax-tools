@@ -17,6 +17,10 @@ let currentColor = 'blue';
 let currentPhoto = null; // Base64 photo data
 let cropShape = 'circle'; // circle or square
 let cropper = null;
+// Advanced Customization State
+let currentFont = 'sans'; // sans, serif, mono
+let currentFontSize = '1'; // multiplier
+let customHexColor = '#3B82F6';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -54,9 +58,188 @@ function selectTemplate(template) {
 }
 
 // Color theme
+// Color theme
 function changeColorTheme() {
-    currentColor = document.getElementById('colorTheme').value;
+    const val = document.getElementById('colorTheme').value;
+    if (val === 'custom') {
+        // Handled by color picker
+    } else {
+        currentColor = val;
+        updatePreview();
+    }
+}
+
+// ==================== ADVANCED CUSTOMIZATION ====================
+
+function updateFont(font) {
+    currentFont = font;
     updatePreview();
+}
+
+function updateFontSize(size) {
+    currentFontSize = size;
+    updatePreview();
+}
+
+function updateCustomColor(color) {
+    customHexColor = color;
+    // Set theme dropdown to 'custom' if it exists, or just use valid logic
+    // We'll treat 'custom' as a virtual concept or modify preview logic
+    currentColor = 'custom';
+    updatePreview();
+}
+
+// Data Portability
+function exportJson() {
+    const data = collectData();
+    data.meta = {
+        template: currentTemplate,
+        color: currentColor,
+        customColor: customHexColor,
+        font: currentFont,
+        fontSize: currentFontSize
+    };
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "resume-data-" + new Date().toISOString().slice(0, 10) + ".json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
+function importJson(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (data.personal) {
+                // Populate fields
+                document.getElementById('fullName').value = data.personal.fullName || '';
+                document.getElementById('jobTitle').value = data.personal.jobTitle || '';
+                document.getElementById('email').value = data.personal.email || '';
+                document.getElementById('phone').value = data.personal.phone || '';
+                document.getElementById('location').value = data.personal.location || '';
+                document.getElementById('linkedin').value = data.personal.linkedin || '';
+                document.getElementById('website').value = data.personal.website || '';
+
+                document.getElementById('summaryText').value = data.summary || '';
+                document.getElementById('skillsText').value = data.skills || '';
+                document.getElementById('languagesText').value = data.languages || '';
+
+                // Restore photo
+                if (data.photo) {
+                    currentPhoto = data.photo;
+                    const preview = document.querySelector('.photo-preview');
+                    preview.innerHTML = `<img src="${currentPhoto}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                    document.querySelector('.photo-actions').style.display = 'flex';
+                }
+
+                // Restore Experience & Education (Clear and Re-add)
+                document.getElementById('experienceList').innerHTML = '';
+                if (data.experience && data.experience.length) {
+                    data.experience.forEach(exp => {
+                        addExperience();
+                        const entries = document.querySelectorAll('.experience-entry');
+                        const lastEntry = entries[entries.length - 1];
+                        lastEntry.querySelector('input[placeholder="Job Title"]').value = exp.title;
+                        lastEntry.querySelector('input[placeholder="Company"]').value = exp.company;
+                        lastEntry.querySelector('input[placeholder="Start Date"]').value = exp.startDate;
+                        lastEntry.querySelector('input[placeholder="End Date"]').value = exp.endDate;
+                        lastEntry.querySelector('textarea').value = exp.description;
+                    });
+                } else {
+                    addExperience();
+                }
+
+                document.getElementById('educationList').innerHTML = '';
+                if (data.education && data.education.length) {
+                    data.education.forEach(edu => {
+                        addEducation();
+                        const entries = document.querySelectorAll('.education-entry');
+                        const lastEntry = entries[entries.length - 1];
+                        lastEntry.querySelector('input[placeholder="Degree"]').value = edu.degree;
+                        lastEntry.querySelector('input[placeholder="Institution"]').value = edu.institution;
+                        lastEntry.querySelector('input[placeholder="Year"]').value = edu.year;
+                    });
+                } else {
+                    addEducation();
+                }
+
+                // Restore Meta
+                if (data.meta) {
+                    currentTemplate = data.meta.template || 'modern';
+                    currentColor = data.meta.color || 'blue';
+                    customHexColor = data.meta.customColor || '#3B82F6';
+                    currentFont = data.meta.font || 'sans';
+                    currentFontSize = data.meta.fontSize || '1';
+
+                    // Update UI Controls
+                    if (document.getElementById('fontFamily')) document.getElementById('fontFamily').value = currentFont;
+                    if (document.getElementById('fontSize')) document.getElementById('fontSize').value = currentFontSize;
+                    if (document.getElementById('customColor')) document.getElementById('customColor').value = customHexColor;
+
+                    selectTemplate(currentTemplate);
+                }
+
+                updatePreview();
+                saveToLocalStorage();
+                alert('Resume data restored successfully!');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error parsing JSON file.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+// ==================== AI RESUME SCORE ====================
+
+function calculateResumeScore(data) {
+    let score = 0;
+    const checks = {
+        name: !!data.personal.fullName, // 10
+        email: !!data.personal.email, // 10
+        phone: !!data.personal.phone, // 5
+        summary: data.summary.length > 50, // 15
+        experience: data.experience.length > 0, // 20
+        education: data.education.length > 0, // 10
+        skills: data.skills.length > 10, // 15
+        bullets: data.experience.some(e => e.description.length > 100) // 15
+    };
+
+    if (checks.name) score += 10;
+    if (checks.email) score += 10;
+    if (checks.phone) score += 5;
+    if (checks.summary) score += 15;
+    if (checks.experience) score += 20;
+    if (checks.education) score += 10;
+    if (checks.skills) score += 15;
+    if (checks.bullets) score += 15;
+
+    return Math.min(score, 100);
+}
+
+function updateResumeScoreUI(score) {
+    const scoreCircle = document.getElementById('scoreCircle');
+    const scoreText = document.getElementById('scoreText');
+    if (!scoreCircle || !scoreText) return;
+
+    // Stroke Dasharray calculation: Circumference = 2 * pi * 15.9155 ≈ 100
+    // So distinct percent is just the value
+    scoreCircle.style.strokeDasharray = `${score}, 100`;
+
+    // Color based on score
+    if (score < 50) scoreCircle.setAttribute('stroke', '#EF4444'); // Red
+    else if (score < 80) scoreCircle.setAttribute('stroke', '#F59E0B'); // Yellow
+    else scoreCircle.setAttribute('stroke', '#10B981'); // Green
+
+    scoreText.textContent = score;
 }
 
 // Experience management
@@ -204,13 +387,15 @@ function removeEntry(id) {
 // Collect form data
 function collectData() {
     const data = {
-        fullName: document.getElementById('fullName')?.value || '',
-        jobTitle: document.getElementById('jobTitle')?.value || '',
-        email: document.getElementById('email')?.value || '',
-        phone: document.getElementById('phone')?.value || '',
-        location: document.getElementById('location')?.value || '',
-        linkedin: document.getElementById('linkedin')?.value || '',
-        website: document.getElementById('website')?.value || '',
+        personal: {
+            fullName: document.getElementById('fullName')?.value || '',
+            jobTitle: document.getElementById('jobTitle')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            phone: document.getElementById('phone')?.value || '',
+            location: document.getElementById('location')?.value || '',
+            linkedin: document.getElementById('linkedin')?.value || '',
+            website: document.getElementById('website')?.value || ''
+        },
         summary: document.getElementById('summaryText')?.value || '',
         skills: document.getElementById('skillsText')?.value || '',
         languages: document.getElementById('languagesText')?.value || '',
@@ -219,6 +404,9 @@ function collectData() {
         projects: [],
         certifications: []
     };
+
+    // Flatten for template rendering compatibility (templates expect data.fullName, not data.personal.fullName)
+    Object.assign(data, data.personal);
 
     // Collect experience
     document.querySelectorAll('#experienceList .rb-entry').forEach(entry => {
@@ -265,31 +453,51 @@ function collectData() {
         if (inputs[0]?.value) {
             data.certifications.push({
                 name: inputs[0]?.value || '',
-                issuer: inputs[1]?.value || '',
-                date: inputs[2]?.value || ''
+                year: inputs[1]?.value || ''
             });
         }
     });
 
     // Add photo
     data.photo = currentPhoto;
-
     return data;
 }
 
 // Update preview
 function updatePreview() {
     const data = collectData();
-    const preview = document.getElementById('resumePreview');
-    preview.setAttribute('data-color', currentColor);
-    preview.setAttribute('data-template', currentTemplate);
+    const previewContainer = document.getElementById('resumePreview');
 
-    // Get template-specific HTML
-    const html = getTemplateHTML(currentTemplate, data);
-    preview.innerHTML = html;
+    // Apply Template and Color
+    previewContainer.className = `rb-resume theme-${currentColor}`;
+
+    // Apply Font (using CSS variables or direct style)
+    let fontFamily = "'Inter', sans-serif";
+    if (currentFont === 'serif') fontFamily = "'Merriweather', 'Times New Roman', serif";
+    if (currentFont === 'mono') fontFamily = "'Roboto Mono', monospace";
+    previewContainer.style.fontFamily = fontFamily;
+
+    // Apply Font Size
+    previewContainer.style.fontSize = `${currentFontSize * 16}px`;
+
+    // Apply Custom Color if active
+    if (currentColor === 'custom') {
+        previewContainer.style.setProperty('--primary', customHexColor);
+        // Simple light variant generation
+        previewContainer.style.setProperty('--primary-light', customHexColor + '20');
+    } else {
+        previewContainer.style.removeProperty('--primary');
+        previewContainer.style.removeProperty('--primary-light');
+    }
+
+    // Render Template
+    previewContainer.innerHTML = getTemplateHTML(currentTemplate, data);
+
+    // Update Score
+    const score = calculateResumeScore(data);
+    updateResumeScoreUI(score);
 }
 
-// Template generators
 function getTemplateHTML(template, data) {
     switch (template) {
         case 'modern': return getModernTemplate(data);

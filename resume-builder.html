@@ -171,6 +171,53 @@
             <div class="rb-layout">
                 <!-- Form Panel -->
                 <div class="rb-form-panel">
+                    <!-- Advanced Tools -->
+                    <div class="rb-tools-section"
+                        style="margin-bottom: 20px; background: var(--rb-card); padding: 15px; border-radius: 12px; border: 1px solid var(--rb-border);">
+                        <h4
+                            style="margin: 0 0 10px 0; font-size: 0.9em; text-transform: uppercase; color: var(--rb-primary);">
+                            Advanced Customization</h4>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                            <!-- Font Family -->
+                            <div style="flex: 1; min-width: 120px;">
+                                <label style="display: block; font-size: 0.8em; margin-bottom: 5px;">Font Style</label>
+                                <select id="fontFamily" onchange="updateFont(this.value)"
+                                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--rb-border); background: var(--rb-bg);">
+                                    <option value="sans">Modern (Sans-Serif)</option>
+                                    <option value="serif">Classic (Serif)</option>
+                                    <option value="mono">Technical (Monospace)</option>
+                                </select>
+                            </div>
+                            <!-- Font Size -->
+                            <div style="flex: 1; min-width: 120px;">
+                                <label style="display: block; font-size: 0.8em; margin-bottom: 5px;">Text Size</label>
+                                <input type="range" id="fontSize" min="0.8" max="1.2" step="0.1" value="1"
+                                    oninput="updateFontSize(this.value)" style="width: 100%;">
+                            </div>
+                            <!-- Custom Color -->
+                            <div>
+                                <label style="display: block; font-size: 0.8em; margin-bottom: 5px;">Theme Color</label>
+                                <input type="color" id="customColor" value="#3B82F6"
+                                    oninput="updateCustomColor(this.value)"
+                                    style="height: 38px; width: 60px; padding: 0; border: none; border-radius: 6px; cursor: pointer;">
+                            </div>
+                        </div>
+
+                        <!-- Data Actions -->
+                        <div
+                            style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--rb-border); display: flex; gap: 10px;">
+                            <button onclick="exportJson()" class="photo-btn"
+                                style="flex: 1; justify-content: center; background: var(--rb-bg); border: 1px solid var(--rb-border); color: var(--rb-text);">
+                                <i class="fas fa-download"></i> Backup Data
+                            </button>
+                            <label class="photo-btn"
+                                style="flex: 1; justify-content: center; background: var(--rb-bg); border: 1px solid var(--rb-border); color: var(--rb-text); margin: 0;">
+                                <i class="fas fa-upload"></i> Restore
+                                <input type="file" onchange="importJson(this)" accept=".json" style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="rb-form-header">
                         <h3><i class="fas fa-edit"></i> Build Your Resume</h3>
                         <button class="rb-autosave-btn" onclick="saveToLocalStorage()">
@@ -360,7 +407,29 @@
                 <div class="rb-preview-panel">
                     <div class="rb-preview-header">
                         <h3><i class="fas fa-eye"></i> Live Preview</h3>
-                        <div class="rb-preview-actions">
+                        <div class="rb-preview-actions" style="display: flex; gap: 10px; align-items: center;">
+                            <!-- Resume Score Widget -->
+                            <div class="resume-score-widget"
+                                style="display: flex; align-items: center; gap: 10px; margin-right: 5px; background: var(--rb-bg); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--rb-border);">
+                                <div style="position: relative; width: 32px; height: 32px;">
+                                    <svg viewBox="0 0 36 36"
+                                        style="transform: rotate(-90deg); width: 100%; height: 100%;">
+                                        <path
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                            fill="none" stroke="#E5E7EB" stroke-width="4" />
+                                        <path id="scoreCircle"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                            fill="none" stroke="#10B981" stroke-width="4" stroke-dasharray="0, 100" />
+                                    </svg>
+                                    <div id="scoreText"
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; font-weight: bold; color: var(--rb-text);">
+                                        0</div>
+                                </div>
+                                <div
+                                    style="font-size: 0.8em; font-weight: 600; color: var(--rb-text); display: none; @media(min-width: 1024px){display:block;}">
+                                    Score</div>
+                            </div>
+
                             <select id="colorTheme" onchange="changeColorTheme()">
                                 <option value="blue">Blue</option>
                                 <option value="green">Green</option>
