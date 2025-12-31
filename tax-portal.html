@@ -998,6 +998,35 @@
                 </nav>
             </div>
 
+            <!-- Best AI Prompts Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-header" style="background: linear-gradient(135deg, #FF6B35, #F7C59F);">
+                    <i class="fas fa-magic"></i>
+                    <span>Best AI Prompts</span>
+                    <span class="tool-badge" style="background: #FF6B35;">HOT</span>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="javascript:void(0)" onclick="openPromptModal('resume-builder')" class="sidebar-link"
+                        style="background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(247,197,159,0.1)); border-left: 3px solid #FF6B35;">
+                        <i class="fas fa-file-alt"></i>
+                        Resume Builder Prompt
+                        <span class="new-tag" style="background: #FF6B35;">📋 Copy</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="openPromptModal('ecommerce')" class="sidebar-link"
+                        style="background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(247,197,159,0.05)); border-left: 3px solid #F7C59F;">
+                        <i class="fas fa-shopping-cart"></i>
+                        E-Commerce Site Prompt
+                        <span class="new-tag" style="background: #22c55e;">Soon</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="openPromptModal('portfolio')" class="sidebar-link"
+                        style="background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(247,197,159,0.05)); border-left: 3px solid #F7C59F;">
+                        <i class="fas fa-briefcase"></i>
+                        Portfolio Site Prompt
+                        <span class="new-tag" style="background: #22c55e;">Soon</span>
+                    </a>
+                </nav>
+            </div>
+
             <!-- Utilities Section -->
             <div class="sidebar-section">
                 <div class="sidebar-section-header utilities">
@@ -6426,6 +6455,437 @@
             </div>
         </div>
     </div>
+
+    <!-- AI Prompt Modal -->
+    <div class="share-modal-overlay hidden" id="promptModal">
+        <div class="share-modal" style="max-width: 900px; max-height: 85vh;">
+            <div class="share-modal-header" style="background: linear-gradient(135deg, #FF6B35, #F7C59F);">
+                <h3><i class="fas fa-magic"></i> <span id="promptModalTitle">AI Website Builder Prompt</span></h3>
+                <button onclick="closePromptModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="share-modal-body" style="padding: 0;">
+                <div
+                    style="padding: 1rem; background: rgba(255,107,53,0.1); border-bottom: 1px solid rgba(255,107,53,0.2);">
+                    <p style="margin: 0; color: var(--text-primary);"><i class="fas fa-info-circle"></i> Copy this
+                        prompt and paste it into any AI website builder (Cursor, v0, Bolt, etc.) to generate a complete
+                        website!</p>
+                </div>
+                <div id="promptContent"
+                    style="max-height: 50vh; overflow-y: auto; padding: 1.5rem; background: #0a0a1a; color: #e2e8f0; font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap;">
+                    Loading prompt...
+                </div>
+                <div
+                    style="padding: 1rem; display: flex; gap: 1rem; justify-content: center; border-top: 1px solid var(--border-color);">
+                    <button onclick="copyPromptToClipboard()" class="btn btn-primary"
+                        style="background: linear-gradient(135deg, #FF6B35, #F7C59F); border: none;">
+                        <i class="fas fa-copy"></i> Copy Full Prompt
+                    </button>
+                    <button onclick="closePromptModal()" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Prompts JavaScript -->
+    <script>
+        const aiPrompts = {
+            'resume-builder': {
+                title: '📋 Professional Resume Maker - Full AI Prompt',
+                content: `# 📋 MAIN PROMPT: AI Website Builder - Professional Resume Maker
+
+Create a professional, modern, and fully functional Resume/CV Builder website that allows users to create, customize, download, and share stunning resumes in multiple formats and templates. The website should be user-friendly, mobile-responsive, and feature-rich with an elegant UI/UX design.
+
+---
+
+## 🎯 WEBSITE OVERVIEW
+
+**Name:** ResumeForge Pro (or similar professional name)
+**Purpose:** Enable job seekers, professionals, students, and freelancers to create ATS-friendly, visually appealing resumes quickly
+**Target Audience:** Job seekers, fresh graduates, professionals, career changers, freelancers
+**Tone:** Professional, modern, trustworthy, and encouraging
+
+---
+
+## 📄 PAGES TO CREATE
+
+### 1. HOME PAGE
+- Hero section with compelling headline: "Build Your Dream Resume in Minutes"
+- Animated resume preview mockups
+- Key statistics (e.g., "50+ Templates", "1M+ Resumes Created", "ATS-Optimized")
+- "Create My Resume" CTA button (prominent)
+- Feature highlights with icons
+- Template preview carousel/gallery
+- Testimonials section with user photos and reviews
+- How it works section (3-4 steps with illustrations)
+- Industry-specific resume examples section
+- FAQ accordion section
+- Trust badges and security certifications
+- Newsletter subscription
+- Footer with links, social media, contact info
+
+### 2. TEMPLATES PAGE
+- Filter sidebar:
+  * By Industry (IT, Healthcare, Finance, Education, Marketing, Engineering, Hospitality, Legal, Creative, etc.)
+  * By Experience Level (Entry-level, Mid-level, Senior, Executive)
+  * By Style (Modern, Classic, Creative, Minimalist, Professional, Bold, Elegant)
+  * By Color scheme
+  * By Layout (Single column, Two column, Infographic)
+- Template grid with:
+  * Live preview thumbnails
+  * Template names
+  * "Use Template" button
+  * Favorite/save option
+  * ATS-friendly badge where applicable
+- Template categories:
+  * Professional Templates (10+)
+  * Modern Templates (10+)
+  * Creative Templates (10+)
+  * Simple/Minimalist Templates (10+)
+  * Executive Templates (5+)
+  * Academic/CV Templates (5+)
+  * Infographic Resumes (5+)
+  * Career-specific Templates (15+)
+
+### 3. RESUME BUILDER/EDITOR PAGE
+- Multi-step form wizard OR real-time side-by-side editor
+- Left panel: Form inputs
+- Right panel: Live resume preview
+- Sections to include:
+  
+  **Personal Information:**
+  - Full Name
+  - Professional Title/Headline
+  - Email Address
+  - Phone Number
+  - LinkedIn URL
+  - Portfolio/Website URL
+  - Location (City, State, Country)
+  - Professional Photo upload (optional)
+  
+  **Professional Summary/Objective:**
+  - Text area with character count
+  - AI-powered suggestions button
+  - Pre-written examples dropdown
+  
+  **Work Experience:**
+  - Add multiple entries
+  - Company Name
+  - Job Title
+  - Start Date - End Date (or "Present")
+  - Location
+  - Description/Bullet points
+  - Achievements with metrics
+  - Drag-and-drop reordering
+  
+  **Education:**
+  - Institution Name
+  - Degree/Certification
+  - Field of Study
+  - Graduation Date
+  - GPA (optional)
+  - Relevant coursework
+  - Honors/Awards
+  
+  **Skills:**
+  - Hard Skills
+  - Soft Skills
+  - Technical Skills
+  - Skill level indicators (Beginner/Intermediate/Expert or percentage bars)
+  - Suggested skills based on job title
+  
+  **Additional Sections (toggleable):**
+  - Certifications & Licenses
+  - Projects
+  - Publications
+  - Languages (with proficiency levels)
+  - Volunteer Experience
+  - Awards & Achievements
+  - Interests/Hobbies
+  - References
+  - Custom sections
+
+- Editor Features:
+  * Real-time preview
+  * Template switcher
+  * Color theme picker (primary, secondary, accent colors)
+  * Font selector (10+ professional fonts)
+  * Font size adjustment
+  * Spacing/margin controls
+  * Section reordering (drag-and-drop)
+  * Section visibility toggles
+  * Undo/Redo buttons
+  * Auto-save functionality
+  * Progress indicator
+  * Tips and suggestions throughout
+
+### 4. COVER LETTER BUILDER PAGE
+- Similar structure to resume builder
+- Multiple cover letter templates
+- AI-assisted writing suggestions
+- Job-specific customization
+- Matching designs with resume templates
+
+### 5. DOWNLOAD/EXPORT PAGE
+- Download formats:
+  * PDF (optimized for ATS)
+  * Word Document (.docx)
+  * Plain Text (.txt)
+  * HTML
+  * PNG/JPEG (for visual resumes)
+- Quality options (Standard, High, Print-ready)
+- Direct sharing options:
+  * Email
+  * LinkedIn
+  * Shareable link
+  * QR code generation
+- Print option
+
+### 6. MY RESUMES DASHBOARD (User Account)
+- Grid/List view of saved resumes
+- Resume cards showing:
+  * Thumbnail preview
+  * Resume name
+  * Last edited date
+  * Quick actions (Edit, Duplicate, Download, Delete)
+- Create new resume button
+- Folder organization
+- Search and filter saved resumes
+- Account settings link
+
+### 7. PRICING PAGE
+- Free tier with limitations
+- Premium tier with full features
+- Comparison table
+- Feature highlights for each plan
+- Monthly/Annual toggle with discount
+- Money-back guarantee badge
+- FAQ about pricing
+
+---
+
+## 🎨 DESIGN SPECIFICATIONS
+
+### Color Palette:
+- Primary: Deep Blue (#1E3A8A) or Teal (#0D9488)
+- Secondary: White (#FFFFFF)
+- Accent: Gold/Orange (#F59E0B) or Coral (#F97316)
+- Text: Dark Gray (#1F2937)
+- Light Background: (#F8FAFC)
+- Success: Green (#10B981)
+- Error: Red (#EF4444)
+
+### Typography:
+- Headings: Modern sans-serif (e.g., Inter, Poppins, Montserrat)
+- Body: Clean readable font (e.g., Open Sans, Roboto, Lato)
+- Resume fonts: Variety of professional options
+
+### Design Style:
+- Clean and minimal
+- Generous white space
+- Subtle shadows and depth
+- Rounded corners
+- Smooth animations and transitions
+- Gradient accents
+- Professional illustrations/icons
+- Consistent spacing system
+
+---
+
+## ✨ KEY FEATURES
+
+### Core Features:
+1. Drag-and-drop resume builder
+2. 50+ professional templates
+3. Real-time preview
+4. ATS optimization checker
+5. Multiple download formats
+6. Auto-save functionality
+7. Mobile-responsive editor
+8. Cloud storage for resumes
+9. Duplicate/clone resumes
+10. Version history
+
+### AI-Powered Features:
+1. AI writing assistant for descriptions
+2. Skill suggestions based on job title
+3. Grammar and spell check
+4. Content optimization recommendations
+5. ATS keyword scanner
+6. Job description analyzer
+7. Auto-fill from LinkedIn
+
+### Customization Features:
+1. Color theme customization
+2. Font selection (15+ fonts)
+3. Layout adjustments
+4. Section reordering
+5. Custom sections
+6. Photo positioning options
+7. Icon style selection
+8. Spacing controls
+
+---
+
+## 📊 RESUME TEMPLATES TO INCLUDE
+
+### By Style:
+1. **Classic Professional** - Traditional, clean, corporate-friendly
+2. **Modern Minimal** - Clean lines, lots of white space
+3. **Creative Bold** - Eye-catching, unique layouts
+4. **Executive Premium** - Sophisticated, elegant
+5. **Tech Industry** - Modern with skill bars, icons
+6. **Academic CV** - Detailed, publication-focused
+7. **Infographic** - Visual, data-driven
+8. **Simple Clean** - Basic, ATS-optimized
+9. **Two-Column** - Efficient use of space
+10. **Timeline-based** - Chronological visual format
+
+### By Industry:
+1. IT/Software Developer
+2. Healthcare/Medical
+3. Finance/Banking
+4. Marketing/Advertising
+5. Education/Teaching
+6. Engineering
+7. Legal
+8. Hospitality/Tourism
+9. Sales
+10. Creative/Design
+11. Human Resources
+12. Administrative
+
+---
+
+## 🔒 TECHNICAL REQUIREMENTS
+
+- Fast page load times (<3 seconds)
+- SEO optimized
+- SSL certificate
+- GDPR compliance
+- Accessibility (WCAG 2.1)
+- Cross-browser compatibility
+- Image optimization
+- CDN integration
+- Analytics integration
+- Error tracking
+
+---
+
+Please create a visually stunning, fully functional, and professional resume builder website with all the above specifications. The design should be modern, intuitive, and inspire confidence in users to create their professional resumes.`
+            },
+            'ecommerce': {
+                title: '🛒 E-Commerce Website - Coming Soon',
+                content: `# 🛒 E-Commerce Website Prompt
+
+Coming soon! This prompt will include:
+
+- Product catalog with categories
+- Shopping cart functionality
+- Checkout process
+- User authentication
+- Order management
+- Payment integration
+- Admin dashboard
+- Inventory management
+- Reviews and ratings
+- Wishlist functionality
+
+Stay tuned for the full prompt!`
+            },
+            'portfolio': {
+                title: '💼 Portfolio Website - Coming Soon',
+                content: `# 💼 Portfolio Website Prompt
+
+Coming soon! This prompt will include:
+
+- Hero section with animations
+- Project showcase gallery
+- About me section
+- Skills visualization
+- Experience timeline
+- Contact form
+- Blog integration
+- Testimonials
+- Social media links
+- Dark/Light mode
+
+Stay tuned for the full prompt!`
+            }
+        };
+
+        function openPromptModal(promptId) {
+            const prompt = aiPrompts[promptId];
+            if (!prompt) return;
+
+            document.getElementById('promptModalTitle').textContent = prompt.title;
+            document.getElementById('promptContent').textContent = prompt.content;
+            document.getElementById('promptModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePromptModal() {
+            document.getElementById('promptModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function copyPromptToClipboard() {
+            const promptText = document.getElementById('promptContent').textContent;
+            navigator.clipboard.writeText(promptText).then(() => {
+                // Show toast notification
+                const toast = document.createElement('div');
+                toast.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 1rem 2rem; border-radius: 12px; z-index: 10001; font-weight: 600; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4); animation: slideUp 0.3s ease;';
+                toast.innerHTML = '<i class="fas fa-check-circle"></i> Prompt copied to clipboard!';
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.animation = 'slideDown 0.3s ease forwards';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2000);
+            });
+        }
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !document.getElementById('promptModal').classList.contains('hidden')) {
+                closePromptModal();
+            }
+        });
+
+        // Close modal on overlay click
+        document.getElementById('promptModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'promptModal') {
+                closePromptModal();
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(-50%) translateY(100px);
+                opacity: 0;
+            }
+        }
+    </style>
 
 </body>
 
