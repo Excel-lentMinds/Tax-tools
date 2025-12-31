@@ -292,6 +292,10 @@ function getTemplateHTML(template, data) {
         case 'minimal': return getMinimalTemplate(data);
         case 'executive': return getExecutiveTemplate(data);
         case 'tech': return getTechTemplate(data);
+        case 'academic': return getAcademicTemplate(data);
+        case 'designer': return getDesignerTemplate(data);
+        case 'healthcare': return getHealthcareTemplate(data);
+        case 'sales': return getSalesTemplate(data);
         default: return getModernTemplate(data);
     }
 }
@@ -425,6 +429,107 @@ function getTechTemplate(data) {
             ${skillsArr.length ? `<div style="margin-bottom: 1.5rem;"><div style="color: #64748B; font-size: 0.8em;">const skills = [</div><div style="margin-left: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">${skillsArr.map(s => `<span style="background: #1E293B; border: 1px solid #10B981; color: #10B981; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.8em;">"${s}"</span>`).join(', ')}</div><div style="color: #64748B; font-size: 0.8em;">];</div></div>` : ''}
             ${data.experience.length ? `<div style="margin-bottom: 1.5rem;"><div style="color: #64748B; font-size: 0.8em;">// Experience</div>${data.experience.map(e => `<div style="margin: 0.75rem 0; padding-left: 1rem; border-left: 2px solid #3B82F6;"><div style="color: #F1F5F9;"><span style="color: #3B82F6;">function</span> ${e.title.replace(/\s+/g, '_')}<span style="color: #10B981;">()</span></div><div style="color: #64748B; font-size: 0.85em;">// ${e.company} | ${e.startDate} - ${e.endDate}</div><p style="color: #94A3B8; font-size: 0.85em; margin: 0.25rem 0;">${e.description}</p></div>`).join('')}</div>` : ''}
             ${data.education.length ? `<div><div style="color: #64748B; font-size: 0.8em;">// Education</div>${data.education.map(e => `<div style="margin: 0.5rem 0; padding-left: 1rem;"><span style="color: #F1F5F9;">${e.degree}</span><span style="color: #64748B;"> @ ${e.institution} (${e.year})</span></div>`).join('')}</div>` : ''}
+    `;
+}
+
+// ACADEMIC Template - Scholarly style
+function getAcademicTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    return `
+        <div class="tpl-academic" style="font-family: 'Times New Roman', serif;">
+            <div style="background: #1E40AF; color: white; padding: 1.5rem; margin: -2rem -2rem 1.5rem;">
+                <h1 style="font-size: 2em; margin: 0; font-weight: normal;">${data.fullName || 'Your Name'}, Ph.D.</h1>
+                <div style="font-size: 1.1em; opacity: 0.9; margin: 0.5rem 0;">${data.jobTitle || 'Professional Title'}</div>
+                <div style="font-size: 0.85em; opacity: 0.8;">${[data.email, data.phone, data.location].filter(Boolean).join(' | ')}</div>
+            </div>
+            ${data.summary ? `<div style="margin-bottom: 1.5rem;"><h3 style="color: #1E40AF; font-size: 1.1em; text-transform: uppercase; margin-bottom: 0.5rem; border-bottom: 2px solid #1E40AF;">Research Interests</h3><p style="line-height: 1.7; text-align: justify;">${data.summary}</p></div>` : ''}
+            ${data.education.length ? `<div style="margin-bottom: 1.5rem;"><h3 style="color: #1E40AF; font-size: 1.1em; text-transform: uppercase; margin-bottom: 0.5rem; border-bottom: 2px solid #1E40AF;">Education</h3>${data.education.map(e => `<div style="margin-bottom: 0.75rem;"><strong>${e.degree}</strong><div style="color: #666;">${e.institution}, ${e.year}${e.gpa ? ' | ' + e.gpa : ''}</div></div>`).join('')}</div>` : ''}
+            ${data.experience.length ? `<div style="margin-bottom: 1.5rem;"><h3 style="color: #1E40AF; font-size: 1.1em; text-transform: uppercase; margin-bottom: 0.5rem; border-bottom: 2px solid #1E40AF;">Professional Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 1rem;"><div style="display: flex; justify-content: space-between;"><strong>${e.title}</strong><span style="color: #666;">${e.startDate} - ${e.endDate}</span></div><div style="font-style: italic; color: #666;">${e.company}</div><p style="margin: 0.25rem 0;">${e.description}</p></div>`).join('')}</div>` : ''}
+            ${skillsArr.length ? `<div><h3 style="color: #1E40AF; font-size: 1.1em; text-transform: uppercase; margin-bottom: 0.5rem; border-bottom: 2px solid #1E40AF;">Technical Skills</h3><p>${skillsArr.join(' • ')}</p></div>` : ''}
+        </div>
+    `;
+}
+
+// DESIGNER Template - Portfolio style
+function getDesignerTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    return `
+        <div class="tpl-designer" style="font-family: 'Helvetica Neue', sans-serif;">
+            <div style="background: linear-gradient(135deg, #F472B6, #A855F7, #3B82F6); color: white; padding: 2rem; margin: -2rem -2rem 1.5rem; text-align: center;">
+                <div style="width: 80px; height: 80px; background: white; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2em; font-weight: bold; color: #A855F7;">${(data.fullName || 'YN').split(' ').map(n => n[0]).join('')}</div>
+                <h1 style="font-size: 2em; margin: 0; font-weight: 300;">${data.fullName || 'Your Name'}</h1>
+                <div style="font-size: 1.2em; opacity: 0.9; margin: 0.5rem 0; font-weight: 500;">${data.jobTitle || 'Creative Professional'}</div>
+                <div style="font-size: 0.85em; opacity: 0.8; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    ${data.email ? `<span>✉ ${data.email}</span>` : ''}
+                    ${data.website ? `<span>🌐 ${data.website}</span>` : ''}
+                </div>
+            </div>
+            ${data.summary ? `<div style="margin-bottom: 1.5rem; text-align: center;"><p style="color: #666; line-height: 1.7; font-size: 1em; max-width: 500px; margin: 0 auto; font-style: italic;">"${data.summary}"</p></div>` : ''}
+            ${skillsArr.length ? `<div style="margin-bottom: 1.5rem; text-align: center;"><div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">${skillsArr.map(s => `<span style="background: linear-gradient(135deg, #F472B6, #A855F7); color: white; padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85em;">${s}</span>`).join('')}</div></div>` : ''}
+            ${data.experience.length ? `<div style="margin-bottom: 1.5rem;"><h3 style="color: #A855F7; font-size: 0.9em; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem; text-align: center;">Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 1rem; padding: 1rem; background: #F9FAFB; border-radius: 12px;"><div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;"><strong style="color: #A855F7;">${e.title}</strong><span style="color: #888; font-size: 0.9em;">${e.startDate} - ${e.endDate}</span></div><div style="color: #666; font-size: 0.9em; margin-bottom: 0.25rem;">${e.company}</div><p style="margin: 0; color: #555; font-size: 0.9em;">${e.description}</p></div>`).join('')}</div>` : ''}
+            ${data.education.length ? `<div><h3 style="color: #A855F7; font-size: 0.9em; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem; text-align: center;">Education</h3><div style="text-align: center;">${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><strong>${e.degree}</strong> — ${e.institution}</div>`).join('')}</div></div>` : ''}
+        </div>
+    `;
+}
+
+// HEALTHCARE Template - Medical professional style
+function getHealthcareTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    return `
+        <div class="tpl-healthcare">
+            <div style="display: grid; grid-template-columns: 160px 1fr;">
+                <div style="background: linear-gradient(180deg, #14B8A6 0%, #0D9488 100%); color: white; padding: 1.5rem 1rem; margin: -2rem 0 -2rem -2rem;">
+                    <div style="width: 70px; height: 70px; background: white; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2em;">⚕️</span>
+                    </div>
+                    <div style="font-size: 0.8em; margin-bottom: 1rem;">
+                        ${data.email ? `<div style="margin: 0.5rem 0;">📧 ${data.email}</div>` : ''}
+                        ${data.phone ? `<div style="margin: 0.5rem 0;">📱 ${data.phone}</div>` : ''}
+                        ${data.location ? `<div style="margin: 0.5rem 0;">📍 ${data.location}</div>` : ''}
+                    </div>
+                    ${skillsArr.length ? `<div style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 1rem;"><h4 style="margin: 0 0 0.5rem; font-size: 0.8em; text-transform: uppercase;">Clinical Skills</h4>${skillsArr.slice(0, 6).map(s => `<div style="background: rgba(255,255,255,0.2); padding: 0.2rem 0.5rem; border-radius: 4px; margin: 0.25rem 0; font-size: 0.75em;">${s}</div>`).join('')}</div>` : ''}
+                </div>
+                <div style="padding: 0 1rem;">
+                    <h1 style="font-size: 1.8em; margin: 0 0 0.25rem; color: #0D9488;">${data.fullName || 'Your Name'}</h1>
+                    <div style="color: #14B8A6; font-size: 1.1em; font-weight: 500; margin-bottom: 1rem;">${data.jobTitle || 'Healthcare Professional'}</div>
+                    ${data.summary ? `<div style="margin-bottom: 1rem; padding: 0.75rem; background: #F0FDFA; border-radius: 8px; border-left: 4px solid #14B8A6;"><p style="margin: 0; color: #0D9488; font-size: 0.9em; line-height: 1.6;">${data.summary}</p></div>` : ''}
+                    ${data.experience.length ? `<div style="margin-bottom: 1rem;"><h3 style="color: #0D9488; font-size: 1em; margin-bottom: 0.5rem; border-bottom: 2px solid #14B8A6; padding-bottom: 0.25rem;">Clinical Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 0.75rem;"><div style="display: flex; justify-content: space-between;"><strong style="font-size: 0.95em;">${e.title}</strong><span style="color: #14B8A6; font-size: 0.85em;">${e.startDate} - ${e.endDate}</span></div><div style="color: #666; font-size: 0.9em;">${e.company}</div><p style="margin: 0.25rem 0; font-size: 0.85em; color: #555;">${e.description}</p></div>`).join('')}</div>` : ''}
+                    ${data.education.length ? `<div><h3 style="color: #0D9488; font-size: 1em; margin-bottom: 0.5rem; border-bottom: 2px solid #14B8A6; padding-bottom: 0.25rem;">Education & Certifications</h3>${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><strong style="font-size: 0.9em;">${e.degree}</strong><div style="color: #666; font-size: 0.85em;">${e.institution} | ${e.year}</div></div>`).join('')}</div>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// SALES Template - Results-driven business style
+function getSalesTemplate(data) {
+    const skillsArr = data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    return `
+        <div class="tpl-sales">
+            <div style="background: linear-gradient(90deg, #F59E0B 0%, #D97706 100%); color: white; padding: 1.5rem 2rem; margin: -2rem -2rem 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h1 style="font-size: 2em; margin: 0; font-weight: 700;">${data.fullName || 'Your Name'}</h1>
+                        <div style="font-size: 1.2em; opacity: 0.95; margin-top: 0.25rem;">${data.jobTitle || 'Sales Professional'}</div>
+                    </div>
+                    <div style="text-align: right; font-size: 0.85em; opacity: 0.9;">
+                        ${data.email ? `<div>${data.email}</div>` : ''}
+                        ${data.phone ? `<div>${data.phone}</div>` : ''}
+                        ${data.location ? `<div>${data.location}</div>` : ''}
+                    </div>
+                </div>
+            </div>
+            <div style="background: #1F2937; color: white; padding: 0.75rem 2rem; margin: -1.5rem -2rem 1.5rem; display: flex; gap: 2rem; justify-content: center;">
+                <div style="text-align: center;"><div style="font-size: 1.5em; font-weight: bold; color: #F59E0B;">150%</div><div style="font-size: 0.75em; opacity: 0.8;">Quota Achievement</div></div>
+                <div style="text-align: center;"><div style="font-size: 1.5em; font-weight: bold; color: #F59E0B;">$2M+</div><div style="font-size: 0.75em; opacity: 0.8;">Revenue Generated</div></div>
+                <div style="text-align: center;"><div style="font-size: 1.5em; font-weight: bold; color: #F59E0B;">Top 5%</div><div style="font-size: 0.75em; opacity: 0.8;">Performance Rank</div></div>
+            </div>
+            ${data.summary ? `<div style="margin-bottom: 1.5rem;"><h3 style="color: #D97706; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Professional Summary</h3><p style="line-height: 1.6; color: #374151;">${data.summary}</p></div>` : ''}
+            ${data.experience.length ? `<div style="margin-bottom: 1.5rem;"><h3 style="color: #D97706; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem;">Sales Experience</h3>${data.experience.map(e => `<div style="margin-bottom: 1rem; padding-left: 1rem; border-left: 3px solid #F59E0B;"><div style="display: flex; justify-content: space-between;"><strong>${e.title}</strong><span style="color: #F59E0B; font-weight: 500;">${e.startDate} - ${e.endDate}</span></div><div style="color: #6B7280;">${e.company}</div><p style="margin: 0.25rem 0; color: #374151; font-size: 0.95em;">${e.description}</p></div>`).join('')}</div>` : ''}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                ${skillsArr.length ? `<div><h3 style="color: #D97706; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Core Competencies</h3><div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">${skillsArr.map(s => `<span style="background: #FEF3C7; color: #92400E; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.8em;">${s}</span>`).join('')}</div></div>` : ''}
+                ${data.education.length ? `<div><h3 style="color: #D97706; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Education</h3>${data.education.map(e => `<div style="margin-bottom: 0.5rem;"><strong style="font-size: 0.9em;">${e.degree}</strong><div style="color: #6B7280; font-size: 0.85em;">${e.institution}</div></div>`).join('')}</div>` : ''}
+            </div>
         </div>
     `;
 }
